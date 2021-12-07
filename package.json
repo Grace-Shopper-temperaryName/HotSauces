@@ -1,7 +1,7 @@
 {
-  "name": "fs-app-template",
+  "name": "hot_n_saucy",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "Satisfy your cravings to burn!",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
