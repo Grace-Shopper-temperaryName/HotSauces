@@ -17,7 +17,7 @@
     "test:dev:models": "npm run test:dev -- --grep=model",
     "test:dev:routes": "npm run test:dev -- --grep=route"
   },
-  "author": "Fullstack Academy of Code",
+  "author": "am-hernandez, rblanchard719, anthonyliang1117, HTHR-WHT",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.21.1",
