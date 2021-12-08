@@ -2,8 +2,15 @@
 
 const {
   db,
-  models: { User, HotSauce },
+  models: { Customer, HotSauce, Order, Payment, OrderHotSauce },
 } = require("../server/db");
+
+const {
+  customerData,
+  hotSaucesData,
+  orderData,
+  paymentData,
+} = require("./seedFile");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -13,54 +20,75 @@ async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
   console.log("db synced!");
 
-  // Creating Users
+  // Creating Customers
+  const customers = await Promise.all(
+    customerData.map((customer) => {
+      return Customer.create(customer);
+    })
+  );
 
-  const createUsers = async function () {
-    let users = [];
-    for (let i = 0; i < 10; i++) {
-      users.push(
-        await User.create({
-          name: `name${i}`,
-          email: `${i}@email.com`,
-          password: `123${i}`,
-          address: `${i} sesame street`,
-        })
-      );
-    }
-    return users;
-  };
+  // Creating HotSauces
+  const hotSauces = await Promise.all(
+    hotSaucesData.map((hotSauce) => {
+      return HotSauce.create(hotSauce);
+    })
+  );
 
-  const users = await Promise.all(createUsers());
-  console.log("USERS!!!!!!!!!!!! ", users);
+  // Creating Orders
+  const orders = await Promise.all(
+    orderData.map((order) => {
+      return Order.create(order);
+    })
+  );
 
-  const createHotSauces = async function () {
-    let sauces = [];
-    for (let i = 0; i < 10; i++) {
-      sauces.push(
-        await HotSauce.create({
-          name: `name${i}`,
-          heatLevel: i,
-          imageUrl: `${i}.jpeg`,
-          price: i,
-          sku: i,
-          description: `hot sauce ${i} is awesome`,
-        })
-      );
-    }
-    return sauces;
-  };
+  // Creating Payments
+  const payments = await Promise.all(
+    paymentData.map((payment) => {
+      return Payment.create(payment);
+    })
+  );
 
-  const hotSauces = await Promise.all(createHotSauces());
+  /* How to see all Magic Methods
+   console.log("MAGIC METHODS", Object.keys(order.prototype));
+  */
 
-  console.log(`seeded ${users.length} users`);
-  // console.log(`seeded ${hotSauces.length} hot sauces`);
+  for (let i = 0; i < orders.length; i++) {
+    const randomIndex = Math.floor(Math.random() * hotSauces.length - 1) + 1;
+    const randomQuantity = Math.floor(Math.random() * 10) + 1;
+    const order = orders[i];
+    const hotSauce = hotSauces[randomIndex];
+    console.log(hotSauce.id);
+    await OrderHotSauce.create({
+      quantity: randomQuantity,
+      orderId: order.id,
+      hotSauceId: hotSauce.id,
+    });
+  }
+
+  for (let i = 0; i < orders.length; i++) {
+    const randomIndex = Math.floor(Math.random() * hotSauces.length - 1) + 1;
+    const randomQuantity = Math.floor(Math.random() * 10) + 1;
+    const order = orders[i];
+    const hotSauce = hotSauces[randomIndex];
+    console.log(hotSauce.id);
+    await OrderHotSauce.create({
+      quantity: randomQuantity,
+      orderId: order.id,
+      hotSauceId: hotSauce.id,
+    });
+  }
+
+  console.log(`seeded ${customers.length} customers`);
+  console.log(`seeded ${hotSauces.length} hot sauces`);
+  console.log(`seeded ${orders.length} orders`);
+  console.log(`seeded ${payments.length} payments`);
   console.log(`seeded successfully`);
-  return {
-    users: {
-      cody: users[0],
-      murphy: users[1],
-    },
-  };
+  // return {
+  //   users: {
+  //     cody: users[0],
+  //     murphy: users[1],
+  //   },
+  // };
 }
 
 /*
