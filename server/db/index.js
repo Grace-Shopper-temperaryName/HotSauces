@@ -6,28 +6,14 @@ const db = require("./db");
 const Customer = require("./models/Customer");
 const HotSauce = require("./models/HotSauce");
 const Order = require("./models/Order");
-const Payment = require("./models/Payment");
+const OrderHotSauce = require("./models/OrderHotSauce");
 
 //associations could go here!
 Customer.hasMany(Order);
 Order.belongsTo(Customer);
 
-const OrderHotSauce = db.define("orderHotSauce", {
-  quantity: {
-    type: Sequelize.INTEGER,
-    validate: {
-      min: 1,
-      notEmpty: true,
-    },
-    allowNull: false,
-  },
-});
-
 Order.belongsToMany(HotSauce, { through: OrderHotSauce });
 HotSauce.belongsToMany(Order, { through: OrderHotSauce });
-
-Order.hasOne(Payment);
-Payment.belongsTo(Order);
 
 module.exports = {
   db,
@@ -35,7 +21,6 @@ module.exports = {
     Customer,
     HotSauce,
     Order,
-    Payment,
     OrderHotSauce,
   },
 };

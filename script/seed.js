@@ -2,15 +2,10 @@
 
 const {
   db,
-  models: { Customer, HotSauce, Order, Payment, OrderHotSauce },
+  models: { Customer, HotSauce, Order, OrderHotSauce },
 } = require("../server/db");
 
-const {
-  customerData,
-  hotSaucesData,
-  orderData,
-  paymentData,
-} = require("./seedFile");
+const { customerData, hotSaucesData, orderData } = require("./seedFile");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -41,54 +36,41 @@ async function seed() {
     })
   );
 
-  // Creating Payments
-  const payments = await Promise.all(
-    paymentData.map((payment) => {
-      return Payment.create(payment);
-    })
-  );
+  // How to see all Magic Methods
+  // console.log("MAGIC METHODS", Object.keys(Order.prototype));
 
-  /* How to see all Magic Methods
-   console.log("MAGIC METHODS", Object.keys(order.prototype));
+  /*
+  Waiting for clarification from Johanna on Magic Methods
+
+  for (let i = 0; i < orders.length; i++) {
+    const randomIndex = Math.floor(Math.random() * hotSauces.length - 1) + 1;
+    const randomQuantity = Math.floor(Math.random() * 10) + 1;
+    const order = orders[i];
+    const hotSauce = hotSauces[randomIndex];
+    await OrderHotSauce.create({
+      quantity: randomQuantity,
+      orderId: order.id,
+      hotSauceId: hotSauce.id,
+    });
+  }
+
+  for (let i = 0; i < orders.length; i++) {
+    const randomIndex = Math.floor(Math.random() * hotSauces.length - 1) + 1;
+    const randomQuantity = Math.floor(Math.random() * 10) + 1;
+    const order = orders[i];
+    const hotSauce = hotSauces[randomIndex];
+    await OrderHotSauce.create({
+      quantity: randomQuantity,
+      orderId: order.id,
+      hotSauceId: hotSauce.id,
+    });
+  }
   */
-
-  for (let i = 0; i < orders.length; i++) {
-    const randomIndex = Math.floor(Math.random() * hotSauces.length - 1) + 1;
-    const randomQuantity = Math.floor(Math.random() * 10) + 1;
-    const order = orders[i];
-    const hotSauce = hotSauces[randomIndex];
-    console.log(hotSauce.id);
-    await OrderHotSauce.create({
-      quantity: randomQuantity,
-      orderId: order.id,
-      hotSauceId: hotSauce.id,
-    });
-  }
-
-  for (let i = 0; i < orders.length; i++) {
-    const randomIndex = Math.floor(Math.random() * hotSauces.length - 1) + 1;
-    const randomQuantity = Math.floor(Math.random() * 10) + 1;
-    const order = orders[i];
-    const hotSauce = hotSauces[randomIndex];
-    console.log(hotSauce.id);
-    await OrderHotSauce.create({
-      quantity: randomQuantity,
-      orderId: order.id,
-      hotSauceId: hotSauce.id,
-    });
-  }
 
   console.log(`seeded ${customers.length} customers`);
   console.log(`seeded ${hotSauces.length} hot sauces`);
   console.log(`seeded ${orders.length} orders`);
-  console.log(`seeded ${payments.length} payments`);
   console.log(`seeded successfully`);
-  // return {
-  //   users: {
-  //     cody: users[0],
-  //     murphy: users[1],
-  //   },
-  // };
 }
 
 /*
