@@ -6,6 +6,7 @@ import Home from './components/Home';
 import { me } from './store';
 import AllHotSauces from './components/AllHotSauces';
 
+
 /**
  * COMPONENT
  */
