@@ -21,10 +21,6 @@ const OrderHotSauce = db.define("orderHotSauce", {
     },
     allowNull: false,
   },
-  orderId: {
-    type: Seq
-    unique: false,
-  },
 });
 
 Order.belongsToMany(HotSauce, { through: OrderHotSauce });
