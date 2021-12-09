@@ -22,12 +22,15 @@ const Customer = db.define("customer", {
     },
   },
   phone: {
-    type: Sequelize.BIGINT,
+    type: Sequelize.STRING,
   },
   email: {
     type: Sequelize.STRING,
     unique: true,
     allowNull: false,
+    validate: {
+      isEmail: true,
+    },
   },
   password: {
     type: Sequelize.STRING,
@@ -51,7 +54,7 @@ const Customer = db.define("customer", {
     },
   },
   zip: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
