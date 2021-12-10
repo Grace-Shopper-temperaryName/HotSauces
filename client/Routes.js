@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Login, Signup } from './components/AuthForm';
-import Home from './components/Home';
-import { me } from './store';
-import AllHotSauces from './components/AllHotSauces';
-
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Login, Signup } from "./components/AuthForm";
+import Home from "./components/Home";
+import { me } from "./store";
+import AllHotSauces from "./components/AllHotSauces";
+import SingleHotSauce from "./components/SingleHotSauce";
 
 /**
  * COMPONENT
@@ -23,7 +23,8 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Route path="/hotsauces" component={AllHotSauces} />
+            <Route exact path="/hotsauces" component={AllHotSauces} />
+            <Route path="/hotsauces/:id" component={SingleHotSauce} />
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -31,7 +32,8 @@ class Routes extends Component {
             <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/hotsauces" component={AllHotSauces} />
+            <Route exact path="/hotsauces" component={AllHotSauces} />
+            <Route path="/hotsauces/:id" component={SingleHotSauce} />
           </Switch>
         )}
       </div>

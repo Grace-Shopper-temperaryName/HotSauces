@@ -1,6 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
+import history from "../history";
 
-const SET_SINGLE_HOT_SAUCE = 'SET_SINGLE_HOT_SAUCE';
+const SET_SINGLE_HOT_SAUCE = "SET_SINGLE_HOT_SAUCE";
 
 export const setSingleHotSauce = (hotSauce) => {
   return {
@@ -9,18 +10,18 @@ export const setSingleHotSauce = (hotSauce) => {
   };
 };
 
-export const fetchSingleHotSauce = (hotSauceId) => {
+export const fetchSingleHotSauce = (id) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/hotsauces/${hotSauceId}`);
-      dispatch(setSingleHotSauce(data));
+      const { data: hotSauce } = await axios.get(`/api/hotsauces/${id}`);
+      dispatch(setSingleHotSauce(hotSauce));
     } catch (err) {
       console.error(err);
     }
   };
 };
 
-export default function singleHotSauce(state = [], action) {
+export default function (state = [], action) {
   switch (action.type) {
     case SET_SINGLE_HOT_SAUCE:
       return action.hotSauce;
