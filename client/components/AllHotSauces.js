@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchHotSauces } from '../store/hotSauces';
+import { Link } from 'react-router-dom';
 
 export class AllHotSauces extends Component {
   componentDidMount() {
@@ -21,11 +22,13 @@ export class AllHotSauces extends Component {
                   alt={`picture of ${hotSauce.name}`}
                 />
               </div>
-              <div className="containerRight">
-                <p>{hotSauce.name}</p>
-                <p>{hotSauce.price}</p>
-                <p>{hotSauce.heatLevel}</p>
-              </div>
+              <Link to={`/hotsauces/${hotSauce.id}`}>
+                <div className="containerRight">
+                  <p>{hotSauce.name}</p>
+                  <p>{hotSauce.price}</p>
+                  <p>{hotSauce.heatLevel}</p>
+                </div>
+              </Link>
             </div>
           ))}
         </div>

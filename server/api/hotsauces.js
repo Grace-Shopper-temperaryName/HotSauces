@@ -13,3 +13,12 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
+
+router.get('/:id', async (req, res, next) => {
+  try {
+    const hotSauce = await HotSauce.findByPk(req.params.id);
+    res.json(hotSauce);
+  } catch (error) {
+    next(error);
+  }
+});

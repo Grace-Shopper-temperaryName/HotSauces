@@ -4,24 +4,33 @@ import { fetchSingleHotSauce } from '../store/singleHotSauce';
 
 export class SingleHotSauce extends React.Component {
   componentDidMount() {
-    this.props.fetchSingleHotSauce(this.props.match.params.hotSauceId);
+    this.props.fetchSingleHotSauce(this.props.match.params.id);
   }
 
   render() {
-    const singleHotSauce = this.props;
+    const { singleHotSauce } = this.props;
     return (
       <div>
         <center>
-          <h1> Single Hot Sauce </h1>
-          <div>
+          <h1> Hot 'n' Saucy Hot Sauce </h1>
+          <div id="singleHotSauce">
             <div>
-              <p> {singleHotSauce.imageUrl}</p>
-              <h2>{singleHotSauce.name}</h2>
-              <p> (fire emoji here) {singleHotSauce.heatLevel}</p>
-              <p>{singleHotSauce.price}</p>
-              <p>{singleHotSauce.stock}</p>
-              <p>{singleHotSauce.sku}</p>
-              <p>{singleHotSauce.description}</p>
+              <img
+                src={singleHotSauce.imageUrl}
+                alt={`picture of ${singleHotSauce.name}`}
+              />
+            </div>
+            <div className="containerRight">
+              {singleHotSauce.stock < 1 ? (
+                <h1> OUT OF STOCK! </h1>
+              ) : (
+                <div>
+                  <h2>{singleHotSauce.name}</h2>
+                  <p> ${singleHotSauce.price / 100} </p>
+                  <p> 🔥 {singleHotSauce.heatLevel} / 10</p>
+                  <p>{singleHotSauce.description}</p>
+                </div>
+              )}
             </div>
           </div>
         </center>
@@ -36,8 +45,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchSingleHotSauce: (hotSauceId) =>
-      dispatch(fetchSingleHotSauce(hotSauceId)),
+    fetchSingleHotSauce: (id) => dispatch(fetchSingleHotSauce(id)),
   };
 };
 
