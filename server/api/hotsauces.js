@@ -25,8 +25,8 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const newHotSauce = await HotSauce.create(req.body);
-    res.json(newHotSauce);
+    const hotSauce = await HotSauce.create(req.body);
+    res.json(hotSauce);
   } catch (error) {
     next(error);
   }
@@ -34,9 +34,9 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
-    const hotSauceToUpdate = await HotSauce.findByPk(req.params.id);
-    const updatedHotSauce = await hotSauceToUpdate.update(req.body);
-    res.json(updatedHotSauce);
+    const hotSauce = await HotSauce.findByPk(req.params.id);
+    await hotSauce.update(req.body);
+    res.json(hotSauce);
   } catch (error) {
     next(error);
   }
@@ -44,10 +44,10 @@ router.put("/:id", async (req, res, next) => {
 
 router.delete("/:id", async (req, res, next) => {
   try {
-    const hotSauceToRemove = await HotSauce.findByPk(req.params.id);
-    const removedHotSauce = await hotSauceToRemove.destroy();
-    res.json(removedHotSauce);
+    const hotSauce = await HotSauce.findByPk(req.params.id);
+    await hotSauce.destroy();
+    res.json(hotSauce);
   } catch (error) {
     next(error);
   }
-})
+});
