@@ -25,8 +25,8 @@ export class AllHotSauces extends Component {
               <Link to={`/hotsauces/${hotSauce.id}`}>
                 <div className="containerRight">
                   <p>{hotSauce.name}</p>
-                  <p>{hotSauce.price}</p>
-                  <p>{hotSauce.heatLevel}</p>
+                  <p>${hotSauce.price / 100}</p>
+                  <p>🔥{hotSauce.heatLevel} / 10</p>
                 </div>
               </Link>
             </div>
