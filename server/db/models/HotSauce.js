@@ -40,6 +40,9 @@ const HotSauce = db.define("hotSauce", {
   sku: {
     type: Sequelize.STRING,
     unique: true,
+    validate: {
+      notEmpty: true,
+    },
   },
   description: {
     type: Sequelize.STRING(1000),

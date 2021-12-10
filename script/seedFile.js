@@ -2001,7 +2001,7 @@ const customerData = [
   },
 ];
 
-const hotSaucesData = [
+let hotSaucesData = [
   {
     name: "Maury Menelaws",
     heatLevel: 10,
@@ -3902,7 +3902,7 @@ const hotSaucesData = [
   },
 ];
 
-const orderData = [
+let orderData = [
   {
     orderStatus: true,
     orderDate: "06/03/2021",
@@ -5704,5 +5704,38 @@ const orderData = [
     paymentStatus: false,
   },
 ];
+
+function editSeedHotSauceData(arr) {
+  for (let i in arr) {
+    arr[i].price = Number(arr[i].price.toString().slice(0, -2) + "00");
+  }
+  return arr;
+}
+
+const orderStatuses = ["open", "pending payment", "completed", "cancelled"];
+
+function editSeedOrderData(arr) {
+  for (let i in arr) {
+    arr[i].amount = Number(arr[i].amount.toString().slice(0, -3) + "00");
+    arr[i].orderStatus = orderStatuses[Math.floor(Math.random() * 4)];
+    if (arr[i].orderStatus === "completed") {
+      arr[i].isCart = false;
+      arr[i].paymentStatus = "fulfilled";
+    } else if (arr[i].orderStatus === "cancelled") {
+      arr[i].isCart = false;
+      arr[i].paymentStatus = "cancelled";
+    } else if (arr[i].orderStatus === "pending payment") {
+      arr[i].isCart = false;
+      arr[i].paymentStatus = "pending";
+    } else {
+      arr[i].isCart = true;
+      arr[i].paymentStatus = "none";
+    }
+  }
+  return arr;
+}
+
+hotSaucesData = editSeedHotSauceData(hotSaucesData);
+orderData = editSeedOrderData(orderData);
 
 module.exports = { customerData, hotSaucesData, orderData };
