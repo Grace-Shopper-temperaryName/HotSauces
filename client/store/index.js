@@ -5,11 +5,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import auth from './auth';
 import hotSauces from './hotSauces';
 import singleHotSauce from './singleHotSauce';
+import singleCustomer from './singleCustomer';
 
 const reducer = combineReducers({
   auth,
   singleHotSauce,
-  hotSauces
+  hotSauces,
+  singleCustomer,
 });
 
 const middleware = composeWithDevTools(
