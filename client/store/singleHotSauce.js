@@ -1,7 +1,7 @@
-import axios from 'axios';
-import history from '../history';
+import axios from "axios";
+import history from "../history";
 
-const SET_SINGLE_HOT_SAUCE = 'SET_SINGLE_HOT_SAUCE';
+const SET_SINGLE_HOT_SAUCE = "SET_SINGLE_HOT_SAUCE";
 
 export const setSingleHotSauce = (hotSauce) => {
   return {

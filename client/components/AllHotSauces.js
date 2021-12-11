@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchHotSauces } from '../store/hotSauces';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchHotSauces } from "../store/hotSauces";
+import { Link } from "react-router-dom";
 
 export class AllHotSauces extends Component {
   componentDidMount() {

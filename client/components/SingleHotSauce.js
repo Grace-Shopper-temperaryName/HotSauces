@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { fetchSingleHotSauce } from '../store/singleHotSauce';
+import React from "react";
+import { connect } from "react-redux";
+import { fetchSingleHotSauce } from "../store/singleHotSauce";
 
 export class SingleHotSauce extends React.Component {
   componentDidMount() {
