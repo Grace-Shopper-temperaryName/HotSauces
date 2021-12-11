@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { fetchSingleHotSauce } from '../store/singleHotSauce';
+import React from "react";
+import { connect } from "react-redux";
+import { fetchSingleHotSauce } from "../store/singleHotSauce";
 
 export class SingleHotSauce extends React.Component {
   componentDidMount() {
@@ -9,6 +9,7 @@ export class SingleHotSauce extends React.Component {
 
   render() {
     const { singleHotSauce } = this.props;
+    const stock = singleHotSauce.stock || 1;
     return (
       <div>
         <center>
@@ -21,7 +22,7 @@ export class SingleHotSauce extends React.Component {
               />
             </div>
             <div className="containerRight">
-              {singleHotSauce.stock < 1 ? (
+              {stock < 1 ? (
                 <h1> OUT OF STOCK! </h1>
               ) : (
                 <div>

@@ -36,36 +36,27 @@ async function seed() {
     })
   );
 
-  // How to see all Magic Methods
-  // console.log("MAGIC METHODS", Object.keys(Order.prototype));
-
-  /*
-  Waiting for clarification from Johanna on Magic Methods
-
   for (let i = 0; i < orders.length; i++) {
-    const randomIndex = Math.floor(Math.random() * hotSauces.length - 1) + 1;
+    const randomIndex1 = Math.floor(Math.random() * hotSauces.length - 1) + 1;
+    let randomIndex2 = Math.floor(Math.random() * hotSauces.length - 1) + 1;
     const randomQuantity = Math.floor(Math.random() * 10) + 1;
     const order = orders[i];
-    const hotSauce = hotSauces[randomIndex];
+    if (randomIndex1 === randomIndex2) {
+      randomIndex2 = randomIndex2 + 1;
+    }
+    const hotSauce = hotSauces[randomIndex1];
+    const hotSauce2 = hotSauces[randomIndex2];
     await OrderHotSauce.create({
       quantity: randomQuantity,
       orderId: order.id,
       hotSauceId: hotSauce.id,
     });
-  }
-
-  for (let i = 0; i < orders.length; i++) {
-    const randomIndex = Math.floor(Math.random() * hotSauces.length - 1) + 1;
-    const randomQuantity = Math.floor(Math.random() * 10) + 1;
-    const order = orders[i];
-    const hotSauce = hotSauces[randomIndex];
     await OrderHotSauce.create({
       quantity: randomQuantity,
       orderId: order.id,
-      hotSauceId: hotSauce.id,
+      hotSauceId: hotSauce2.id,
     });
   }
-  */
 
   console.log(`seeded ${customers.length} customers`);
   console.log(`seeded ${hotSauces.length} hot sauces`);

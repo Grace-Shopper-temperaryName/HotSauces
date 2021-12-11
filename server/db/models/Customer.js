@@ -46,6 +46,13 @@ const Customer = db.define("customer", {
       notEmpty: true,
     },
   },
+  city: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    validate: {
+      notEmpty: true,
+    },
+  },
   state: {
     type: Sequelize.STRING,
     allowNull: false,

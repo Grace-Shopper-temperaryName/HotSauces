@@ -1,11 +1,11 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Login, Signup } from './components/AuthForm';
-import Home from './components/Home';
-import { me } from './store';
-import AllHotSauces from './components/AllHotSauces';
-import SingleHotSauce from './components/SingleHotSauce';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Login, Signup } from "./components/AuthForm";
+import Home from "./components/Home";
+import { me } from "./store";
+import AllHotSauces from "./components/AllHotSauces";
+import SingleHotSauce from "./components/SingleHotSauce";
 
 /**
  * COMPONENT
@@ -25,6 +25,8 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route exact path="/hotsauces" component={AllHotSauces} />
             <Route path="/hotsauces/:id" component={SingleHotSauce} />
+            <Route exact path="/customers" component={AllCustomers} />
+            <Route path="/customers/:id" component={SingleCustomer} />
             <Redirect to="/home" />
           </Switch>
         ) : (

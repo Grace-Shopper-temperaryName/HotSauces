@@ -3,8 +3,7 @@ const db = require("../db");
 
 const Order = db.define("order", {
   orderStatus: {
-    // type: Sequelize.ENUM('cancelled', 'opened' , 'completed')
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.ENUM("open", "pending payment", "completed", "cancelled"),
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -12,10 +11,17 @@ const Order = db.define("order", {
   },
   orderDate: {
     type: Sequelize.DATE,
+    validate: {
+      notEmpty: true,
+    },
   },
   isCart: {
-    // true = orderStatus: opened , false = orderStatus: completed or cancelled
+    // true = orderStatus: open, paymentStatus: null
+    // false = orderStatus: completed, cancelled, pending payment, paymentStatus: fulfuilled, cancelled, pending
     type: Sequelize.BOOLEAN,
+    validate: {
+      notEmpty: true,
+    },
   },
   amount: {
     type: Sequelize.INTEGER,
@@ -25,8 +31,7 @@ const Order = db.define("order", {
     },
   },
   provider: {
-    // type: Sequelize.ENUM("Visa", "Mastercard", "American Express", "Discover"),
-    type: Sequelize.STRING,
+    type: Sequelize.ENUM("visa", "mastercard", "americanexpress"),
     allowNull: false,
     validate: {
       notEmpty: true,
@@ -40,8 +45,10 @@ const Order = db.define("order", {
     },
   },
   paymentStatus: {
-    // type: Sequelize.ENUM("cancelled", "pending", "fulfilled" )
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.ENUM("none", "pending", "fulfilled", "cancelled"),
+    validate: {
+      notEmpty: true,
+    },
   },
 });
 

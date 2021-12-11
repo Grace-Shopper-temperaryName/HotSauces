@@ -1,9 +1,8 @@
 const router = require('express').Router();
 module.exports = router;
 
-router.use('/users', require('./users'));
+router.use('/customers', require('./customers'));
 router.use('/hotsauces', require('./hotsauces'));
-
 
 router.use((req, res, next) => {
   const error = new Error('Not Found');
