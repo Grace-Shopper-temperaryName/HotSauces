@@ -2,10 +2,15 @@
 
 const {
   db,
-  models: { Customer, HotSauce, Order, OrderHotSauce },
+  models: { Customer, HotSauce, Order, OrderHotSauce, Guest },
 } = require("../server/db");
 
-const { customerData, hotSaucesData, orderData } = require("./seedFile");
+const {
+  customerData,
+  hotSaucesData,
+  orderData,
+  guestData,
+} = require("./seedFile");
 
 /**
  * seed - this function clears the database, updates tables to
@@ -19,6 +24,13 @@ async function seed() {
   const customers = await Promise.all(
     customerData.map((customer) => {
       return Customer.create(customer);
+    })
+  );
+
+  // Creating Guests
+  const guests = await Promise.all(
+    guestData.map((guest) => {
+      return Guest.create(guest);
     })
   );
 
@@ -59,6 +71,7 @@ async function seed() {
   }
 
   console.log(`seeded ${customers.length} customers`);
+  console.log(`seeded ${guests.length} guests`);
   console.log(`seeded ${hotSauces.length} hot sauces`);
   console.log(`seeded ${orders.length} orders`);
   console.log(`seeded successfully`);
