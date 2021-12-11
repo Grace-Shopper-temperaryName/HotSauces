@@ -6,22 +6,20 @@ import history from "../history";
  */
 const SET_HOTSAUCES = "SET_HOTSAUCES";
 const ADD_HOTSAUCE = "ADD_HOTSAUCE";
-const UPDATE_HOTSAUCES = "UPDATE_HOTSAUCES";
 const DELETE_HOTSAUCE = "DELETE_HOTSAUCE";
+const UPDATE_HOTSAUCE = "UPDATE_HOTSAUCE";
 
 /**
  * ACTION CREATORS
  */
 const setHotSauces = (hotSauces) => ({ type: SET_HOTSAUCES, hotSauces });
 
-const addNewHotSauce = (hotSauce) => ({ type: ADD_HOTSAUCE, hotSauce });
+const addSingleHotSauce = (hotSauce) => ({ type: ADD_HOTSAUCE, hotSauce });
 
-const updateAllHotSauces = (hotSauce) => ({
-  type: UPDATE_HOTSAUCES,
+const deleteSingleHotSauce = (hotSauce) => ({
+  type: DELETE_HOTSAUCE,
   hotSauce,
 });
-
-const deleteThisHotSauce = (hotSauce) => ({ type: DELETE_HOTSAUCE, hotSauce });
 
 /**
  * THUNK CREATORS
@@ -37,14 +35,14 @@ export const fetchHotSauces = () => {
   };
 };
 
-export const addHotSauce = (hotSauce, history) => {
+export const createNewHotSauce = (hotSauce, history) => {
   return async (dispatch) => {
     try {
       const { data: newHotSauce } = await axios.post(
         "/api/hotsauces",
         hotSauce
       );
-      dispatch(addNewHotSauce(newHotSauce));
+      dispatch(addSingleHotSauce(newHotSauce));
       history.push("/hotsauces");
     } catch (err) {
       console.error(err);
@@ -52,26 +50,11 @@ export const addHotSauce = (hotSauce, history) => {
   };
 };
 
-export const updateHotSauces = (hotSauce) => {
-  return async (dispatch) => {
-    try {
-      const { data: updatedHotSauce } = await axios.put(
-        `/api/hotsauces/${hotSauce.id}`,
-        hotSauce
-      );
-      dispatch(updateAllHotSauces(updatedHotSauce));
-    } catch (err) {
-      console.error(err);
-    }
-  };
-};
-
-export const deleteHotSauce = (id, history) => {
+export const deleteHotSauce = (id) => {
   return async (dispatch) => {
     try {
       const { data: hotSauce } = await axios.delete(`/api/hotsauces/${id}`);
-      dispatch(deleteThisHotSauce(hotSauce));
-      history.push("/hotsauces");
+      dispatch(deleteSingleHotSauce(hotSauce));
     } catch (err) {
       console.error(err);
     }
@@ -87,12 +70,12 @@ export default function (state = [], action) {
       return action.hotSauces;
     case ADD_HOTSAUCE:
       return [...state, action.hotSauce];
-    case UPDATE_HOTSAUCES:
-      return state.map((hotSauce) =>
-        hotSauce.id === action.hotSauce.id ? action.hotSauce : hotSauce
-      );
     case DELETE_HOTSAUCE:
       return state.filter((hotSauce) => hotSauce.id !== action.hotSauce.id);
+    case UPDATE_HOTSAUCE:
+      return state.map((hotSauce) => {
+        hotSauce.id === action.hotSauce.id ? action.hotSauce : hotSauce;
+      });
     default:
       return state;
   }
