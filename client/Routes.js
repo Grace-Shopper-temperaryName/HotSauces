@@ -25,6 +25,8 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route exact path="/hotsauces" component={AllHotSauces} />
             <Route path="/hotsauces/:id" component={SingleHotSauce} />
+            <Route exact path="/customers" component={AllCustomers} />
+            <Route path="/customers/:id" component={SingleCustomer} />
             <Redirect to="/home" />
           </Switch>
         ) : (

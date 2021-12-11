@@ -22,3 +22,32 @@ router.get("/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+router.post("/", async (req, res, next) => {
+  try {
+    const hotSauce = await HotSauce.create(req.body);
+    res.json(hotSauce);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const hotSauce = await HotSauce.findByPk(req.params.id);
+    await hotSauce.update(req.body);
+    res.json(hotSauce);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const hotSauce = await HotSauce.findByPk(req.params.id);
+    await hotSauce.destroy();
+    res.json(hotSauce);
+  } catch (error) {
+    next(error);
+  }
+});
