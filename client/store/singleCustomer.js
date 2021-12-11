@@ -1,7 +1,7 @@
-import axios from 'axios';
-import history from '../history';
+import axios from "axios";
+import history from "../history";
 
-const SET_SINGLE_CUSTOMER = 'SET_SINGLE_CUSTOMER';
+const SET_SINGLE_CUSTOMER = "SET_SINGLE_CUSTOMER";
 
 export const setSingleCustomer = (customer) => {
   return {
@@ -21,7 +21,7 @@ export const fetchSingleCustomer = (id) => {
   };
 };
 
-export default function (state = [], action) {
+export default function (state = {}, action) {
   switch (action.type) {
     case SET_SINGLE_CUSTOMER:
       return action.customer;

@@ -1,15 +1,15 @@
-import axios from 'axios';
-import history from '../history';
+import axios from "axios";
+import history from "../history";
 
 /**
  * ACTION TYPES
  */
-const SET_CUSTOMERS = 'SET_CUSTOMERS';
+const SET_CUSTOMERS = "SET_CUSTOMERS";
 
 /**
  * ACTION CREATORS
  */
-const setCutomers = (customers) => ({ type: SET_CUSTOMERS, customers });
+const setCustomers = (customers) => ({ type: SET_CUSTOMERS, customers });
 
 /**
  * THUNK CREATORS
@@ -17,8 +17,8 @@ const setCutomers = (customers) => ({ type: SET_CUSTOMERS, customers });
 export const fetchCustomers = () => {
   return async (dispatch) => {
     try {
-      const { data: customers } = await axios.get('/api/customers');
-      dispatch(setCutomers(customers));
+      const { data: customers } = await axios.get("/api/customers");
+      dispatch(setCustomers(customers));
     } catch (err) {
       console.error(err);
     }
