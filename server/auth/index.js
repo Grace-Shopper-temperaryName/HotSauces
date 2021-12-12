@@ -1,10 +1,10 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
-  models: { Customer },
-} = require('../db');
+  models: { Customer, Order },
+} = require("../db");
 module.exports = router;
 
-router.post('/login', async (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   try {
     res.send({ token: await Customer.authenticate(req.body) });
   } catch (err) {
@@ -12,22 +12,24 @@ router.post('/login', async (req, res, next) => {
   }
 });
 
-router.post('/signup', async (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   try {
     const customer = await Customer.create(req.body);
     res.send({ token: await customer.generateToken() });
   } catch (err) {
-    if (err.name === 'SequelizeUniqueConstraintError') {
-      res.status(401).send('Customer already exists');
+    if (err.name === "SequelizeUniqueConstraintError") {
+      res.status(401).send("Customer already exists");
     } else {
       next(err);
     }
   }
 });
 
-router.get('/me', async (req, res, next) => {
+router.get("/me", async (req, res, next) => {
   try {
-    res.send(await Customer.findByToken(req.headers.authorization));
+    res.send(
+      await Customer.findByToken(req.headers.authorization, { include: Order })
+    );
   } catch (ex) {
     next(ex);
   }
