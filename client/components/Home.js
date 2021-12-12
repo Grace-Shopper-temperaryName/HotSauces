@@ -12,17 +12,17 @@ export const Home = (props) => {
   return (
     <div>
       <h2>Welcome, {firstName}</h2>
+      <Link to="/profile">
+        <button type="submit" id="editCustomerInfo">
+          Edit Info
+        </button>
+      </Link>
       <div className="container" id="customerOrders">
-        <h3>Order History</h3>
-        <Link to="/profile">
-          <button type="submit" id="editCustomerInfo">
-            Edit Info
-          </button>
-        </Link>
+        <h3>Recent Orders</h3>
         {orders ? (
           orders.length > 0 ? (
-            orders.map((order) => (
-              <div className="container" id="customerOrders">
+            orders.slice(0, 5).map((order) => (
+              <div className="container" id="customerOrders" key={order.id}>
                 <div className="containerLeft">
                   <h3>{order.orderStatus}</h3>
                 </div>

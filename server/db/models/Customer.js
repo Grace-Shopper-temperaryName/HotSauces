@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const axios = require("axios");
+const Order = require("./Order");
 
 const SALT_ROUNDS = 5;
 
@@ -83,9 +83,9 @@ Customer.authenticate = async function ({ email, password }) {
 Customer.findByToken = async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
-    const customer = Customer.findByPk(id);
+    const customer = Customer.findByPk(id, { include: Order });
     if (!customer) {
-      throw "nooo";
+      throw "Customer not found!";
     }
     return customer;
   } catch (ex) {
@@ -107,6 +107,6 @@ const hashPassword = async (customer) => {
 
 Customer.beforeCreate(hashPassword);
 Customer.beforeUpdate(hashPassword);
-Customer.beforeBulkCreate((customer) =>
+Customer.beforeBulkCreate((customers) =>
   Promise.all(customers.map(hashPassword))
 );
