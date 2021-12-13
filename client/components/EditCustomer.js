@@ -82,75 +82,61 @@ class EditCustomer extends Component {
       state,
       zip,
     } = this.state;
+    const { handleChange, handleCancel, handleSubmit } = this;
     return (
-      <form id="edit-form">
+      <form id="edit-form" onSubmit={handleSubmit}>
         <label htmlFor="firstName">First Name</label>
         <input
           type="text"
           name="firstName"
           value={firstName}
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
         <label htmlFor="lastName">Last Name</label>
         <input
           type="text"
           name="lastName"
           value={lastName}
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
         <label htmlFor="phone">Phone Number</label>
         <input
           type="phone"
           name="phone"
           value={phone}
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
         <label htmlFor="email">Email</label>
         <input
           type="email"
           name="email"
           value={email}
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
         <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"
           value={password}
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
         <label htmlFor="streetAddress">Street Address</label>
         <input
           type="text"
           name="streetAddress"
           value={streetAddress}
-          onChange={this.handleChange}
+          onChange={handleChange}
         />
         <label htmlFor="city">City</label>
-        <input
-          type="text"
-          name="city"
-          value={city}
-          onChange={this.handleChange}
-        />
+        <input type="text" name="city" value={city} onChange={handleChange} />
         <label htmlFor="state">State</label>
-        <input
-          type="text"
-          name="state"
-          value={state}
-          onChange={this.handleChange}
-        />
+        <input type="text" name="state" value={state} onChange={handleChange} />
         <label htmlFor="zip">Zip Code</label>
-        <input
-          type="text"
-          name="zip"
-          value={zip}
-          onChange={this.handleChange}
-        />
-        <button type="submit" id="saveChanges" onSubmit={this.handleSubmit}>
+        <input type="text" name="zip" value={zip} onChange={handleChange} />
+        <button type="submit" id="saveChanges">
           Save Changes
         </button>
-        <button type="submit" onSubmit={this.handleCancel}>
+        <button onClick={handleCancel} id="saveChanges">
           Cancel Changes
         </button>
       </form>
@@ -164,11 +150,11 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
     fetchAuthCustomer: () => dispatch(me()),
     updateCustomer: (updatedCustomer) =>
-      dispatch(updateCustomer(updatedCustomer)),
+      dispatch(updateCustomer(updatedCustomer, history)),
   };
 };
 
