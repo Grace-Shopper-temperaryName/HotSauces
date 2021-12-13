@@ -31,13 +31,20 @@ export class Checkout extends Component {
   componentDidMount() {
     this.props.loadAuthCustomer();
   }
+  //componentWillUnmount-- clear local storage cart here??
+
   handleChange(event) {
     this.setState({ ...this.state, [event.target.name]: event.target.value });
   }
   handleSelect(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
-  handleSubmit() {}
+  handleSubmit() {
+      //change current orderStatus to "pending payment"
+      //change order's paymentStatus to "pending"
+      //redirect to confirmation component view
+      //clear cart in store? here or componentWillUnmount?
+  }
   render() {
     const {
       firstName,
