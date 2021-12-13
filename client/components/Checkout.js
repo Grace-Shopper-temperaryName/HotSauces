@@ -28,8 +28,11 @@ export class Checkout extends Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  componentDidMount() {
+    this.props.loadAuthCustomer();
+  }
   handleChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ ...this.state, [event.target.name]: event.target.value });
   }
   handleSelect(event) {
     this.setState({ [event.target.name]: event.target.value });
@@ -188,7 +191,7 @@ const mapState = (state) => {
 };
 const mapDispatch = (dispatch) => {
   return {
-    fetchAuthCustomer: () => dispatch(me()),
+    loadAuthCustomer: () => dispatch(me()),
   };
 };
 
