@@ -11,12 +11,14 @@ export const Home = (props) => {
 
   return (
     <div>
-      <h2>Welcome, {firstName}</h2>
-      <Link to={`/profile/${id}/edit`}>
-        <button type="submit" id="editCustomerInfo">
-          Edit Info
-        </button>
-      </Link>
+      <div className="container">
+        <h2>Welcome, {firstName}</h2>
+        <Link to={`/profile/${id}/edit`}>
+          <button type="submit" id="editCustomerInfo">
+            Edit Info
+          </button>
+        </Link>
+      </div>
       <div className="container" id="customerOrders">
         <h3>Recent Orders</h3>
         {orders ? (
