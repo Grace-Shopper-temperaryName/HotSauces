@@ -24,9 +24,16 @@ export class Checkout extends Component {
       provider: "",
       cardNumber: "",
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleChange() {}
-  handleSelect() {}
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+  handleSelect(event) {
+    this.setState({ state: event.target.value });
+  }
   handleSubmit() {}
   render() {
     const {
