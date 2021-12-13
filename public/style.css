@@ -19,3 +19,10 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+#signupform {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
