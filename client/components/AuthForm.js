@@ -47,6 +47,7 @@ const mapLogin = (state) => {
   };
 };
 
+//Remember to address the commented out lines below
 // const mapSignup = (state) => {
 //   return {
 //     name: "signup",
