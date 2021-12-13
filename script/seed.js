@@ -48,6 +48,7 @@ async function seed() {
     })
   );
 
+  //Creating instances for orderHotSauces
   for (let i = 0; i < orders.length; i++) {
     const randomIndex1 = Math.floor(Math.random() * hotSauces.length - 1) + 1;
     let randomIndex2 = Math.floor(Math.random() * hotSauces.length - 1) + 1;
@@ -68,6 +69,10 @@ async function seed() {
       orderId: order.id,
       hotSauceId: hotSauce2.id,
     });
+    // add each order to a random customer
+    await customers[Math.floor(Math.random() * customers.length)].addOrder(
+      order
+    );
   }
 
   console.log(`seeded ${customers.length} customers`);
