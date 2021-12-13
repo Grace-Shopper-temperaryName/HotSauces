@@ -1,13 +1,13 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Login, Signup } from './components/AuthForm';
-import Home from './components/Home';
-import { me } from './store';
-import AllHotSauces from './components/AllHotSauces';
-import SingleHotSauce from './components/SingleHotSauce';
-import AllCustomers from './components/AllCustomers';
-import SingleCustomer from './components/SingleCustomer';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import { Login, Signup } from "./components/AuthForm";
+import Home from "./components/Home";
+import { me } from "./store";
+import AllHotSauces from "./components/AllHotSauces";
+import SingleHotSauce from "./components/SingleHotSauce";
+import AllCustomers from "./components/AllCustomers";
+import SingleCustomer from "./components/SingleCustomer";
 
 /**
  * COMPONENT
