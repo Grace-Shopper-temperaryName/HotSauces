@@ -9,17 +9,9 @@ const SALT_ROUNDS = 5;
 const Customer = db.define("customer", {
   firstName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
   },
   phone: {
     type: Sequelize.STRING,

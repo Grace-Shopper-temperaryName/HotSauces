@@ -28,12 +28,12 @@ export const Home = (props) => {
                 </div>
                 <div className="containerRight">
                   {order.isCart ? "🛒" : ""}
-                  <p>{order.orderDate}</p>
-                  <p>{order.amount}</p>
+                  <p>{order.orderDate.slice(0, 10)}</p>
+                  <p>${order.amount / 100}</p>
                   <small>Payment:</small>
                   <p>{order.paymentStatus}</p>
                   <p>{order.provider}</p>
-                  <p>{order.cardNumber}</p>
+                  <p>***{order.cardNumber.slice(-4)}</p>
                 </div>
               </div>
             ))
