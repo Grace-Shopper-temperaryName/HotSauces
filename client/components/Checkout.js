@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { me } from "../store/auth";
 /*
 loggedIn customer info: populated form for delivery address, payment info,
 guest customer: blank form for delivery address, payment info
@@ -32,7 +32,7 @@ export class Checkout extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
   handleSelect(event) {
-    this.setState({ state: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
   }
   handleSubmit() {}
   render() {
@@ -50,7 +50,7 @@ export class Checkout extends Component {
     } = this.state;
     const { handleChange, handleSubmit, handleSelect } = this;
     //if guest- use input from this.state
-    //if customer loggedIn- map state from customer store to props?
+    //if customer loggedIn- map state from customer auth store to props?
     return (
       <form method="post" onSubmit={handleSubmit}>
         <label>Contact Information</label>
@@ -183,9 +183,13 @@ export class Checkout extends Component {
 
 const mapState = (state) => {
   return {
-    customer: state.auth,
+    auth: state.auth,
   };
 };
-const mapDispatch = () => {};
+const mapDispatch = (dispatch) => {
+  return {
+    fetchAuthCustomer: () => dispatch(me()),
+  };
+};
 
 export default connect(mapState, mapDispatch)(Checkout);
