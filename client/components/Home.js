@@ -6,13 +6,13 @@ import { Link } from "react-router-dom";
  * COMPONENT
  */
 export const Home = (props) => {
-  const { firstName } = props;
+  const { firstName, id } = props;
   const { orders } = props || [];
 
   return (
     <div>
       <h2>Welcome, {firstName}</h2>
-      <Link to="/profile">
+      <Link to={`/profile/${id}/edit`}>
         <button type="submit" id="editCustomerInfo">
           Edit Info
         </button>
@@ -61,6 +61,7 @@ const mapState = (state) => {
   return {
     firstName: state.auth.firstName,
     orders: state.auth.orders,
+    id: state.auth.id,
   };
 };
 

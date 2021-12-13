@@ -31,3 +31,23 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const customer = await Customer.findByPk(req.params.id);
+    await customer.update(req.body);
+    res.json(customer);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const customer = await Customer.findByPk(req.params.id);
+    await customer.destroy();
+    res.json(customer);
+  } catch (error) {
+    next(error);
+  }
+});

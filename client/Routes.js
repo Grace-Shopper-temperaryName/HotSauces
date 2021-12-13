@@ -8,6 +8,7 @@ import AllHotSauces from "./components/AllHotSauces";
 import SingleHotSauce from "./components/SingleHotSauce";
 import AllCustomers from "./components/AllCustomers";
 import SingleCustomer from "./components/SingleCustomer";
+import EditCustomer from "./components/EditCustomer";
 
 /**
  * COMPONENT
@@ -28,6 +29,7 @@ class Routes extends Component {
             <Route exact path="/hotsauces" component={AllHotSauces} />
             <Route path="/hotsauces/:id" component={SingleHotSauce} />
             <Route exact path="/customers" component={AllCustomers} />
+            <Route path="/profile/:id/edit" component={EditCustomer} />
             <Route path="/customers/:id" component={SingleCustomer} />
             <Redirect to="/home" />
           </Switch>
