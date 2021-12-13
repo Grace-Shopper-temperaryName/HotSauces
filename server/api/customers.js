@@ -4,6 +4,18 @@ const {
 } = require("../db");
 module.exports = router;
 
+const requireToken = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization;
+    console.log("REQ", req.headers);
+    const customer = await Customer.findByToken(token);
+    req.customer = customer;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
 // mounted at /api/customers
 router.get("/", async (req, res, next) => {
   try {
@@ -20,6 +32,19 @@ router.get("/:id", async (req, res, next) => {
     res.json(customer);
   } catch (error) {
     next(error);
+  }
+});
+
+router.get("/:id/orders", requireToken, async (req, res, next) => {
+  try {
+    const orders = await Order.findAll({
+      where: {
+        customerId: req.customer.id,
+      },
+    });
+    res.send(orders);
+  } catch (err) {
+    next(err);
   }
 });
 
