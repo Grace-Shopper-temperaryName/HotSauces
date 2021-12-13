@@ -23,6 +23,15 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.post("/", async (req, res, next) => {
+  try {
+    const customers = await Customer.create(req.body);
+    res.json(customers);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.put("/:id", async (req, res, next) => {
   try {
     const customer = await Customer.findByPk(req.params.id);

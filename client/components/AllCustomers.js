@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchCustomers } from '../store/customers';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchCustomers } from "../store/customers";
+import { Link } from "react-router-dom";
 
 export class AllCustomers extends Component {
   componentDidMount() {
