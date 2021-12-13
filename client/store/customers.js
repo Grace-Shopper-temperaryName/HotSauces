@@ -29,7 +29,7 @@ export const fetchCustomers = () => {
   };
 };
 
-export const updateCustomer = (updatedCustomer) => {
+export const updateCustomer = (updatedCustomer, history) => {
   return async (dispatch) => {
     try {
       const { data: customer } = await axios.put(
@@ -37,7 +37,7 @@ export const updateCustomer = (updatedCustomer) => {
         updatedCustomer
       );
       dispatch(_updateCustomer(customer));
-      history.push("/home");
+      history.goBack();
     } catch (error) {
       console.error(error);
     }
