@@ -21,6 +21,7 @@ export const Home = (props) => {
       </div>
       <div className="container" id="customerOrders">
         <h3>Recent Orders</h3>
+
         {orders ? (
           orders.length > 0 ? (
             orders.slice(0, 5).map((order) => (

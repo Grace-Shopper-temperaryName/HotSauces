@@ -79,6 +79,7 @@ Customer.authenticate = async function ({ email, password }) {
 Customer.findByToken = async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
+
     const customer = Customer.findByPk(id, { include: Order });
     if (!customer) {
       throw "Customer not found!";

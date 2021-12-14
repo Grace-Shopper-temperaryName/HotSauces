@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   models: { Customer, Order },
 } = require("../db");
+const requireToken = require("./middleware");
 module.exports = router;
 
 // mounted at /api/customers
