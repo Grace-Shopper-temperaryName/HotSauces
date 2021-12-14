@@ -31,6 +31,10 @@ const Customer = db.define("customer", {
       notEmpty: true,
     },
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
   streetAddress: {
     type: Sequelize.STRING,
   },
