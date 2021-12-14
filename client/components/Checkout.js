@@ -40,10 +40,10 @@ export class Checkout extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
   handleSubmit() {
-      //change current orderStatus to "pending payment"
-      //change order's paymentStatus to "pending"
-      //redirect to confirmation component view
-      //clear cart in store? here or componentWillUnmount?
+    //change current orderStatus to "pending payment"
+    //change order's paymentStatus to "pending"
+    //redirect to confirmation component view
+    //clear cart in store? here or componentWillUnmount?
   }
   render() {
     const {
@@ -106,59 +106,13 @@ export class Checkout extends Component {
             />
 
             <span>
-              <select placeholder="State" name="state" onChange={handleSelect}>
-                <option disabled>State</option>
-                <option value={state}>Alabama</option>
-                <option value={state}>Alaska</option>
-                <option value={state}>Arizona</option>
-                <option value={state}>Arkansas</option>
-                <option value={state}>California</option>
-                <option value={state}>Colorado</option>
-                <option value={state}>Connecticut</option>
-                <option value={state}>Delaware</option>
-                <option value={state}>Florida</option>
-                <option value={state}>Georgia</option>
-                <option value={state}>Hawaii</option>
-                <option value={state}>Idaho</option>
-                <option value={state}>Illinois</option>
-                <option value={state}>Indiana</option>
-                <option value={state}>Iowa</option>
-                <option value={state}>Kansas</option>
-                <option value={state}>Kentucky</option>
-                <option value={state}>Louisiana</option>
-                <option value={state}>Maine</option>
-                <option value={state}>Maryland</option>
-                <option value={state}>Massachusetts</option>
-                <option value={state}>Michigan</option>
-                <option value={state}>Minnesota</option>
-                <option value={state}>Mississippi</option>
-                <option value={state}>Missouri</option>
-                <option value={state}>Montana</option>
-                <option value={state}>Nebraska</option>
-                <option value={state}>Nevada</option>
-                <option value={state}>New Hampshire</option>
-                <option value={state}>New Jersey</option>
-                <option value={state}>New Mexico</option>
-                <option value={state}>New York</option>
-                <option value={state}>North Carolina</option>
-                <option value={state}>North Dakota</option>
-                <option value={state}>Ohio</option>
-                <option value={state}>Oklahoma</option>
-                <option value={state}>Oregon</option>
-                <option value={state}>Pennsylvania</option>
-                <option value={state}>Rhode Island</option>
-                <option value={state}>South Carolina</option>
-                <option value={state}>South Dakota</option>
-                <option value={state}>Tennessee</option>
-                <option value={state}>Texas</option>
-                <option value={state}>Utah</option>
-                <option value={state}>Vermont</option>
-                <option value={state}>Virginia</option>
-                <option value={state}>Washington</option>
-                <option value={state}>West Virginia</option>
-                <option value={state}>Wisconsin</option>
-                <option value={state}>Wyoming</option>
-              </select>
+              <input
+                placeholder="State"
+                name="state"
+                onChange={handleChange}
+                value={state}
+              />
+              
               <input
                 placeholder="ZIP code"
                 name="zip"
