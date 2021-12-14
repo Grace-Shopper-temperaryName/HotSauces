@@ -50,8 +50,8 @@ async function seed() {
 
   //Creating instances for orderHotSauces
   for (let i = 0; i < orders.length; i++) {
-    const randomIndex1 = Math.floor(Math.random() * hotSauces.length - 1) + 1;
-    let randomIndex2 = Math.floor(Math.random() * hotSauces.length - 1) + 1;
+    const randomIndex1 = Math.floor(Math.random() * hotSauces.length);
+    let randomIndex2 = Math.floor(Math.random() * hotSauces.length);
     const randomQuantity = Math.floor(Math.random() * 10) + 1;
     const order = orders[i];
     if (randomIndex1 === randomIndex2) {
@@ -74,6 +74,7 @@ async function seed() {
       order
     );
   }
+  console.log(Object.keys(Customer.prototype));
 
   console.log(`seeded ${customers.length} customers`);
   console.log(`seeded ${guests.length} guests`);
