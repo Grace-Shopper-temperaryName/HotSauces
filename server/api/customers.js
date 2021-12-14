@@ -35,16 +35,12 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/:id/orders", requireToken, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
-    const orders = await Order.findAll({
-      where: {
-        customerId: req.customer.id,
-      },
-    });
-    res.send(orders);
-  } catch (err) {
-    next(err);
+    const customers = await Customer.create(req.body);
+    res.json(customers);
+  } catch (error) {
+    next(error);
   }
 });
 

@@ -136,7 +136,7 @@ class EditCustomer extends Component {
         <button type="submit" id="saveChanges">
           Save Changes
         </button>
-        <button onClick={handleCancel} id="saveChanges">
+        <button onClick={handleCancel} id="cancelChanges">
           Cancel Changes
         </button>
       </form>

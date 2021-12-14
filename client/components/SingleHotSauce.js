@@ -11,30 +11,28 @@ export class SingleHotSauce extends React.Component {
     const { singleHotSauce } = this.props;
     const stock = singleHotSauce.stock || 1;
     return (
-      <div>
-        <center>
-          <h1> Hot 'n' Saucy Hot Sauce </h1>
-          <div id="singleHotSauce">
-            <div>
-              <img
-                src={singleHotSauce.imageUrl}
-                alt={`picture of ${singleHotSauce.name}`}
-              />
-            </div>
-            <div className="containerRight">
-              {stock < 1 ? (
-                <h1> OUT OF STOCK! </h1>
-              ) : (
-                <div>
-                  <h2>{singleHotSauce.name}</h2>
-                  <p> ${singleHotSauce.price / 100} </p>
-                  <p> 🔥 {singleHotSauce.heatLevel} / 10</p>
-                  <p>{singleHotSauce.description}</p>
-                </div>
-              )}
-            </div>
+      <div className="container">
+        <h1> Hot 'n' Saucy Hot Sauce </h1>
+        <div id="singleHotSauce">
+          <div>
+            <img
+              src={singleHotSauce.imageUrl}
+              alt={`picture of ${singleHotSauce.name}`}
+            />
           </div>
-        </center>
+          <div className="containerRight">
+            {stock < 1 ? (
+              <h1> OUT OF STOCK! </h1>
+            ) : (
+              <div>
+                <h2>{singleHotSauce.name}</h2>
+                <p> ${singleHotSauce.price / 100} </p>
+                <p> 🔥 {singleHotSauce.heatLevel} / 10</p>
+                <p>{singleHotSauce.description}</p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     );
   }

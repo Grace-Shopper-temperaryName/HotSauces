@@ -9,17 +9,9 @@ const SALT_ROUNDS = 5;
 const Customer = db.define("customer", {
   firstName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
   },
   lastName: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
   },
   phone: {
     type: Sequelize.STRING,
@@ -38,6 +30,10 @@ const Customer = db.define("customer", {
     validate: {
       notEmpty: true,
     },
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
   streetAddress: {
     type: Sequelize.STRING,
