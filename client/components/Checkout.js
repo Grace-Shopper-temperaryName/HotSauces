@@ -3,12 +3,6 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { me } from "../store/auth";
 import Cart from "./Cart";
-/*
-loggedIn customer info: populated form for delivery address, payment info,
-guest customer: blank form for delivery address, payment info
-render cart component
-purchase/place order button - onSubmit/handleSubmit...
-*/
 
 export class Checkout extends Component {
   constructor() {
@@ -68,8 +62,8 @@ export class Checkout extends Component {
       cCity,
       cState,
       cZip,
-    //   cProvider,
-    //   cCardNumber,
+      //   cProvider,
+      //   cCardNumber,
     } = this.props.customer || {};
     const { handleChange, handleSubmit, handleSelect } = this;
     //if guest- use input from this.state
@@ -78,152 +72,138 @@ export class Checkout extends Component {
       //ADD cart here above form?  <Cart insideCheckout={true} />
       <>
         <Cart insideCheckout={true} />
-        
+
         <div>
-        {this.props.customer ? <form method="post" onSubmit={handleSubmit}>
-            <label>Contact Information</label>
-            <input
-              placeholder="Email"
-              name="email"
-              onChange={handleChange}
-              value={cEmail}
-            />
-
-            <label>Shipping Information</label>
-            <span>
-              <input
-                placeholder="First name"
-                name="firstName"
-                onChange={handleChange}
-                value={cFirstName}
-              />
-
-              <input
-                placeholder="Last name"
-                name="lastName"
-                onChange={handleChange}
-                value={cLastName}
-              />
-            </span>
-
-            <input
-              placeholder="Street Address"
-              name="streetAddress"
-              onChange={handleChange}
-              value={cStreetAddress}
-            />
-
-            <input
-              placeholder="City"
-              name="city"
-              onChange={handleChange}
-              value={cCity}
-            />
-
-            <span>
-              <input
-                placeholder="State"
-                name="state"
-                onChange={handleChange}
-                value={cState}
-              />
-
-              <input
-                placeholder="ZIP code"
-                name="zip"
-                onChange={handleChange}
-                value={cZip}
-              />
-            </span>
-
-            <input
-              placeholder="Phone"
-              name="phone"
-              onChange={handleChange}
-              value={cPhone}
-            />
-
-            <label>Payment Information</label>
-            <select
-              placeholder="Credit card provider"
-              name="provider"
-              onChange={handleSelect}
-            >
-              <option disabled>Card type</option>
-              <option value={provider}>American Express</option>
-              <option value={provider}>Mastercard</option>
-              <option value={provider}>Visa</option>
-            </select>
-
-            <input
-              placeholder="Card number"
-              name="cardNumber"
-              value={cardNumber}
-            />
-          </form> :   
           <form method="post" onSubmit={handleSubmit}>
-            <label>Contact Information</label>
-            <input
-              placeholder="Email"
-              name="email"
-              onChange={handleChange}
-              value={email}
-            />
+            {this.props.customer ? (
+              <div>
+                <label>Contact Information</label>
+                <input
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleChange}
+                  value={cEmail}
+                />
 
-            <label>Shipping Information</label>
-            <span>
-              <input
-                placeholder="First name"
-                name="firstName"
-                onChange={handleChange}
-                value={firstName}
-              />
+                <label>Shipping Information</label>
+                <span>
+                  <input
+                    placeholder="First name"
+                    name="firstName"
+                    onChange={handleChange}
+                    value={cFirstName}
+                  />
 
-              <input
-                placeholder="Last name"
-                name="lastName"
-                onChange={handleChange}
-                value={lastName}
-              />
-            </span>
+                  <input
+                    placeholder="Last name"
+                    name="lastName"
+                    onChange={handleChange}
+                    value={cLastName}
+                  />
+                </span>
 
-            <input
-              placeholder="Street Address"
-              name="streetAddress"
-              onChange={handleChange}
-              value={streetAddress}
-            />
+                <input
+                  placeholder="Street Address"
+                  name="streetAddress"
+                  onChange={handleChange}
+                  value={cStreetAddress}
+                />
 
-            <input
-              placeholder="City"
-              name="city"
-              onChange={handleChange}
-              value={city}
-            />
+                <input
+                  placeholder="City"
+                  name="city"
+                  onChange={handleChange}
+                  value={cCity}
+                />
 
-            <span>
-              <input
-                placeholder="State"
-                name="state"
-                onChange={handleChange}
-                value={state}
-              />
+                <span>
+                  <input
+                    placeholder="State"
+                    name="state"
+                    onChange={handleChange}
+                    value={cState}
+                  />
 
-              <input
-                placeholder="ZIP code"
-                name="zip"
-                onChange={handleChange}
-                value={zip}
-              />
-            </span>
+                  <input
+                    placeholder="ZIP code"
+                    name="zip"
+                    onChange={handleChange}
+                    value={cZip}
+                  />
+                </span>
 
-            <input
-              placeholder="Phone"
-              name="phone"
-              onChange={handleChange}
-              value={phone}
-            />
+                <input
+                  placeholder="Phone"
+                  name="phone"
+                  onChange={handleChange}
+                  value={cPhone}
+                />
+              </div>
+            ) : (
+              <div>
+                <label>Contact Information</label>
+                <input
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleChange}
+                  value={email}
+                />
 
+                <label>Shipping Information</label>
+                <span>
+                  <input
+                    placeholder="First name"
+                    name="firstName"
+                    onChange={handleChange}
+                    value={firstName}
+                  />
+
+                  <input
+                    placeholder="Last name"
+                    name="lastName"
+                    onChange={handleChange}
+                    value={lastName}
+                  />
+                </span>
+
+                <input
+                  placeholder="Street Address"
+                  name="streetAddress"
+                  onChange={handleChange}
+                  value={streetAddress}
+                />
+
+                <input
+                  placeholder="City"
+                  name="city"
+                  onChange={handleChange}
+                  value={city}
+                />
+
+                <span>
+                  <input
+                    placeholder="State"
+                    name="state"
+                    onChange={handleChange}
+                    value={state}
+                  />
+
+                  <input
+                    placeholder="ZIP code"
+                    name="zip"
+                    onChange={handleChange}
+                    value={zip}
+                  />
+                </span>
+
+                <input
+                  placeholder="Phone"
+                  name="phone"
+                  onChange={handleChange}
+                  value={phone}
+                />
+              </div>
+            )}
             <label>Payment Information</label>
             <select
               placeholder="Credit card provider"
@@ -241,9 +221,9 @@ export class Checkout extends Component {
               name="cardNumber"
               value={cardNumber}
             />
+
+            <button type="submit">Place Order</button>
           </form>
-        }
-          <button type="submit">Place Order</button>
         </div>
       </>
       //ADD here at bottom, before Place Order button? <Cart insideCheckout={true} />
@@ -254,6 +234,7 @@ export class Checkout extends Component {
 const mapState = (state) => {
   return {
     customer: state.auth,
+    customerOrders: state.auth.orders,
   };
 };
 const mapDispatch = (dispatch) => {
