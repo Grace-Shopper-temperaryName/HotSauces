@@ -31,6 +31,10 @@ const Customer = db.define("customer", {
       notEmpty: true,
     },
   },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
   streetAddress: {
     type: Sequelize.STRING,
   },
@@ -75,6 +79,7 @@ Customer.authenticate = async function ({ email, password }) {
 Customer.findByToken = async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
+
     const customer = Customer.findByPk(id, { include: Order });
     if (!customer) {
       throw "Customer not found!";
