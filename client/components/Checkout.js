@@ -1,10 +1,10 @@
-import { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { me } from "../store/auth";
 import Cart from "./Cart";
 
-export class Checkout extends Component {
+export class Checkout extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -38,7 +38,7 @@ export class Checkout extends Component {
   }
   handleCancel(event) {
     event.preventDefault();
-    this.props.history.goback();
+    this.props.history.goBack();
   }
   handleSubmit(event) {
     //change to --> this.props.cart.orderStatus = "pending payment"
@@ -98,23 +98,23 @@ export class Checkout extends Component {
                 />
 
                 <label>Shipping Information</label>
-                <span>
-                  <input
-                    type="text"
-                    placeholder="First name"
-                    name="firstName"
-                    onChange={handleChange}
-                    value={cFirstName}
-                  />
+                {/* <span> */}
+                <input
+                  type="text"
+                  placeholder="First name"
+                  name="firstName"
+                  onChange={handleChange}
+                  value={cFirstName}
+                />
 
-                  <input
-                    type="text"
-                    placeholder="Last name"
-                    name="lastName"
-                    onChange={handleChange}
-                    value={cLastName}
-                  />
-                </span>
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  name="lastName"
+                  onChange={handleChange}
+                  value={cLastName}
+                />
+                {/* </span> */}
 
                 <input
                   type="text"
@@ -132,23 +132,23 @@ export class Checkout extends Component {
                   value={cCity}
                 />
 
-                <span>
-                  <input
-                    type="text"
-                    placeholder="State"
-                    name="state"
-                    onChange={handleChange}
-                    value={cState}
-                  />
+                {/* <span> */}
+                <input
+                  type="text"
+                  placeholder="State"
+                  name="state"
+                  onChange={handleChange}
+                  value={cState}
+                />
 
-                  <input
-                    type="text"
-                    placeholder="ZIP code"
-                    name="zip"
-                    onChange={handleChange}
-                    value={cZip}
-                  />
-                </span>
+                <input
+                  type="text"
+                  placeholder="ZIP code"
+                  name="zip"
+                  onChange={handleChange}
+                  value={cZip}
+                />
+                {/* </span> */}
 
                 <input
                   type="phone"
@@ -170,23 +170,23 @@ export class Checkout extends Component {
                 />
 
                 <label>Shipping Information</label>
-                <span>
-                  <input
-                    type="text"
-                    placeholder="First name"
-                    name="firstName"
-                    onChange={handleChange}
-                    value={firstName}
-                  />
+                {/* <span> */}
+                <input
+                  type="text"
+                  placeholder="First name"
+                  name="firstName"
+                  onChange={handleChange}
+                  value={firstName}
+                />
 
-                  <input
-                    type="text"
-                    placeholder="Last name"
-                    name="lastName"
-                    onChange={handleChange}
-                    value={lastName}
-                  />
-                </span>
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  name="lastName"
+                  onChange={handleChange}
+                  value={lastName}
+                />
+                {/* </span> */}
 
                 <input
                   type="text"
@@ -204,23 +204,23 @@ export class Checkout extends Component {
                   value={city}
                 />
 
-                <span>
-                  <input
-                    type="text"
-                    placeholder="State"
-                    name="state"
-                    onChange={handleChange}
-                    value={state}
-                  />
+                {/* <span> */}
+                <input
+                  type="text"
+                  placeholder="State"
+                  name="state"
+                  onChange={handleChange}
+                  value={state}
+                />
 
-                  <input
-                    type="text"
-                    placeholder="ZIP code"
-                    name="zip"
-                    onChange={handleChange}
-                    value={zip}
-                  />
-                </span>
+                <input
+                  type="text"
+                  placeholder="ZIP code"
+                  name="zip"
+                  onChange={handleChange}
+                  value={zip}
+                />
+                {/* </span> */}
 
                 <input
                   type="phone"
@@ -238,7 +238,9 @@ export class Checkout extends Component {
               name="provider"
               onChange={handleSelect}
             >
-              <option disabled>Card type</option>
+              <option placeholder="Credit card provider" disabled>
+                Card type
+              </option>
               <option value={provider}>American Express</option>
               <option value={provider}>Mastercard</option>
               <option value={provider}>Visa</option>
@@ -249,6 +251,7 @@ export class Checkout extends Component {
               placeholder="Card number"
               name="cardNumber"
               value={cardNumber}
+              onChange={handleChange}
             />
 
             <button type="submit" id="placeOrder">
