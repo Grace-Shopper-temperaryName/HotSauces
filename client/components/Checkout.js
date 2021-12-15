@@ -31,7 +31,6 @@ export class Checkout extends React.Component {
 
   handleChange(event) {
     this.setState({ ...this.state, [event.target.name]: event.target.value });
-    console.log(this.state);
   }
   handleSelect(event) {
     this.setState({ ...this.state, [event.target.name]: event.target.value });
@@ -47,6 +46,7 @@ export class Checkout extends React.Component {
     //redirect to confirmation component view...maybe wrap purchase button in a Link to Confirmation component?
     //clear local storage cart here or in componentWillUnmount?
     event.preventDefault();
+    //update order data through thunk in cart reducer?
     this.props.cart.orderStatus = "pending payment";
     this.props.cart.paymentStatus = "pending";
     this.props.cart.isCart = "false";
