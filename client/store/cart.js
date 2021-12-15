@@ -47,10 +47,12 @@ export const addToCart = (hotSauceId, quantity, cart) => {
     try {
       const { data: hotsauce } = await axios.get(`api/hotsauces/${hotSauceId}`);
       const orderItem = await cart.addHotSauce(hotsauce);
+      console.log("ORDER ITEM !!!!!", orderItem);
       orderItem.quantity = quantity;
+      console.log("CHANGING ORDER ITEM QUANTITY", orderItem.quantity);
       dispatch(_addToCart(cart));
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 };

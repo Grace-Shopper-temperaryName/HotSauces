@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchCart, addToCart } from "../store/cart";
+import { fetchCart } from "../store/cart";
 
 export class Cart extends Component {
-  componentDidMount() {
-    this.props.fetchCart(this.props.customerId);
-  }
+  // componentDidMount() {
+  //   this.props.fetchCart(this.props.customerId);
+  // }
 
   render() {
     const items = this.props.cart.hotSauces || [];
@@ -42,8 +42,6 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCart: (customerId) => dispatch(fetchCart(customerId)),
-    addToCart: (hotSauceId, quantity, cart) =>
-      dispatch(addToCart(hotSauceId, quantity, cart)),
   };
 };
 
