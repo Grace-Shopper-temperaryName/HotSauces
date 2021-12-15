@@ -42,15 +42,17 @@ export const fetchCart = (customerId) => {
   };
 };
 
-export const addToCart = (hotSauceId, quantity, cart) => {
+export const addToCart = (hotSauceId, quantity, orderId, customerId) => {
   return async (dispatch) => {
     try {
-      const { data: hotsauce } = await axios.get(`api/hotsauces/${hotSauceId}`);
-      const orderItem = await cart.addHotSauce(hotsauce);
-      orderItem.quantity = quantity;
-      dispatch(_addToCart(cart));
+      // get hot sauce
+      await axios.post(`/api/cart/${orderId}`, {
+        hotSauceId,
+        quantity,
+      });
+      dispatch(fetchCart(customerId));
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 };
@@ -61,7 +63,7 @@ export default function (state = {}, action) {
     case SET_CART:
       return action.cart;
     case ADD_TO_CART:
-      return { ...state, ...action.cart };
+      return action.cart;
     default:
       return state;
   }
