@@ -25,6 +25,7 @@ export class Checkout extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
   componentDidMount() {
+    console.log("MOUNTED IN CHECKOUT!!");
     this.props.loadAuthCustomer();
   }
   //componentWillUnmount-- clear local storage cart here??
@@ -52,6 +53,7 @@ export class Checkout extends Component {
     //window.localStorage.clear();
   }
   render() {
+    console.log("RENDERING IN CHECKOUT!!");
     const {
       firstName,
       lastName,
