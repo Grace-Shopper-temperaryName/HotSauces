@@ -24,17 +24,17 @@ export class Checkout extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
-  componentDidMount() {
-    console.log("MOUNTED IN CHECKOUT!!");
-    this.props.loadAuthCustomer();
+  async componentDidMount() {
+    await this.props.loadAuthCustomer();
   }
   //componentWillUnmount-- clear local storage cart here??
 
   handleChange(event) {
     this.setState({ ...this.state, [event.target.name]: event.target.value });
+    console.log(this.state);
   }
   handleSelect(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    this.setState({ ...this.state, [event.target.name]: event.target.value });
   }
   handleCancel(event) {
     event.preventDefault();
@@ -53,7 +53,6 @@ export class Checkout extends React.Component {
     //window.localStorage.clear();
   }
   render() {
-    console.log("RENDERING IN CHECKOUT!!");
     const {
       firstName,
       lastName,
@@ -66,101 +65,102 @@ export class Checkout extends React.Component {
       provider,
       cardNumber,
     } = this.state || {};
-    const {
-      cFirstName,
-      cLastName,
-      cPhone,
-      cEmail,
-      cStreetAddress,
-      cCity,
-      cState,
-      cZip,
-    } = this.props.customer || {};
+
+    const auth = this.props.auth || {};
+
     const { handleChange, handleSubmit, handleSelect, handleCancel } = this;
 
     return (
       <>
         <h3>Review Your Cart</h3>
 
-        <Cart insideCheckout={true} />
+        {/* <Cart insideCheckout={true} /> */}
 
         <div>
           <form id="checkoutForm" onSubmit={handleSubmit}>
-            {this.props.customer ? (
+            {this.props.auth ? (
               <div>
-                <label>Contact Information</label>
+                <h4>Contact Information</h4>
+
+                <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   placeholder="Email"
                   name="email"
                   onChange={handleChange}
-                  value={cEmail}
+                  value={auth.email}
                 />
 
-                <label>Shipping Information</label>
-                {/* <span> */}
+                <h4>Shipping Information</h4>
+
+                <label htmlFor="firstName">First Name</label>
                 <input
                   type="text"
                   placeholder="First name"
                   name="firstName"
                   onChange={handleChange}
-                  value={cFirstName}
+                  value={auth.firstName}
                 />
 
+                <label htmlFor="lastName">Last Name</label>
                 <input
                   type="text"
                   placeholder="Last name"
                   name="lastName"
                   onChange={handleChange}
-                  value={cLastName}
+                  value={auth.lastName}
                 />
-                {/* </span> */}
 
+                <label htmlFor="streetAddress">Street Address</label>
                 <input
                   type="text"
                   placeholder="Street Address"
                   name="streetAddress"
                   onChange={handleChange}
-                  value={cStreetAddress}
+                  value={auth.streetAddress}
                 />
 
+                <label htmlFor="city">City</label>
                 <input
                   type="text"
                   placeholder="City"
                   name="city"
                   onChange={handleChange}
-                  value={cCity}
+                  value={auth.city}
                 />
 
-                {/* <span> */}
+                <label htmlFor="state">State</label>
                 <input
                   type="text"
                   placeholder="State"
                   name="state"
                   onChange={handleChange}
-                  value={cState}
+                  value={auth.state}
                 />
 
+                <label htmlFor="zip">Zipcode</label>
                 <input
                   type="text"
-                  placeholder="ZIP code"
+                  placeholder="Zipcode"
                   name="zip"
                   onChange={handleChange}
-                  value={cZip}
+                  value={auth.zip}
                 />
-                {/* </span> */}
 
+                <label htmlFor="phone">Phone</label>
                 <input
                   type="phone"
                   placeholder="Phone"
                   name="phone"
                   onChange={handleChange}
-                  value={cPhone}
+                  value={auth.phone}
                 />
               </div>
             ) : (
               <div>
-                <label>Contact Information</label>
+                <h4>Contact Information</h4>
+
+                <label htmlFor="email">Email</label>
                 <input
                   type="email"
                   placeholder="Email"
@@ -169,8 +169,9 @@ export class Checkout extends React.Component {
                   value={email}
                 />
 
-                <label>Shipping Information</label>
-                {/* <span> */}
+                <h4>Shipping Information</h4>
+
+                <label htmlFor="firstName">First Name</label>
                 <input
                   type="text"
                   placeholder="First name"
@@ -179,6 +180,7 @@ export class Checkout extends React.Component {
                   value={firstName}
                 />
 
+                <label htmlFor="lastName">Last Name</label>
                 <input
                   type="text"
                   placeholder="Last name"
@@ -186,8 +188,8 @@ export class Checkout extends React.Component {
                   onChange={handleChange}
                   value={lastName}
                 />
-                {/* </span> */}
 
+                <label htmlFor="streetAddress">Street Address</label>
                 <input
                   type="text"
                   placeholder="Street Address"
@@ -196,6 +198,7 @@ export class Checkout extends React.Component {
                   value={streetAddress}
                 />
 
+                <label htmlFor="city">City</label>
                 <input
                   type="text"
                   placeholder="City"
@@ -204,7 +207,7 @@ export class Checkout extends React.Component {
                   value={city}
                 />
 
-                {/* <span> */}
+                <label htmlFor="state">State</label>
                 <input
                   type="text"
                   placeholder="State"
@@ -213,15 +216,16 @@ export class Checkout extends React.Component {
                   value={state}
                 />
 
+                <label htmlFor="zip">Zipcode</label>
                 <input
                   type="text"
-                  placeholder="ZIP code"
+                  placeholder="Zipcode"
                   name="zip"
                   onChange={handleChange}
                   value={zip}
                 />
-                {/* </span> */}
 
+                <label htmlFor="phone">Phone</label>
                 <input
                   type="phone"
                   placeholder="Phone"
@@ -231,21 +235,18 @@ export class Checkout extends React.Component {
                 />
               </div>
             )}
-            <label>Payment Information</label>
-            <select
-              type="text"
-              placeholder="Credit card provider"
-              name="provider"
-              onChange={handleSelect}
-            >
-              <option placeholder="Credit card provider" disabled>
-                Card type
-              </option>
+
+            <h4>Payment Information</h4>
+
+            <label htmlFor="provider">Credit Card Provider</label>
+            <select type="text" name="provider" onChange={handleSelect}>
+              <option value="">Select provider</option>
               <option value={provider}>American Express</option>
               <option value={provider}>Mastercard</option>
               <option value={provider}>Visa</option>
             </select>
 
+            <label htmlFor="cardNumber">Card Number</label>
             <input
               type="text"
               placeholder="Card number"
@@ -253,6 +254,8 @@ export class Checkout extends React.Component {
               value={cardNumber}
               onChange={handleChange}
             />
+
+            <br />
 
             <button type="submit" id="placeOrder">
               Place Order
@@ -270,7 +273,7 @@ export class Checkout extends React.Component {
 
 const mapState = (state) => {
   return {
-    customer: state.auth,
+    auth: state.auth,
     cart: state.cart,
   };
 };
