@@ -22,6 +22,7 @@ export class Checkout extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
   componentDidMount() {
     this.props.loadAuthCustomer();
@@ -34,11 +35,21 @@ export class Checkout extends Component {
   handleSelect(event) {
     this.setState({ [event.target.name]: event.target.value });
   }
-  handleSubmit() {
-    //change current orderStatus to "pending payment"
-    //change order's paymentStatus to "pending"
-    //redirect to confirmation component view
-    //clear cart in store? here or componentWillUnmount?
+  handleCancel(event) {
+    event.preventDefault();
+    this.props.history.goback();
+  }
+  handleSubmit(event) {
+    //change to --> this.props.cart.orderStatus = "pending payment"
+    //change to --> this.props.cart.paymentStatus = "pending"
+    //change to --> this.props.cart.isCart = "false"
+    //redirect to confirmation component view...maybe wrap purchase button in a Link to Confirmation component?
+    //clear local storage cart here or in componentWillUnmount?
+    event.preventDefault();
+    this.props.cart.orderStatus = "pending payment";
+    this.props.cart.paymentStatus = "pending";
+    this.props.cart.isCart = "false";
+    //window.localStorage.clear();
   }
   render() {
     const {
@@ -62,23 +73,22 @@ export class Checkout extends Component {
       cCity,
       cState,
       cZip,
-      //   cProvider,
-      //   cCardNumber,
     } = this.props.customer || {};
-    const { handleChange, handleSubmit, handleSelect } = this;
-    //if guest- use input from this.state
-    //if auth customer- populate form from this.props
+    const { handleChange, handleSubmit, handleSelect, handleCancel } = this;
+
     return (
-      //ADD cart here above form?  <Cart insideCheckout={true} />
       <>
+        <h3>Review Your Cart</h3>
+
         <Cart insideCheckout={true} />
 
         <div>
-          <form method="post" onSubmit={handleSubmit}>
+          <form id="checkoutForm" onSubmit={handleSubmit}>
             {this.props.customer ? (
               <div>
                 <label>Contact Information</label>
                 <input
+                  type="email"
                   placeholder="Email"
                   name="email"
                   onChange={handleChange}
@@ -88,6 +98,7 @@ export class Checkout extends Component {
                 <label>Shipping Information</label>
                 <span>
                   <input
+                    type="text"
                     placeholder="First name"
                     name="firstName"
                     onChange={handleChange}
@@ -95,6 +106,7 @@ export class Checkout extends Component {
                   />
 
                   <input
+                    type="text"
                     placeholder="Last name"
                     name="lastName"
                     onChange={handleChange}
@@ -103,6 +115,7 @@ export class Checkout extends Component {
                 </span>
 
                 <input
+                  type="text"
                   placeholder="Street Address"
                   name="streetAddress"
                   onChange={handleChange}
@@ -110,6 +123,7 @@ export class Checkout extends Component {
                 />
 
                 <input
+                  type="text"
                   placeholder="City"
                   name="city"
                   onChange={handleChange}
@@ -118,6 +132,7 @@ export class Checkout extends Component {
 
                 <span>
                   <input
+                    type="text"
                     placeholder="State"
                     name="state"
                     onChange={handleChange}
@@ -125,6 +140,7 @@ export class Checkout extends Component {
                   />
 
                   <input
+                    type="text"
                     placeholder="ZIP code"
                     name="zip"
                     onChange={handleChange}
@@ -133,6 +149,7 @@ export class Checkout extends Component {
                 </span>
 
                 <input
+                  type="phone"
                   placeholder="Phone"
                   name="phone"
                   onChange={handleChange}
@@ -143,6 +160,7 @@ export class Checkout extends Component {
               <div>
                 <label>Contact Information</label>
                 <input
+                  type="email"
                   placeholder="Email"
                   name="email"
                   onChange={handleChange}
@@ -152,6 +170,7 @@ export class Checkout extends Component {
                 <label>Shipping Information</label>
                 <span>
                   <input
+                    type="text"
                     placeholder="First name"
                     name="firstName"
                     onChange={handleChange}
@@ -159,6 +178,7 @@ export class Checkout extends Component {
                   />
 
                   <input
+                    type="text"
                     placeholder="Last name"
                     name="lastName"
                     onChange={handleChange}
@@ -167,6 +187,7 @@ export class Checkout extends Component {
                 </span>
 
                 <input
+                  type="text"
                   placeholder="Street Address"
                   name="streetAddress"
                   onChange={handleChange}
@@ -174,6 +195,7 @@ export class Checkout extends Component {
                 />
 
                 <input
+                  type="text"
                   placeholder="City"
                   name="city"
                   onChange={handleChange}
@@ -182,6 +204,7 @@ export class Checkout extends Component {
 
                 <span>
                   <input
+                    type="text"
                     placeholder="State"
                     name="state"
                     onChange={handleChange}
@@ -189,6 +212,7 @@ export class Checkout extends Component {
                   />
 
                   <input
+                    type="text"
                     placeholder="ZIP code"
                     name="zip"
                     onChange={handleChange}
@@ -197,6 +221,7 @@ export class Checkout extends Component {
                 </span>
 
                 <input
+                  type="phone"
                   placeholder="Phone"
                   name="phone"
                   onChange={handleChange}
@@ -206,6 +231,7 @@ export class Checkout extends Component {
             )}
             <label>Payment Information</label>
             <select
+              type="text"
               placeholder="Credit card provider"
               name="provider"
               onChange={handleSelect}
@@ -217,16 +243,22 @@ export class Checkout extends Component {
             </select>
 
             <input
+              type="text"
               placeholder="Card number"
               name="cardNumber"
               value={cardNumber}
             />
 
-            <button type="submit">Place Order</button>
+            <button type="submit" id="placeOrder">
+              Place Order
+            </button>
+
+            <button onClick={handleCancel} id="cancelCheckout">
+              Cancel Checkout
+            </button>
           </form>
         </div>
       </>
-      //ADD here at bottom, before Place Order button? <Cart insideCheckout={true} />
     );
   }
 }
@@ -234,7 +266,7 @@ export class Checkout extends Component {
 const mapState = (state) => {
   return {
     customer: state.auth,
-    customerOrders: state.auth.orders,
+    cart: state.cart,
   };
 };
 const mapDispatch = (dispatch) => {
