@@ -25,12 +25,11 @@ export class SingleHotSauce extends React.Component {
 
   handleAdd(event) {
     event.preventDefault();
-    const { singleHotSauce, cart } = this.props;
+    const { singleHotSauce, cartId, customerId } = this.props;
     const { quantity } = this.state;
     console.log("SINGLE HOT SAUCE ID", singleHotSauce.id);
-    console.log("CART!!!!", cart);
     console.log("QUANTITTY", quantity);
-    this.props.addToCart(singleHotSauce.id, quantity, cart);
+    this.props.addToCart(singleHotSauce.id, quantity, cartId, customerId);
   }
 
   render() {
@@ -79,15 +78,16 @@ export class SingleHotSauce extends React.Component {
 const mapState = (state) => {
   return {
     singleHotSauce: state.singleHotSauce,
-    cart: state.cart,
+    cartId: state.cart.id,
+    customerId: state.auth.id,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     fetchSingleHotSauce: (id) => dispatch(fetchSingleHotSauce(id)),
-    addToCart: (hotSauceId, quantity, cart) =>
-      dispatch(addToCart(hotSauceId, quantity, cart)),
+    addToCart: (hotSauceId, quantity, cartId, customerId) =>
+      dispatch(addToCart(hotSauceId, quantity, cartId, customerId)),
   };
 };
 
