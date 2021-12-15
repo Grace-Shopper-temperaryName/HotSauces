@@ -24,8 +24,8 @@ export class Checkout extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
   }
-  async componentDidMount() {
-    await this.props.loadAuthCustomer();
+  componentDidMount() {
+    this.props.loadAuthCustomer();
   }
   //componentWillUnmount-- clear local storage cart here??
 

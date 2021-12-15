@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import { Login, Signup } from "./components/AuthForm";
+import { Login } from "./components/LoginAuthForm";
+import { Signup } from "./components/signupAuthForm";
 import Home from "./components/Home";
 import { me } from "./store";
 import AllHotSauces from "./components/AllHotSauces";
@@ -11,6 +12,9 @@ import SingleCustomer from "./components/SingleCustomer";
 import EditCustomer from "./components/EditCustomer";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
+import ConfirmationPage from "./components/ConfirmationPage";
+
+
 
 /**
  * COMPONENT
@@ -35,6 +39,10 @@ class Routes extends Component {
             <Route path="/customers/:id" component={SingleCustomer} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
+<<<<<<< HEAD
+=======
+            <Route exact path="/confirmation" component={ConfirmationPage} />
+>>>>>>> 3da80b0241d9fce00c83e4c63bbfb3e80deb52b1
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -46,6 +54,10 @@ class Routes extends Component {
             <Route path="/hotsauces/:id" component={SingleHotSauce} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
+<<<<<<< HEAD
+=======
+            <Route exact path="/confirmation" component={ConfirmationPage} />
+>>>>>>> 3da80b0241d9fce00c83e4c63bbfb3e80deb52b1
           </Switch>
         )}
       </div>
