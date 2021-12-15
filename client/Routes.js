@@ -10,6 +10,7 @@ import AllCustomers from "./components/AllCustomers";
 import SingleCustomer from "./components/SingleCustomer";
 import EditCustomer from "./components/EditCustomer";
 import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
 
 /**
  * COMPONENT
@@ -33,6 +34,7 @@ class Routes extends Component {
             <Route path="/profile/:id/edit" component={EditCustomer} />
             <Route path="/customers/:id" component={SingleCustomer} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="checkout" component={Checkout} />
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -43,6 +45,7 @@ class Routes extends Component {
             <Route exact path="/hotsauces" component={AllHotSauces} />
             <Route path="/hotsauces/:id" component={SingleHotSauce} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="checkout" component={Checkout} />
           </Switch>
         )}
       </div>
