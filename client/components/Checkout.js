@@ -68,19 +68,31 @@ export class Checkout extends React.Component {
 
     const auth = this.props.auth || {};
 
+    const items = this.props.cart.hotSauces || [];
+
     const { handleChange, handleSubmit, handleSelect, handleCancel } = this;
 
     return (
       <>
         <h3>Review Your Cart</h3>
-
-        {/* <Cart insideCheckout={true} /> */}
-
+        {items.map((item) => (
+          <div key={item.id}>
+            <div className="containerLeft">
+              <img src={item.imageUrl} alt={`picture of ${item.name}`} />
+            </div>
+            <div className="containerRight">
+              <p>{item.name}</p>
+              <p>${item.price / 100}</p>
+              <p>{item.orderHotSauce.quantity}</p>
+              <h4>${(item.price / 100) * item.orderHotSauce.quantity}.00</h4>
+            </div>
+          </div>
+        ))}
         <div>
           <form id="checkoutForm" onSubmit={handleSubmit}>
             {this.props.auth ? (
               <div>
-                <h4>Contact Information</h4>
+                <h3>Contact Information</h3>
 
                 <label htmlFor="email">Email</label>
                 <input
@@ -91,7 +103,7 @@ export class Checkout extends React.Component {
                   value={auth.email}
                 />
 
-                <h4>Shipping Information</h4>
+                <h3>Shipping Information</h3>
 
                 <label htmlFor="firstName">First Name</label>
                 <input
@@ -158,7 +170,7 @@ export class Checkout extends React.Component {
               </div>
             ) : (
               <div>
-                <h4>Contact Information</h4>
+                <h3>Contact Information</h3>
 
                 <label htmlFor="email">Email</label>
                 <input
@@ -169,7 +181,7 @@ export class Checkout extends React.Component {
                   value={email}
                 />
 
-                <h4>Shipping Information</h4>
+                <h3>Shipping Information</h3>
 
                 <label htmlFor="firstName">First Name</label>
                 <input
@@ -236,7 +248,7 @@ export class Checkout extends React.Component {
               </div>
             )}
 
-            <h4>Payment Information</h4>
+            <h3>Payment Information</h3>
 
             <label htmlFor="provider">Credit Card Provider</label>
             <select type="text" name="provider" onChange={handleSelect}>
