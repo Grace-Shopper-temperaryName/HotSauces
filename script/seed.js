@@ -74,7 +74,6 @@ async function seed() {
       order
     );
   }
-  console.log(Object.keys(Customer.prototype));
 
   console.log(`seeded ${customers.length} customers`);
   console.log(`seeded ${guests.length} guests`);
