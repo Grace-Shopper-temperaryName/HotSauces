@@ -66,7 +66,6 @@ class ConfirmationPage extends Component {
           <p>$1.00</p>
           <h4>${amount / 100 + 1}.00</h4>
         </div>
-        <button id="downloadButton">Download Confirmation Button</button>
         <button id="cancelOrder">Cancel Order</button>
       </div>
     );
