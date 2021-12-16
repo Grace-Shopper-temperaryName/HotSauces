@@ -39,10 +39,7 @@ class Routes extends Component {
             <Route path="/customers/:id" component={SingleCustomer} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
-<<<<<<< HEAD
-=======
             <Route exact path="/confirmation" component={ConfirmationPage} />
->>>>>>> 3da80b0241d9fce00c83e4c63bbfb3e80deb52b1
             <Redirect to="/home" />
           </Switch>
         ) : (
@@ -54,10 +51,7 @@ class Routes extends Component {
             <Route path="/hotsauces/:id" component={SingleHotSauce} />
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/checkout" component={Checkout} />
-<<<<<<< HEAD
-=======
             <Route exact path="/confirmation" component={ConfirmationPage} />
->>>>>>> 3da80b0241d9fce00c83e4c63bbfb3e80deb52b1
           </Switch>
         )}
       </div>
