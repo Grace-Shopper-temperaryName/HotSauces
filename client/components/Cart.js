@@ -1,15 +1,18 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchCart } from "../store/cart";
+import {
+  addCartItem,
+  subtractCartItem,
+  deleteFromCart,
+  fetchCart,
+} from "../store/cart";
 
 export class Cart extends Component {
-  // componentDidMount() {
-  //   this.props.fetchCart(this.props.customerId);
-  // }
-
   render() {
     const items = this.props.cart.hotSauces || [];
+    const { addCartItem, subtractCartItem, deleteFromCart, cart, customerId } =
+      this.props;
     return (
       <div>
         {items.map((item) => (
@@ -20,12 +23,25 @@ export class Cart extends Component {
             <div className="containerRight">
               <p>{item.name}</p>
               <p>${item.price / 100}</p>
+              <button onClick={() => addCartItem(cart.id, item.id, customerId)}>
+                +
+              </button>
               <p>{item.orderHotSauce.quantity}</p>
+              <button
+                onClick={() => subtractCartItem(cart.id, item.id, customerId)}
+              >
+                -
+              </button>
+              <button
+                onClick={() => deleteFromCart(cart.id, item.id, customerId)}
+              >
+                Remove from Cart
+              </button>
             </div>
           </div>
         ))}
         <Link to="/confirmation">
-          <button>Purchase</button>
+          <button>Checkout</button>
         </Link>
       </div>
     );
@@ -42,6 +58,12 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCart: (customerId) => dispatch(fetchCart(customerId)),
+    deleteFromCart: (orderId, hotSauceId, customerId) =>
+      dispatch(deleteFromCart(orderId, hotSauceId, customerId)),
+    addCartItem: (orderId, hotSauceId, customerId) =>
+      dispatch(addCartItem(orderId, hotSauceId, customerId)),
+    subtractCartItem: (orderId, hotSauceId, customerId) =>
+      dispatch(subtractCartItem(orderId, hotSauceId, customerId)),
   };
 };
 
