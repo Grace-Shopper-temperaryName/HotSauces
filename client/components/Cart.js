@@ -24,7 +24,7 @@ export class Cart extends Component {
             </div>
           </div>
         ))}
-        <Link to="/confirmation">
+        <Link to="/checkout">
           <button>Purchase</button>
         </Link>
       </div>

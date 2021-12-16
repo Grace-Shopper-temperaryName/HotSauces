@@ -256,11 +256,11 @@ export class Checkout extends React.Component {
             />
 
             <br />
-
-            <button type="submit" id="placeOrder">
-              Place Order
-            </button>
-
+            <Link to="/confirmation">
+              <button type="submit" id="placeOrder">
+                Place Order
+              </button>
+            </Link>
             <button onClick={handleCancel} id="cancelCheckout">
               Cancel Checkout
             </button>
