@@ -23,12 +23,24 @@ export class Checkout extends React.Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.calculateCartTotal = this.calculateCartTotal.bind(this);
   }
   componentDidMount() {
     this.props.loadAuthCustomer();
   }
   //componentWillUnmount-- clear local storage cart here??
-
+  calculateCartTotal(array) {
+    let cartTotal = [];
+    for (let i = 0; i <= array.length - 1; i++) {
+      let saucePrice = array[i].price / 100;
+      let sauceOty = array[i].orderHotSauce.quantity;
+      let singleSauceCost = saucePrice * sauceOty;
+      cartTotal.push(singleSauceCost);
+    }
+    let total = 0;
+    cartTotal.forEach((item) => (total += item));
+    return total;
+  }
   handleChange(event) {
     this.setState({ ...this.state, [event.target.name]: event.target.value });
   }
@@ -69,6 +81,8 @@ export class Checkout extends React.Component {
     const auth = this.props.auth || {};
 
     const items = this.props.cart.hotSauces || [];
+    
+    const total = this.calculateCartTotal(items);
 
     const { handleChange, handleSubmit, handleSelect, handleCancel } = this;
 
@@ -88,6 +102,7 @@ export class Checkout extends React.Component {
             </div>
           </div>
         ))}
+        <h3>Order Total: ${total}.00</h3>
         <div>
           <form id="checkoutForm" onSubmit={handleSubmit}>
             {this.props.auth ? (
