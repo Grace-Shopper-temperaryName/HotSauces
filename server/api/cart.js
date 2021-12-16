@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const { createDispatchHook } = require("react-redux");
 const {
   models: { Customer, HotSauce, Order, OrderHotSauce },
 } = require("../db");
@@ -34,6 +35,17 @@ router.post("/:orderId", async (req, res, next) => {
     });
     // newItem.quantity = req.body.quantity;
     res.send(orderItem);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/total/:orderId", async (req, res, next) => {
+  try {
+    const cart = await Order.findByPk(req.params.orderId);
+
+    const updatedCart = await cart.update(req.body);
+    res.send(updatedCart);
   } catch (error) {
     next(error);
   }

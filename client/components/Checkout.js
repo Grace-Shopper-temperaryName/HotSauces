@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { me } from "../store/auth";
-import Cart from "./Cart";
+import { updateCartTotal } from "../store/cart";
 
 export class Checkout extends React.Component {
   constructor() {
@@ -30,6 +30,7 @@ export class Checkout extends React.Component {
   }
   //componentWillUnmount-- clear local storage cart here??
   calculateCartTotal(array) {
+    // let orderId = this.props.cart.id;
     let cartTotal = [];
     for (let i = 0; i <= array.length - 1; i++) {
       let saucePrice = array[i].price / 100;
@@ -39,6 +40,7 @@ export class Checkout extends React.Component {
     }
     let total = 0;
     cartTotal.forEach((item) => (total += item));
+    // this.props.updateCartTotal(orderId, total);
     return total;
   }
   handleChange(event) {
@@ -81,7 +83,7 @@ export class Checkout extends React.Component {
     const auth = this.props.auth || {};
 
     const items = this.props.cart.hotSauces || [];
-    
+
     const total = this.calculateCartTotal(items);
 
     const { handleChange, handleSubmit, handleSelect, handleCancel } = this;
@@ -307,6 +309,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     loadAuthCustomer: () => dispatch(me()),
+    updateCartTotal: (orderId, amount) =>
+      dispatch(updateCartTotal(orderId, amount)),
   };
 };
 
