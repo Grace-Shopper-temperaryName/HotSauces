@@ -40,7 +40,7 @@ router.post("/:orderId", async (req, res, next) => {
   }
 });
 
-router.put("/total/:orderId", async (req, res, next) => {
+router.put("/checkout/:orderId", async (req, res, next) => {
   try {
     const cart = await Order.findByPk(req.params.orderId);
 

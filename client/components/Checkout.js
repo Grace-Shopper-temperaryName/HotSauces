@@ -2,7 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { me } from "../store/auth";
-import { updateCartTotal } from "../store/cart";
+import { updateCart } from "../store/cart";
+import { updateCustomer } from "../store/customers";
 
 export class Checkout extends React.Component {
   constructor() {
@@ -28,9 +29,13 @@ export class Checkout extends React.Component {
   componentDidMount() {
     this.props.loadAuthCustomer();
   }
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.auth !== prevProps.auth) {
+  //     this.props.updateCustomer(this.props.auth);
+  //   }
+  // }
   //componentWillUnmount-- clear local storage cart here??
   calculateCartTotal(array) {
-    // let orderId = this.props.cart.id;
     let cartTotal = [];
     for (let i = 0; i <= array.length - 1; i++) {
       let saucePrice = array[i].price / 100;
@@ -40,7 +45,6 @@ export class Checkout extends React.Component {
     }
     let total = 0;
     cartTotal.forEach((item) => (total += item));
-    // this.props.updateCartTotal(orderId, total);
     return total;
   }
   handleChange(event) {
@@ -54,17 +58,7 @@ export class Checkout extends React.Component {
     this.props.history.goBack();
   }
   handleSubmit(event) {
-    //change to --> this.props.cart.orderStatus = "pending payment"
-    //change to --> this.props.cart.paymentStatus = "pending"
-    //change to --> this.props.cart.isCart = "false"
-    //redirect to confirmation component view...maybe wrap purchase button in a Link to Confirmation component?
-    //clear local storage cart here or in componentWillUnmount?
     event.preventDefault();
-    //update order data through thunk in cart reducer?
-    this.props.cart.orderStatus = "pending payment";
-    this.props.cart.paymentStatus = "pending";
-    this.props.cart.isCart = "false";
-    //window.localStorage.clear();
   }
   render() {
     const {
@@ -81,10 +75,10 @@ export class Checkout extends React.Component {
     } = this.state || {};
 
     const auth = this.props.auth || {};
-
     const items = this.props.cart.hotSauces || [];
 
-    const total = this.calculateCartTotal(items);
+    let total = this.props.cart.amount || 0;
+    total = this.calculateCartTotal(items);
 
     const { handleChange, handleSubmit, handleSelect, handleCancel } = this;
 
@@ -107,7 +101,7 @@ export class Checkout extends React.Component {
         <h3>Order Total: ${total}.00</h3>
         <div>
           <form id="checkoutForm" onSubmit={handleSubmit}>
-            {this.props.auth ? (
+            {auth ? (
               <div>
                 <h3>Contact Information</h3>
 
@@ -306,11 +300,11 @@ const mapState = (state) => {
     cart: state.cart,
   };
 };
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
     loadAuthCustomer: () => dispatch(me()),
-    updateCartTotal: (orderId, amount) =>
-      dispatch(updateCartTotal(orderId, amount)),
+    updateCustomer: (customer) => dispatch(updateCustomer(customer, history)),
+    updateCart: (orderId, cart) => dispatch(updateCart(orderId, cart)),
   };
 };
 

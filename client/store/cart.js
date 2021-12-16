@@ -7,7 +7,6 @@ const SET_CART = "SET_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const DELETE_FROM_CART = "DELETE_FROM_CART";
 const EDIT_CART_ITEM_QUANTITY = "EDIT_CART_ITEM_QUANTITY";
-const UPDATE_CART_TOTAL = "UPDATE_CART_TOTAL";
 
 // Action Creators
 
@@ -31,10 +30,6 @@ const _editCartItemQuantity = (hotSauce) => ({
   hotSauce,
 });
 
-const _updateCartTotal = (cart) => ({
-  type: UPDATE_CART_TOTAL,
-  cart,
-});
 
 //Thunk Creators
 export const fetchCart = (customerId) => {
@@ -63,19 +58,20 @@ export const addToCart = (hotSauceId, quantity, orderId, customerId) => {
   };
 };
 
-export const updateCartTotal = (orderId, amount) => {
+export const updateCart = (orderId, cart) => {
   return async (dispatch) => {
     try {
-      const { data: cart } = await axios.put(
-        `/api/cart/total/${orderId}`,
-        amount
+      const { data: updatedCart } = await axios.put(
+        `/api/cart/checkout/${orderId}`,
+        cart
       );
-      dispatch(_updateCartTotal(cart));
+      dispatch(setCart(updatedCart));
     } catch (error) {
       console.error(error);
     }
   };
 };
+
 
 // Reducer
 export default function (state = {}, action) {
@@ -83,8 +79,6 @@ export default function (state = {}, action) {
     case SET_CART:
       return action.cart;
     case ADD_TO_CART:
-      return action.cart;
-    case UPDATE_CART_TOTAL:
       return action.cart;
     default:
       return state;
