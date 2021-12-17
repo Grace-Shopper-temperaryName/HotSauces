@@ -36,7 +36,7 @@ export class EditCustomer extends Component {
 
   handleCancel(event) {
     event.preventDefault();
-    this.props.history.push(`/home`);
+    this.props.history.goBack();
   }
 
   componentDidMount() {

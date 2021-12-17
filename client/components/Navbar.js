@@ -11,31 +11,41 @@ const Navcontainer = styled.div`
 
 const Navwrapper = styled.div`
   display:inline-block: ;
- 
-  
 `;
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <Navcontainer>
     <Navwrapper>
       {isLoggedIn ? (
         <Link to="/home">
           <img src="hotnsaucylogo.png" id="logo" />
         </Link>
-      ) : (
-        <Link to="/hotsauces">
+    ) : (
+      <Link to="/hotsauces">
           <img src="hotnsaucylogo.png" id="logo" />
         </Link>
       )}
       <nav>
-        {isLoggedIn ? (
+      {isLoggedIn ? (
+        isAdmin ? (
+          <div>
+            {/* The navbar will show these links after you log in */}
+            <Link to="/customers">Customers</Link>
+            <Link to="/hotsauces/add">Add Hot Sauce</Link>
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        ) : (
           <div>
             {/* The navbar will show these links after you log in */}
             <a href="#" onClick={handleClick}>
               Logout
             </a>
           </div>
-        ) : (
+        ) ):
+        (
           <div id="leftLinks">
             {/* The navbar will show these links before you log in */}
             <Link to="/login">LOGIN</Link>
@@ -58,6 +68,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 

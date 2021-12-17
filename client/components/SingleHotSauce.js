@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleHotSauce } from "../store/singleHotSauce";
+
+import { Link } from "react-router-dom";
+
 import { addToCart, createOrder, addToLocalCart } from "../store/cart";
+
 
 export class SingleHotSauce extends React.Component {
   constructor() {
@@ -58,7 +62,7 @@ export class SingleHotSauce extends React.Component {
   }
 
   render() {
-    const { singleHotSauce } = this.props;
+    const { singleHotSauce, isAdmin } = this.props;
     const stock = singleHotSauce.stock || 1;
     const { quantity } = this.state || 1;
     return (
@@ -71,27 +75,36 @@ export class SingleHotSauce extends React.Component {
               src={singleHotSauce.imageUrl}
               alt={`picture of ${singleHotSauce.name}`}
             />
-            <div className="containerRight">
-              {stock < 1 ? (
-                <h1> OUT OF STOCK! </h1>
-              ) : (
-                <div>
-                  <p> ${singleHotSauce.price / 100} </p>
-                  <p> 🔥 {singleHotSauce.heatLevel} / 10</p>
-                  <p>{singleHotSauce.description}</p>
-                  <form id="add-item-to-cart" onSubmit={this.handleAdd}>
-                    <label htmlFor="quantity">Quantity</label>
-                    <input
-                      type="number"
-                      name="quantity"
-                      value={quantity}
-                      onChange={this.handleChange}
-                    ></input>
-                    <button type="submit">Add to Cart</button>
-                  </form>
-                </div>
-              )}
-            </div>
+
+          </div>
+          <div className="containerRight">
+            {stock < 1 ? (
+              <h1> OUT OF STOCK! </h1>
+            ) : (
+              <div>
+                <h2>{singleHotSauce.name}</h2>
+                <p> ${singleHotSauce.price / 100} </p>
+                <p> 🔥 {singleHotSauce.heatLevel} / 10</p>
+                <p>{singleHotSauce.description}</p>
+                <form id="add-item-to-cart" onSubmit={this.handleAdd}>
+                  <label htmlFor="quantity">Quantity</label>
+                  <input
+                    type="number"
+                    name="quantity"
+                    value={quantity}
+                    onChange={this.handleChange}
+                  ></input>
+                  <button type="submit">Add to Cart</button>
+                </form>
+                {isAdmin ? (
+                  <Link to={`/hotsauces/${singleHotSauce.id}/edit`}>
+                    <button>Edit Hot Sauce</button>
+                  </Link>
+                ) : (
+                  <></>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -104,6 +117,7 @@ const mapState = (state) => {
     singleHotSauce: state.singleHotSauce,
     cartId: state.cart.id,
     customerId: state.auth.id,
+    isAdmin: !!state.auth.isAdmin,
     guest: state.guest,
   };
 };

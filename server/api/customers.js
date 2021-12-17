@@ -2,23 +2,29 @@ const router = require("express").Router();
 const {
   models: { Customer, Order },
 } = require("../db");
-const requireToken = require("./middleware");
+const { requireToken, requireTokeninBody } = require("./middleware");
 module.exports = router;
 
 // mounted at /api/customers
-router.get("/", async (req, res, next) => {
+router.get("/", requireToken, async (req, res, next) => {
   try {
-    const customers = await Customer.findAll();
-    res.json(customers);
+    if (!!req.customer.isAdmin) {
+      const customers = await Customer.findAll();
+      res.json(customers);
+    }
   } catch (err) {
     next(err);
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", requireToken, async (req, res, next) => {
   try {
-    const customer = await Customer.findByPk(req.params.id, { include: Order });
-    res.json(customer);
+    if (!!req.customer.isAdmin) {
+      const customer = await Customer.findByPk(req.params.id, {
+        include: Order,
+      });
+      res.json(customer);
+    }
   } catch (error) {
     next(error);
   }
@@ -34,42 +40,46 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", requireTokeninBody, async (req, res, next) => {
   try {
-    const {
-      firstname,
-      lastName,
-      phone,
-      email,
-      password,
-      streetAddress,
-      city,
-      state,
-      zip,
-    } = req.body;
-    const customer = await Customer.findByPk(req.params.id);
-    await customer.update({
-      firstname,
-      lastName,
-      phone,
-      email,
-      password,
-      streetAddress,
-      city,
-      state,
-      zip,
-    });
-    res.json(customer);
+    if (req.customer.id === Number(req.params.id)) {
+      const {
+        firstname,
+        lastName,
+        phone,
+        email,
+        password,
+        streetAddress,
+        city,
+        state,
+        zip,
+      } = req.body.body;
+      const customer = await Customer.findByPk(req.params.id);
+      await customer.update({
+        firstname,
+        lastName,
+        phone,
+        email,
+        password,
+        streetAddress,
+        city,
+        state,
+        zip,
+      });
+      res.json(customer);
+    }
   } catch (error) {
     next(error);
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", requireToken, async (req, res, next) => {
   try {
-    const customer = await Customer.findByPk(req.params.id);
-    await customer.destroy();
-    res.json(customer);
+    if (req.customer) {
+      const customer = await Customer.findByPk(req.params.id);
+      await customer.destroy();
+      res.json(customer);
+    }
   } catch (error) {
     next(error);
   }
