@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Customer, HotSauce, OrderHotSauce },
+  models: { Customer, HotSauce, OrderHotSauce, Order },
 } = require("../db");
 const { requireToken, requireTokeninBody } = require("./middleware");
 module.exports = router;
@@ -23,7 +23,6 @@ router.get("/:customerId", requireToken, async (req, res, next) => {
   }
 });
 
-
 router.post(
   "/:customerId/:orderId",
   requireTokeninBody,
@@ -36,8 +35,9 @@ router.post(
           hotSauceId: req.body.body.hotSauceId,
           quantity: req.body.body.quantity,
         });
-        const amount = cart.amount + req.body.price * req.body.quantity;
-    await cart.update({ ...cart, amount });
+        const amount =
+          cart.amount + req.body.body.price * req.body.body.quantity;
+        await cart.update({ ...cart, amount });
         res.send(orderItem);
       }
     } catch (error) {
