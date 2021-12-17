@@ -2,40 +2,54 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
+import styled from "styled-components";
+
+const Navcontainer = styled.div`
+  background-color: white;
+  display:inline-block: ;
+`;
+
+const Navwrapper = styled.div`
+  display:inline-block: ;
+ 
+  
+`;
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
-  <div>
-    {isLoggedIn ? (
-      <Link to="/home">
-        <h1 id="logo">Hot 'n' Saucy</h1>
-      </Link>
-    ) : (
-      <h1 id="logo">Hot 'n' Saucy</h1>
-    )}
-    <nav>
+  <Navcontainer>
+    <Navwrapper>
       {isLoggedIn ? (
-        <div>
-          {/* The navbar will show these links after you log in */}
-          <a href="#" onClick={handleClick}>
-            Logout
-          </a>
-        </div>
+        <Link to="/home">
+          <img src="hotnsaucylogo.png" id="logo" />
+        </Link>
       ) : (
-        <div>
-          <div>
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
-          </div>
-        </div>
+        <Link to="/hotsauces">
+          <img src="hotnsaucylogo.png" id="logo" />
+        </Link>
       )}
-      <div>
-        <Link to="/hotsauces">Hot Sauces</Link>
-        <Link to="/cart">🛒</Link>
-      </div>
-    </nav>
-    <hr />
-  </div>
+      <nav>
+        {isLoggedIn ? (
+          <div>
+            {/* The navbar will show these links after you log in */}
+            <a href="#" onClick={handleClick}>
+              Logout
+            </a>
+          </div>
+        ) : (
+          <div id="leftLinks">
+            {/* The navbar will show these links before you log in */}
+            <Link to="/login">LOGIN</Link>
+            <Link to="/signup">SIGN UP </Link>
+          </div>
+        )}
+        <div id="rightLinks">
+          <Link to="/hotsauces">SHOP</Link>
+          <Link to="/cart"> CART </Link>
+        </div>
+      </nav>
+      <hr />
+    </Navwrapper>
+  </Navcontainer>
 );
 
 /**

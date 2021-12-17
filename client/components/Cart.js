@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchCart } from "../store/cart";
+import {
+  addCartItem,
+  subtractCartItem,
+  deleteFromCart,
+  fetchCart,
+} from "../store/cart";
 
 export class Cart extends Component {
   constructor() {
@@ -87,6 +92,12 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCart: (customerId) => dispatch(fetchCart(customerId)),
+    deleteFromCart: (orderId, hotSauceId, customerId) =>
+      dispatch(deleteFromCart(orderId, hotSauceId, customerId)),
+    addCartItem: (orderId, hotSauceId, customerId) =>
+      dispatch(addCartItem(orderId, hotSauceId, customerId)),
+    subtractCartItem: (orderId, hotSauceId, customerId) =>
+      dispatch(subtractCartItem(orderId, hotSauceId, customerId)),
   };
 };
 

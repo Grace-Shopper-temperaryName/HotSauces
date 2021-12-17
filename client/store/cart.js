@@ -4,8 +4,6 @@ import auth from "./auth";
 
 // Action Types
 const SET_CART = "SET_CART";
-// const ADD_TO_CART = "ADD_TO_CART";
-// const DELETE_FROM_CART = "DELETE_FROM_CART";
 const EDIT_CART_ITEM_QUANTITY = "EDIT_CART_ITEM_QUANTITY";
 
 // Action Creators
@@ -95,6 +93,7 @@ export const addCartItem = (orderId, hotSauceId, customerId) => {
     try {
       await axios.put(`api/cart/${orderId}/add`, { hotSauceId });
       dispatch(fetchCart(customerId));
+      history.goBack();
     } catch (error) {
       console.error(error);
     }

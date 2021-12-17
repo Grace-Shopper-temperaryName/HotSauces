@@ -2,46 +2,56 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { signupAuthenticate } from "../store";
+import { Grid, Paper } from "@material-ui/core";
 
 const SignupAuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
-
+  const paperStyle = {
+    padding: 20,
+    height: "70vh",
+    width: 280,
+    margin: "20px auto",
+  };
   return (
-    <div>
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
-          <label htmlFor="firstName">
-            <small>First Name</small>
-          </label>
-          <input name="firstName" type="text" />
+    <Grid>
+      <Paper elevation={10} style={paperStyle}>
+        <div className="signUp">
+          <form onSubmit={handleSubmit} name={name}>
+            <div>
+              <label htmlFor="firstName">
+                <small>First Name</small>
+              </label>
+              <input name="firstName" type="text" />
+            </div>
+            <div>
+              <label htmlFor="lastName">
+                <small>Last Name</small>
+              </label>
+              <input name="lastName" type="text" />
+            </div>
+            <div>
+              <label htmlFor="email">
+                <small>Email</small>
+              </label>
+              <input name="email" type="email" />
+            </div>
+            <div>
+              <label htmlFor="password">
+                <small>Password</small>
+              </label>
+              <input name="password" type="password" />
+            </div>
+            <div>
+              <button type="submit">{displayName}</button>
+            </div>
+            <Link to="/login">
+              <h4>Already have an account? Login here!</h4>
+            </Link>
+            {error && error.response && <div> {error.response.data} </div>}
+          </form>
         </div>
-        <div>
-          <label htmlFor="lastName">
-            <small>Last Name</small>
-          </label>
-          <input name="lastName" type="text" />
-        </div>
-        <div>
-          <label htmlFor="email">
-            <small>Email</small>
-          </label>
-          <input name="email" type="email" />
-        </div>
-        <div>
-          <label htmlFor="password">
-            <small>Password</small>
-          </label>
-          <input name="password" type="password" />
-        </div>
-        <div>
-          <button type="submit">{displayName}</button>
-        </div>
-        <Link to="/login">
-          <h4>Already have an account? Login here!</h4>
-        </Link>
-        {error && error.response && <div> {error.response.data} </div>}
-      </form>
-    </div>
+      </Paper>
+    </Grid>
   );
 };
 

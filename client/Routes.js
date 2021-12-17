@@ -13,6 +13,8 @@ import EditCustomer from "./components/EditCustomer";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import ConfirmationPage from "./components/ConfirmationPage";
+import LandingPage from "./components/LandingPage";
+
 
 /**
  * COMPONENT
@@ -42,7 +44,7 @@ class Routes extends Component {
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={Login} />
+            <Route path="/" exact component={LandingPage} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             <Route exact path="/hotsauces" component={AllHotSauces} />

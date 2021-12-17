@@ -26,8 +26,9 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const customers = await Customer.create(req.body);
-    res.json(customers);
+    const { email, password } = req.body;
+    const customer = await Customer.create({ email, password });
+    res.json(customer);
   } catch (error) {
     next(error);
   }
@@ -35,8 +36,29 @@ router.post("/", async (req, res, next) => {
 
 router.put("/:id", async (req, res, next) => {
   try {
+    const {
+      firstname,
+      lastName,
+      phone,
+      email,
+      password,
+      streetAddress,
+      city,
+      state,
+      zip,
+    } = req.body;
     const customer = await Customer.findByPk(req.params.id);
-    await customer.update(req.body);
+    await customer.update({
+      firstname,
+      lastName,
+      phone,
+      email,
+      password,
+      streetAddress,
+      city,
+      state,
+      zip,
+    });
     res.json(customer);
   } catch (error) {
     next(error);

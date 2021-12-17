@@ -12,7 +12,7 @@ export class AllHotSauces extends Component {
     const { hotSauces } = this.props;
     return (
       <div>
-        <h1 className="container">All the Sauce</h1>
+        <h1 class="text">All the Sauce</h1>
         <div id="allSauces">
           {hotSauces.map((hotSauce) => (
             <div className="container" key={hotSauce.id}>

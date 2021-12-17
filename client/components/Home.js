@@ -17,6 +17,9 @@ class Home extends Component {
     return (
       <div>
         <div className="container">
+          <div>
+            <img src="login.jpg" className="homeimage" />
+          </div>
           <h2>Welcome, {firstName}</h2>
           <Link to={`/profile/${id}/edit`}>
             <button type="submit" id="editCustomerInfo">
