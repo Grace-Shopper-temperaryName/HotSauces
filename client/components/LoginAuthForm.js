@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loginAuthenticate } from "../store";
-import { Grid, Paper, Avatar } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 
 /**
  * COMPONENT
