@@ -8,6 +8,7 @@ import singleHotSauce from "./singleHotSauce";
 import customers from "./customers";
 import singleCustomer from "./singleCustomer";
 import cart from "./cart";
+import guest from "./guest";
 
 const reducer = combineReducers({
   auth,
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   customers,
   singleCustomer,
   cart,
+  guest,
 });
 
 const middleware = composeWithDevTools(

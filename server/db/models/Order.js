@@ -31,18 +31,11 @@ const Order = db.define("order", {
     },
   },
   provider: {
-    type: Sequelize.ENUM("visa", "mastercard", "americanexpress"),
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
+    type: Sequelize.ENUM("none", "visa", "mastercard", "americanexpress"),
+    defaultValue: "none",
   },
   cardNumber: {
     type: Sequelize.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true,
-    },
   },
   paymentStatus: {
     type: Sequelize.ENUM("none", "pending", "fulfilled", "cancelled"),

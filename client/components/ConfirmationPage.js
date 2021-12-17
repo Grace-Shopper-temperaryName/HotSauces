@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { fetchCart } from "../store/cart";
 
@@ -14,7 +15,10 @@ class ConfirmationPage extends Component {
     const items = this.props.cart.hotSauces || [];
     return (
       <div>
-        <h2>We thank you for satisfying your cravings to burn, {firstName}!</h2>
+        <h2>
+          We thank you for satisfying your cravings to burn with us, {firstName}
+          !
+        </h2>
         <div id="orderDetails">
           <h3>Order Details</h3>
           <strong>Order ID</strong>
@@ -65,8 +69,7 @@ class ConfirmationPage extends Component {
           <p>$1.00</p>
           <strong>${amount / 100 + 1}.00</strong>
         </div>
-        <button id="downloadButton">Download Confirmation Button</button>
-        <button id="cancelOrder">Cancel Order</button>
+        <button id="downloadButton">Download Receipt</button>
       </div>
     );
   }

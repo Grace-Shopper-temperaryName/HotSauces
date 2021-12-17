@@ -26,9 +26,7 @@ router.get("/:customerId", async (req, res, next) => {
 
 router.post("/:orderId", async (req, res, next) => {
   try {
-    console.log(req.params.orderId);
     const cart = await Order.findByPk(req.params.orderId);
-    // const hotSauce = await HotSauce.findByPk(req.body.hotSauceId);
     const orderItem = await OrderHotSauce.create({
       orderId: req.params.orderId,
       hotSauceId: req.body.hotSauceId,

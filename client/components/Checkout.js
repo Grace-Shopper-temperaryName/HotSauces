@@ -46,6 +46,9 @@ export class Checkout extends React.Component {
         <Link to="/confirmation">
           <button id="confirmPurchase">Confirm Purchase</button>
         </Link>
+        <Link to="/cart">
+          <button id="cancelOrder">Cancel Order</button>
+        </Link>
       </div>
     );
   }
