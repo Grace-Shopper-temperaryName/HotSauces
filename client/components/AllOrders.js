@@ -4,9 +4,9 @@ export default class AllOrders extends Component {
 //   constructor() {
 //     super();
 //   }
-  componentDidMount(){
-      this.props.
-  };
+//   componentDidMount(){
+//       this.props.
+//   };
 
     
 
