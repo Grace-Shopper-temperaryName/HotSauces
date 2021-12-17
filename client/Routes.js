@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login } from "./components/LoginAuthForm";
-import { Signup } from "./components/signupAuthForm";
+import { Signup } from "./components/SignupAuthForm";
 import Home from "./components/Home";
 import { me } from "./store";
 import AllHotSauces from "./components/AllHotSauces";
@@ -13,8 +13,6 @@ import EditCustomer from "./components/EditCustomer";
 import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import ConfirmationPage from "./components/ConfirmationPage";
-
-
 
 /**
  * COMPONENT

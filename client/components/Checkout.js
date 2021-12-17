@@ -2,294 +2,51 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { me } from "../store/auth";
-import { updateCart } from "../store/cart";
-import { updateCustomer } from "../store/customers";
+import { Cart } from "./Cart";
+import { EditCustomer } from "./EditCustomer";
 
 export class Checkout extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      firstName: "",
-      lastName: "",
-      phone: "",
-      email: "",
-      streetAddress: "",
-      city: "",
-      state: "",
-      zip: "",
-      provider: "",
-      cardNumber: "",
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-    this.calculateCartTotal = this.calculateCartTotal.bind(this);
-  }
   componentDidMount() {
-    this.props.loadAuthCustomer();
+    this.props.fetchAuthCustomer();
   }
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.auth !== prevProps.auth) {
-  //     this.props.updateCustomer(this.props.auth);
-  //   }
-  // }
-  //componentWillUnmount-- clear local storage cart here??
-  calculateCartTotal(array) {
-    let cartTotal = [];
-    for (let i = 0; i <= array.length - 1; i++) {
-      let saucePrice = array[i].price / 100;
-      let sauceOty = array[i].orderHotSauce.quantity;
-      let singleSauceCost = saucePrice * sauceOty;
-      cartTotal.push(singleSauceCost);
-    }
-    let total = 0;
-    cartTotal.forEach((item) => (total += item));
-    return total;
-  }
-  handleChange(event) {
-    this.setState({ ...this.state, [event.target.name]: event.target.value });
-  }
-  handleSelect(event) {
-    this.setState({ ...this.state, [event.target.name]: event.target.value });
-  }
-  handleCancel(event) {
-    event.preventDefault();
-    this.props.history.goBack();
-  }
-  handleSubmit(event) {
-    event.preventDefault();
-  }
+
   render() {
-    const {
-      firstName,
-      lastName,
-      phone,
-      email,
-      streetAddress,
-      city,
-      state,
-      zip,
-      provider,
-      cardNumber,
-    } = this.state || {};
-
-    const auth = this.props.auth || {};
     const items = this.props.cart.hotSauces || [];
-
-    let total = this.props.cart.amount || 0;
-    total = this.calculateCartTotal(items);
-
-    const { handleChange, handleSubmit, handleSelect, handleCancel } = this;
-
+    const { cardProvider, cardNumber } = this.props.cart;
+    const providers = ["americanexpress", "mastercard", "visa"];
     return (
-      <>
-        <h3>Review Your Cart</h3>
-        {items.map((item) => (
-          <div key={item.id}>
-            <div className="containerLeft">
-              <img src={item.imageUrl} alt={`picture of ${item.name}`} />
-            </div>
-            <div className="containerRight">
-              <p>{item.name}</p>
-              <p>${item.price / 100}</p>
-              <p>{item.orderHotSauce.quantity}</p>
-              <h4>${(item.price / 100) * item.orderHotSauce.quantity}.00</h4>
-            </div>
-          </div>
-        ))}
-        <h3>Order Total: ${total}.00</h3>
-        <div>
-          <form id="checkoutForm" onSubmit={handleSubmit}>
-            {auth ? (
-              <div>
-                <h3>Contact Information</h3>
-
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  onChange={handleChange}
-                  value={auth.email}
-                />
-
-                <h3>Shipping Information</h3>
-
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  type="text"
-                  placeholder="First name"
-                  name="firstName"
-                  onChange={handleChange}
-                  value={auth.firstName}
-                />
-
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                  type="text"
-                  placeholder="Last name"
-                  name="lastName"
-                  onChange={handleChange}
-                  value={auth.lastName}
-                />
-
-                <label htmlFor="streetAddress">Street Address</label>
-                <input
-                  type="text"
-                  placeholder="Street Address"
-                  name="streetAddress"
-                  onChange={handleChange}
-                  value={auth.streetAddress}
-                />
-
-                <label htmlFor="city">City</label>
-                <input
-                  type="text"
-                  placeholder="City"
-                  name="city"
-                  onChange={handleChange}
-                  value={auth.city}
-                />
-
-                <label htmlFor="state">State</label>
-                <input
-                  type="text"
-                  placeholder="State"
-                  name="state"
-                  onChange={handleChange}
-                  value={auth.state}
-                />
-
-                <label htmlFor="zip">Zipcode</label>
-                <input
-                  type="text"
-                  placeholder="Zipcode"
-                  name="zip"
-                  onChange={handleChange}
-                  value={auth.zip}
-                />
-
-                <label htmlFor="phone">Phone</label>
-                <input
-                  type="phone"
-                  placeholder="Phone"
-                  name="phone"
-                  onChange={handleChange}
-                  value={auth.phone}
-                />
-              </div>
-            ) : (
-              <div>
-                <h3>Contact Information</h3>
-
-                <label htmlFor="email">Email</label>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  onChange={handleChange}
-                  value={email}
-                />
-
-                <h3>Shipping Information</h3>
-
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  type="text"
-                  placeholder="First name"
-                  name="firstName"
-                  onChange={handleChange}
-                  value={firstName}
-                />
-
-                <label htmlFor="lastName">Last Name</label>
-                <input
-                  type="text"
-                  placeholder="Last name"
-                  name="lastName"
-                  onChange={handleChange}
-                  value={lastName}
-                />
-
-                <label htmlFor="streetAddress">Street Address</label>
-                <input
-                  type="text"
-                  placeholder="Street Address"
-                  name="streetAddress"
-                  onChange={handleChange}
-                  value={streetAddress}
-                />
-
-                <label htmlFor="city">City</label>
-                <input
-                  type="text"
-                  placeholder="City"
-                  name="city"
-                  onChange={handleChange}
-                  value={city}
-                />
-
-                <label htmlFor="state">State</label>
-                <input
-                  type="text"
-                  placeholder="State"
-                  name="state"
-                  onChange={handleChange}
-                  value={state}
-                />
-
-                <label htmlFor="zip">Zipcode</label>
-                <input
-                  type="text"
-                  placeholder="Zipcode"
-                  name="zip"
-                  onChange={handleChange}
-                  value={zip}
-                />
-
-                <label htmlFor="phone">Phone</label>
-                <input
-                  type="phone"
-                  placeholder="Phone"
-                  name="phone"
-                  onChange={handleChange}
-                  value={phone}
-                />
-              </div>
-            )}
-
-            <h3>Payment Information</h3>
-
-            <label htmlFor="provider">Credit Card Provider</label>
-            <select type="text" name="provider" onChange={handleSelect}>
-              <option value="">Select provider</option>
-              <option value={provider}>American Express</option>
-              <option value={provider}>Mastercard</option>
-              <option value={provider}>Visa</option>
-            </select>
-
-            <label htmlFor="cardNumber">Card Number</label>
-            <input
-              type="text"
-              placeholder="Card number"
-              name="cardNumber"
-              value={cardNumber}
-              onChange={handleChange}
-            />
-
-            <br />
-            <Link to="/confirmation">
-              <button type="submit" id="placeOrder">
-                Place Order
-              </button>
-            </Link>
-            <button onClick={handleCancel} id="cancelCheckout">
-              Cancel Checkout
-            </button>
-          </form>
-        </div>
-      </>
+      <div>
+        <Cart parentItems={items} />
+        <h3>Billing info:</h3>
+        <EditCustomer
+          parentAuth={this.props.auth}
+          fetchAuthCustomer={this.props.fetchAuthCustomer}
+        />
+        <h4>Payment info:</h4>
+        <form>
+          <select name="provider">
+            {providers.map((provider, index) => {
+              if (provider === cardProvider) {
+                return (
+                  <option value={provider} key={`provider_${index}`} selected>
+                    {provider}
+                  </option>
+                );
+              } else {
+                return (
+                  <option value={provider} key={`provider_${index}`}>
+                    {provider}
+                  </option>
+                );
+              }
+            })}
+          </select>
+          <input id="cardNumber" defaultValue={cardNumber || ""}></input>
+        </form>
+        <Link to="/confirmation">
+          <button id="confirmPurchase">Confirm Purchase</button>
+        </Link>
+      </div>
     );
   }
 }
@@ -302,9 +59,7 @@ const mapState = (state) => {
 };
 const mapDispatch = (dispatch, { history }) => {
   return {
-    loadAuthCustomer: () => dispatch(me()),
-    updateCustomer: (customer) => dispatch(updateCustomer(customer, history)),
-    updateCart: (orderId, cart) => dispatch(updateCart(orderId, cart)),
+    fetchAuthCustomer: () => dispatch(me()),
   };
 };
 

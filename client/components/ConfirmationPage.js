@@ -17,11 +17,11 @@ class ConfirmationPage extends Component {
         <h2>We thank you for satisfying your cravings to burn, {firstName}!</h2>
         <div id="orderDetails">
           <h3>Order Details</h3>
-          <h4>Order ID</h4>
+          <strong>Order ID</strong>
           <p>{id}</p>
-          <h4>Order Date</h4>
+          <strong>Order Date</strong>
           <p>{orderDate.slice(0, 10)}</p>
-          <h4>Shipping Address</h4>
+          <strong>Shipping Address</strong>
           <p>
             {firstName} {lastName}
           </p>
@@ -29,7 +29,7 @@ class ConfirmationPage extends Component {
           <p>
             {city}, {state} {zip}
           </p>
-          <h4>Payment</h4>
+          <strong>Payment</strong>
           <p>
             {provider} ending in {cardNumber.slice(-4)}
           </p>
@@ -39,14 +39,13 @@ class ConfirmationPage extends Component {
           <h3>Items Purchased</h3>
           {items.map((item) => (
             <div key={item.id}>
-              <div className="containerLeft">
-                <img src={item.imageUrl} alt={`picture of ${item.name}`} />
-              </div>
-              <div className="containerRight">
+              <div>
                 <p>{item.name}</p>
                 <p>Price: ${item.price / 100}.00</p>
                 <p>QTY: {item.orderHotSauce.quantity}</p>
-                <h4>${(item.price / 100) * item.orderHotSauce.quantity}.00</h4>
+                <strong>
+                  ${(item.price / 100) * item.orderHotSauce.quantity}.00
+                </strong>
               </div>
             </div>
           ))}
@@ -58,13 +57,13 @@ class ConfirmationPage extends Component {
           <p>Subtotal ({items.length} items) </p>
           <p>Shipping (3-5 business days)</p>
           <p>Tax</p>
-          <h4>Order Total</h4>
+          <strong>Order Total</strong>
         </div>
         <div className="containerRight">
           <p>${amount / 100}.00</p>
           <p>FREE</p>
           <p>$1.00</p>
-          <h4>${amount / 100 + 1}.00</h4>
+          <strong>${amount / 100 + 1}.00</strong>
         </div>
         <button id="downloadButton">Download Confirmation Button</button>
         <button id="cancelOrder">Cancel Order</button>
