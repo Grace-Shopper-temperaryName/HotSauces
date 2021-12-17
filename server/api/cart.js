@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { Customer, HotSauce, OrderHotSauce },
+  models: { Customer, HotSauce, OrderHotSauce, Order },
 } = require("../db");
 const { requireToken, requireTokeninBody } = require("./middleware");
 module.exports = router;
@@ -23,21 +23,17 @@ router.get("/:customerId", requireToken, async (req, res, next) => {
   }
 });
 
-
 router.post(
   "/:customerId/:orderId",
   requireTokeninBody,
   async (req, res, next) => {
     try {
       if (req.customer.id === Number(req.params.customerId)) {
-        const cart = await Order.findByPk(req.params.orderId);
         const orderItem = await OrderHotSauce.create({
           orderId: req.params.orderId,
           hotSauceId: req.body.body.hotSauceId,
           quantity: req.body.body.quantity,
         });
-        const amount = cart.amount + req.body.price * req.body.quantity;
-    await cart.update({ ...cart, amount });
         res.send(orderItem);
       }
     } catch (error) {

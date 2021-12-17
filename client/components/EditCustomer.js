@@ -197,11 +197,11 @@ const mapState = (state) => {
   };
 };
 
-const mapDispatch = (dispatch, { history }) => {
+const mapDispatch = (dispatch) => {
   return {
     fetchAuthCustomer: () => dispatch(me()),
     updateCustomer: (updatedCustomer) =>
-      dispatch(updateCustomer(updatedCustomer, history)),
+      dispatch(updateCustomer(updatedCustomer)),
   };
 };
 

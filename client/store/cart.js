@@ -47,11 +47,13 @@ export const addToCart = (hotSauceId, quantity, orderId, customerId, price) => {
     try {
       if (customerId) {
         await axios.post(`/api/cart/${customerId}/${orderId}`, {
-        body: { hotSauceId: hotSauceId, quantity: quantity },
-        headers: {
-          authorization: token,
-        },
+          body: { hotSauceId: hotSauceId, quantity: quantity, price: price },
+          headers: {
+            authorization: token,
+          },
+        });
         dispatch(fetchCart(customerId, quantity, price));
+        history.goBack();
       } else {
         await axios.post(`/api/cart/${orderId}`, {
           hotSauceId,
@@ -68,12 +70,10 @@ export const addToCart = (hotSauceId, quantity, orderId, customerId, price) => {
 export const addToLocalCart = (hotSauceId, quantity, orderId, price) => {
   return async (dispatch) => {
     try {
-
       await axios.post(`/api/cart/${orderId}`, {
         hotSauceId,
         quantity,
         price,
-
       });
       dispatch(fetchCart(null, quantity, price));
     } catch (error) {
@@ -108,7 +108,6 @@ export const subtractCartItem = (orderId, hotSauceId, customerId) => {
         },
       });
       dispatch(fetchCart(customerId));
-      history.goBack();
     } catch (error) {
       console.error(error);
     }

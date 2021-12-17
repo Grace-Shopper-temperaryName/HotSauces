@@ -43,29 +43,8 @@ router.post("/", async (req, res, next) => {
 router.put("/:id", requireTokeninBody, async (req, res, next) => {
   try {
     if (req.customer.id === Number(req.params.id)) {
-      const {
-        firstname,
-        lastName,
-        phone,
-        email,
-        password,
-        streetAddress,
-        city,
-        state,
-        zip,
-      } = req.body.body;
       const customer = await Customer.findByPk(req.params.id);
-      await customer.update({
-        firstname,
-        lastName,
-        phone,
-        email,
-        password,
-        streetAddress,
-        city,
-        state,
-        zip,
-      });
+      await customer.update(req.body.body);
       res.json(customer);
     }
   } catch (error) {

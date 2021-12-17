@@ -57,17 +57,23 @@ class ConfirmationPage extends Component {
         <hr></hr>
 
         <h3>Summary of Charges </h3>
-        <div className="containerLeft">
-          <p>Subtotal ({items.length} items) </p>
-          <p>Shipping (3-5 business days)</p>
-          <p>Tax</p>
-          <strong>Order Total</strong>
-        </div>
-        <div className="containerRight">
-          <p>${amount / 100}.00</p>
-          <p>FREE</p>
-          <p>$1.00</p>
-          <strong>${amount / 100 + 1}.00</strong>
+        <div className="container">
+          <div>
+            <span>Subtotal ({items.length} items) </span>
+            <span> ${amount / 100}.00</span>
+          </div>
+          <div>
+            <span>Shipping (3-5 business days)</span>
+            <span> FREE</span>
+          </div>
+          <div>
+            <span>Tax</span>
+            <span> $1.00</span>
+          </div>
+          <div>
+            <span>Order Total</span>
+            <span> ${amount / 100 + 1}.00</span>
+          </div>
         </div>
         <button id="downloadButton">Download Receipt</button>
       </div>

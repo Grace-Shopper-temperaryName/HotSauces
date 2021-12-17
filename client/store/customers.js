@@ -35,7 +35,7 @@ export const fetchCustomers = () => {
   };
 };
 
-export const createCustomer = (customer, history) => {
+export const createCustomer = (customer) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post("/api/customers", customer);
@@ -47,7 +47,7 @@ export const createCustomer = (customer, history) => {
   };
 };
 
-export const updateCustomer = (updatedCustomer, history) => {
+export const updateCustomer = (updatedCustomer) => {
   return async (dispatch) => {
     try {
       const { data: customer } = await axios.put(
