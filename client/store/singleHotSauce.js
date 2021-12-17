@@ -3,12 +3,14 @@ import history from "../history";
 
 const SET_SINGLE_HOT_SAUCE = "SET_SINGLE_HOT_SAUCE";
 
+
 export const setSingleHotSauce = (hotSauce) => {
   return {
     type: SET_SINGLE_HOT_SAUCE,
     hotSauce,
   };
 };
+
 
 export const fetchSingleHotSauce = (id) => {
   return async (dispatch) => {
@@ -20,6 +22,7 @@ export const fetchSingleHotSauce = (id) => {
     }
   };
 };
+
 
 export default function (state = {}, action) {
   switch (action.type) {

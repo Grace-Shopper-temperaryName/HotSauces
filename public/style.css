@@ -1,5 +1,16 @@
 body {
-  font-family: sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-family: "Urbanist", sans-serif;
+  font-size: 20px;
+}
+
+.header {
+  height: 60%;
+  width: 50%;
+  background-image: linear-gradient(
+    rgba(4, 9, 30, 0, 7),
+    rgba(4, 9, 30, 0, 7) url("home.JPG")
+  );
 }
 
 a {
@@ -10,9 +21,25 @@ label {
   display: block;
 }
 
-nav a {
-  display: inline-block;
-  margin: 1em;
+nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+#rightLinks {
+  width: 13%;
+  max-width: 150px;
+  display: flex;
+  justify-content: space-between;
+  margin-right: 1rem;
+}
+
+#leftLinks {
+  width: 13%;
+  max-width: 200px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1rem;
 }
 
 form div {
@@ -20,16 +47,117 @@ form div {
   display: inline-block;
 }
 
-#signupform {
+#allSauces {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 0.5em;
+}
+
+#singleHotSauce {
+  width: 150%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 1rem;
+}
+.container {
+  width: 45%;
+  max-width: 405px;
+  min-width: 350px;
+  margin: 5px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+}
+
+.containerLeft {
+  width: 40%;
+  max-height: 200px;
+  min-width: 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.containerLeft > img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: 50% 50%;
+}
+
+.containerRight {
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.container {
-  align-items: center;
+#hotSauce {
+  width: 100%;
+  height: 500px;
+  margin-top: 2rem;
+  padding: 1rem;
+}
+
+#containerRightSingle {
+  float: right;
   display: flex;
   flex-direction: column;
+  margin: 4px 4px;
+  text-align: center;
+  align-items: center;
+}
+
+.singleHotSaucePic {
+  float: left;
+  display: inline;
+  flex-direction: row;
+  justify-content: center;
+  margin: 16px 16px;
+  align-items: center;
+}
+
+.img {
+  max-width: 70%;
+  height: auto;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+#logo {
+  width: 150px;
+  height: 110px;
+  justify-content: center;
+}
+
+.text-box {
+  width: 50%;
+  color: white;
+  position: absolute;
+  top: 75%;
+  left: 60%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.homeimage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+.text {
+  text-align: center;
+}
+
+#editCustomerInfo {
   justify-content: center;
 }

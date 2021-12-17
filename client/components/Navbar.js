@@ -2,17 +2,31 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
+import styled from "styled-components";
+
+const Navcontainer = styled.div`
+  background-color: white;
+  display:inline-block: ;
+`;
+
+const Navwrapper = styled.div`
+  display:inline-block: ;
+`;
+
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
-  <div>
-    {isLoggedIn ? (
-      <Link to="/home">
-        <h1 id="logo">Hot 'n' Saucy</h1>
-      </Link>
+  <Navcontainer>
+    <Navwrapper>
+      {isLoggedIn ? (
+        <Link to="/home">
+          <img src="hotnsaucylogo.png" id="logo" />
+        </Link>
     ) : (
-      <h1 id="logo">Hot 'n' Saucy</h1>
-    )}
-    <nav>
+      <Link to="/hotsauces">
+          <img src="hotnsaucylogo.png" id="logo" />
+        </Link>
+      )}
+      <nav>
       {isLoggedIn ? (
         isAdmin ? (
           <div>
@@ -30,23 +44,22 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
               Logout
             </a>
           </div>
-        )
-      ) : (
-        <div>
-          <div>
+        ) ):
+        (
+          <div id="leftLinks">
             {/* The navbar will show these links before you log in */}
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <Link to="/login">LOGIN</Link>
+            <Link to="/signup">SIGN UP </Link>
           </div>
+        )}
+        <div id="rightLinks">
+          <Link to="/hotsauces">SHOP</Link>
+          <Link to="/cart"> CART </Link>
         </div>
-      )}
-      <div>
-        <Link to="/hotsauces">Hot Sauces</Link>
-        <Link to="/cart">🛒</Link>
-      </div>
-    </nav>
-    <hr />
-  </div>
+      </nav>
+      <hr />
+    </Navwrapper>
+  </Navcontainer>
 );
 
 /**

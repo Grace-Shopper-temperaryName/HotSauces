@@ -12,6 +12,7 @@ const setCart = (cart) => ({
 });
 
 //Thunk Creators
+
 export const fetchCart = (customerId) => {
   return async (dispatch) => {
     try {
@@ -27,17 +28,54 @@ export const fetchCart = (customerId) => {
   };
 };
 
-export const addToCart = (hotSauceId, quantity, orderId, customerId) => {
+export const createOrder = (customerId) => {
   return async (dispatch) => {
     try {
-      await axios.post(`/api/cart/${customerId}/${orderId}`, {
+      const { data: order } = await axios.post(`/api/orders/`);
+      if (!customerId) {
+        return order;
+      }
+      dispatch(fetchCart(customerId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const addToCart = (hotSauceId, quantity, orderId, customerId, price) => {
+  return async (dispatch) => {
+    try {
+      if (customerId) {
+        await axios.post(`/api/cart/${customerId}/${orderId}`, {
         body: { hotSauceId: hotSauceId, quantity: quantity },
         headers: {
           authorization: token,
         },
+        dispatch(fetchCart(customerId, quantity, price));
+      } else {
+        await axios.post(`/api/cart/${orderId}`, {
+          hotSauceId,
+          quantity,
+          price,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
+export const addToLocalCart = (hotSauceId, quantity, orderId, price) => {
+  return async (dispatch) => {
+    try {
+
+      await axios.post(`/api/cart/${orderId}`, {
+        hotSauceId,
+        quantity,
+        price,
+
       });
-      dispatch(fetchCart(customerId));
-      history.goBack();
+      dispatch(fetchCart(null, quantity, price));
     } catch (error) {
       console.error(error);
     }
@@ -70,6 +108,7 @@ export const subtractCartItem = (orderId, hotSauceId, customerId) => {
         },
       });
       dispatch(fetchCart(customerId));
+      history.goBack();
     } catch (error) {
       console.error(error);
     }

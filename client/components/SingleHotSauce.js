@@ -1,8 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleHotSauce } from "../store/singleHotSauce";
-import { addToCart } from "../store/cart";
+
 import { Link } from "react-router-dom";
+
+import { addToCart, createOrder, addToLocalCart } from "../store/cart";
+
 
 export class SingleHotSauce extends React.Component {
   constructor() {
@@ -14,8 +17,13 @@ export class SingleHotSauce extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     this.props.fetchSingleHotSauce(this.props.match.params.id);
+    if (!this.props.customerId) {
+      const cart = await this.props.makeOrder();
+
+      window.localStorage.setItem("cart", JSON.stringify(cart));
+    }
   }
 
   handleChange(evt) {
@@ -24,11 +32,33 @@ export class SingleHotSauce extends React.Component {
     });
   }
 
-  handleAdd(event) {
+  async handleAdd(event) {
     event.preventDefault();
-    const { singleHotSauce, cartId, customerId } = this.props;
-    const { quantity } = this.state;
-    this.props.addToCart(singleHotSauce.id, quantity, cartId, customerId);
+    if (this.props.customerId) {
+      const { singleHotSauce, customerId } = this.props;
+      if (!this.props.cartId) {
+        this.props.makeOrder();
+      }
+      const { quantity } = this.state;
+      this.props.addToCart(
+        singleHotSauce.id,
+        quantity,
+        this.props.cartId,
+        customerId,
+        singleHotSauce.price
+      );
+    } else {
+      if (window.localStorage.cart) {
+        const cart = JSON.parse(localStorage.getItem("cart"));
+
+        this.props.addToCart(
+          this.props.singleHotSauce.id,
+          this.state.quantity,
+          cart.id,
+          this.props.singleHotSauce.price
+        );
+      }
+    }
   }
 
   render() {
@@ -36,14 +66,16 @@ export class SingleHotSauce extends React.Component {
     const stock = singleHotSauce.stock || 1;
     const { quantity } = this.state || 1;
     return (
-      <div className="container">
-        <h1> Hot 'n' Saucy Hot Sauce </h1>
-        <div id="singleHotSauce">
-          <div>
+      <div id="singleHotSauce">
+        <h1> {singleHotSauce.name} </h1>
+        <div className="container" id="hotSauce">
+          <div className="containerLeft">
             <img
+              className="img"
               src={singleHotSauce.imageUrl}
               alt={`picture of ${singleHotSauce.name}`}
             />
+
           </div>
           <div className="containerRight">
             {stock < 1 ? (
@@ -86,14 +118,18 @@ const mapState = (state) => {
     cartId: state.cart.id,
     customerId: state.auth.id,
     isAdmin: !!state.auth.isAdmin,
+    guest: state.guest,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
     fetchSingleHotSauce: (id) => dispatch(fetchSingleHotSauce(id)),
-    addToCart: (hotSauceId, quantity, cartId, customerId) =>
-      dispatch(addToCart(hotSauceId, quantity, cartId, customerId)),
+    addToCart: (hotSauceId, quantity, cartId, customerId, price) =>
+      dispatch(addToCart(hotSauceId, quantity, cartId, customerId, price)),
+    addToLocalCart: (hotSauceId, quantity, cartId, customerId, price) =>
+      dispatch(addToLocalCart(hotSauceId, quantity, cartId, customerId, price)),
+    makeOrder: () => dispatch(createOrder()),
   };
 };
 
