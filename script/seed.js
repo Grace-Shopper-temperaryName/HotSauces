@@ -18,7 +18,7 @@ const {
  */
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
-  console.log("db synced!");
+  console.log("db synced! 🔥");
 
   // Creating Customers
   const customers = await Promise.all(
@@ -79,7 +79,7 @@ async function seed() {
   console.log(`seeded ${guests.length} guests`);
   console.log(`seeded ${hotSauces.length} hot sauces`);
   console.log(`seeded ${orders.length} orders`);
-  console.log(`seeded successfully`);
+  console.log(`seeded successfully 🌶`);
 }
 
 /*

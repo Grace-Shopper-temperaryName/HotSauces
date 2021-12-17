@@ -1,277 +1,68 @@
-import { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { me } from "../store/auth";
-import Cart from "./Cart";
+import { Cart } from "./Cart";
+import { EditCustomer } from "./EditCustomer";
 
-export class Checkout extends Component {
-  constructor() {
-    super();
-    this.state = {
-      firstName: "",
-      lastName: "",
-      phone: "",
-      email: "",
-      streetAddress: "",
-      city: "",
-      state: "",
-      zip: "",
-      provider: "",
-      cardNumber: "",
-    };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSelect = this.handleSelect.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
-  }
+export class Checkout extends React.Component {
   componentDidMount() {
-    this.props.loadAuthCustomer();
+    this.props.fetchAuthCustomer();
   }
-  //componentWillUnmount-- clear local storage cart here??
 
-  handleChange(event) {
-    this.setState({ ...this.state, [event.target.name]: event.target.value });
-  }
-  handleSelect(event) {
-    this.setState({ [event.target.name]: event.target.value });
-  }
-  handleCancel(event) {
-    event.preventDefault();
-    this.props.history.goback();
-  }
-  handleSubmit(event) {
-    //change to --> this.props.cart.orderStatus = "pending payment"
-    //change to --> this.props.cart.paymentStatus = "pending"
-    //change to --> this.props.cart.isCart = "false"
-    //redirect to confirmation component view...maybe wrap purchase button in a Link to Confirmation component?
-    //clear local storage cart here or in componentWillUnmount?
-    event.preventDefault();
-    this.props.cart.orderStatus = "pending payment";
-    this.props.cart.paymentStatus = "pending";
-    this.props.cart.isCart = "false";
-    //window.localStorage.clear();
-  }
   render() {
-    const {
-      firstName,
-      lastName,
-      phone,
-      email,
-      streetAddress,
-      city,
-      state,
-      zip,
-      provider,
-      cardNumber,
-    } = this.state || {};
-    const {
-      cFirstName,
-      cLastName,
-      cPhone,
-      cEmail,
-      cStreetAddress,
-      cCity,
-      cState,
-      cZip,
-    } = this.props.customer || {};
-    const { handleChange, handleSubmit, handleSelect, handleCancel } = this;
-
+    const items = this.props.cart.hotSauces || [];
+    const { cardProvider, cardNumber } = this.props.cart;
+    const providers = ["americanexpress", "mastercard", "visa"];
     return (
-      <>
-        <h3>Review Your Cart</h3>
-
-        <Cart insideCheckout={true} />
-
-        <div>
-          <form id="checkoutForm" onSubmit={handleSubmit}>
-            {this.props.customer ? (
-              <div>
-                <label>Contact Information</label>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  onChange={handleChange}
-                  value={cEmail}
-                />
-
-                <label>Shipping Information</label>
-                <span>
-                  <input
-                    type="text"
-                    placeholder="First name"
-                    name="firstName"
-                    onChange={handleChange}
-                    value={cFirstName}
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Last name"
-                    name="lastName"
-                    onChange={handleChange}
-                    value={cLastName}
-                  />
-                </span>
-
-                <input
-                  type="text"
-                  placeholder="Street Address"
-                  name="streetAddress"
-                  onChange={handleChange}
-                  value={cStreetAddress}
-                />
-
-                <input
-                  type="text"
-                  placeholder="City"
-                  name="city"
-                  onChange={handleChange}
-                  value={cCity}
-                />
-
-                <span>
-                  <input
-                    type="text"
-                    placeholder="State"
-                    name="state"
-                    onChange={handleChange}
-                    value={cState}
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="ZIP code"
-                    name="zip"
-                    onChange={handleChange}
-                    value={cZip}
-                  />
-                </span>
-
-                <input
-                  type="phone"
-                  placeholder="Phone"
-                  name="phone"
-                  onChange={handleChange}
-                  value={cPhone}
-                />
-              </div>
-            ) : (
-              <div>
-                <label>Contact Information</label>
-                <input
-                  type="email"
-                  placeholder="Email"
-                  name="email"
-                  onChange={handleChange}
-                  value={email}
-                />
-
-                <label>Shipping Information</label>
-                <span>
-                  <input
-                    type="text"
-                    placeholder="First name"
-                    name="firstName"
-                    onChange={handleChange}
-                    value={firstName}
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Last name"
-                    name="lastName"
-                    onChange={handleChange}
-                    value={lastName}
-                  />
-                </span>
-
-                <input
-                  type="text"
-                  placeholder="Street Address"
-                  name="streetAddress"
-                  onChange={handleChange}
-                  value={streetAddress}
-                />
-
-                <input
-                  type="text"
-                  placeholder="City"
-                  name="city"
-                  onChange={handleChange}
-                  value={city}
-                />
-
-                <span>
-                  <input
-                    type="text"
-                    placeholder="State"
-                    name="state"
-                    onChange={handleChange}
-                    value={state}
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="ZIP code"
-                    name="zip"
-                    onChange={handleChange}
-                    value={zip}
-                  />
-                </span>
-
-                <input
-                  type="phone"
-                  placeholder="Phone"
-                  name="phone"
-                  onChange={handleChange}
-                  value={phone}
-                />
-              </div>
-            )}
-            <label>Payment Information</label>
-            <select
-              type="text"
-              placeholder="Credit card provider"
-              name="provider"
-              onChange={handleSelect}
-            >
-              <option disabled>Card type</option>
-              <option value={provider}>American Express</option>
-              <option value={provider}>Mastercard</option>
-              <option value={provider}>Visa</option>
-            </select>
-
-            <input
-              type="text"
-              placeholder="Card number"
-              name="cardNumber"
-              value={cardNumber}
-            />
-
-            <button type="submit" id="placeOrder">
-              Place Order
-            </button>
-
-            <button onClick={handleCancel} id="cancelCheckout">
-              Cancel Checkout
-            </button>
-          </form>
-        </div>
-      </>
+      <div>
+        <Cart parentItems={items} />
+        <h3>Billing info:</h3>
+        <EditCustomer
+          parentAuth={this.props.auth}
+          fetchAuthCustomer={this.props.fetchAuthCustomer}
+        />
+        <h4>Payment info:</h4>
+        <form>
+          <select name="provider">
+            {providers.map((provider, index) => {
+              if (provider === cardProvider) {
+                return (
+                  <option value={provider} key={`provider_${index}`} selected>
+                    {provider}
+                  </option>
+                );
+              } else {
+                return (
+                  <option value={provider} key={`provider_${index}`}>
+                    {provider}
+                  </option>
+                );
+              }
+            })}
+          </select>
+          <input id="cardNumber" defaultValue={cardNumber || ""}></input>
+        </form>
+        <Link to="/confirmation">
+          <button id="confirmPurchase">Confirm Purchase</button>
+        </Link>
+        <Link to="/cart">
+          <button id="cancelOrder">Cancel Order</button>
+        </Link>
+      </div>
     );
   }
 }
 
 const mapState = (state) => {
   return {
-    customer: state.auth,
+    auth: state.auth,
     cart: state.cart,
   };
 };
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch, { history }) => {
   return {
-    loadAuthCustomer: () => dispatch(me()),
+    fetchAuthCustomer: () => dispatch(me()),
   };
 };
 
