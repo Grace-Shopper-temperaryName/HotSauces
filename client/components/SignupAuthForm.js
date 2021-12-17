@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { signupAuthenticate } from "../store";
-import { Grid, Paper, Avatar } from "@material-ui/core";
-import DeviceThermostatIcon from "@mui/icons-material/DeviceThermostat";
+import { Grid, Paper } from "@material-ui/core";
 
 const SignupAuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
@@ -16,9 +15,6 @@ const SignupAuthForm = (props) => {
   return (
     <Grid>
       <Paper elevation={10} style={paperStyle}>
-        <Avatar style={avatar}>
-          <DeviceThermostatIcon />
-        </Avatar>
         <div className="signUp">
           <form onSubmit={handleSubmit} name={name}>
             <div>
