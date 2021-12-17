@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { fetchSingleHotSauce } from "../store/singleHotSauce";
 import { addToCart } from "../store/cart";
+import { Link } from "react-router-dom";
 
 export class SingleHotSauce extends React.Component {
   constructor() {
@@ -31,7 +32,7 @@ export class SingleHotSauce extends React.Component {
   }
 
   render() {
-    const { singleHotSauce } = this.props;
+    const { singleHotSauce, isAdmin } = this.props;
     const stock = singleHotSauce.stock || 1;
     const { quantity } = this.state || 1;
     return (
@@ -63,6 +64,13 @@ export class SingleHotSauce extends React.Component {
                   ></input>
                   <button type="submit">Add to Cart</button>
                 </form>
+                {isAdmin ? (
+                  <Link to={`/hotsauces/${singleHotSauce.id}/edit`}>
+                    <button>Edit Hot Sauce</button>
+                  </Link>
+                ) : (
+                  <></>
+                )}
               </div>
             )}
           </div>
@@ -77,6 +85,7 @@ const mapState = (state) => {
     singleHotSauce: state.singleHotSauce,
     cartId: state.cart.id,
     customerId: state.auth.id,
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 

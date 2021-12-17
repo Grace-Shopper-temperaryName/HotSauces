@@ -16,6 +16,7 @@ export class AllCustomers extends Component {
           {customers.map((customer) => (
             <div className="container" key={customer.id}>
               <div className="containerLeft">
+                <h2>Customer {customer.id}</h2>
                 <h3>{customer.name}</h3>
               </div>
               <Link to={`/customers/${customer.id}`}>

@@ -5,7 +5,6 @@ const {
 const requireToken = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    console.log("REQ", req.headers);
     const customer = await Customer.findByToken(token);
     req.customer = customer;
     next();
@@ -14,4 +13,15 @@ const requireToken = async (req, res, next) => {
   }
 };
 
-module.exports = requireToken;
+const requireTokeninBody = async (req, res, next) => {
+  try {
+    const token = req.body.headers.authorization;
+    const customer = await Customer.findByToken(token);
+    req.customer = customer;
+    next();
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { requireToken, requireTokeninBody };

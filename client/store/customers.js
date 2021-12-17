@@ -1,6 +1,7 @@
 import axios from "axios";
 import history from "../history";
 
+const token = window.localStorage.getItem("token");
 /**
  * ACTION TYPES
  */
@@ -22,7 +23,11 @@ const _createCustomer = (customer) => ({ type: CREATE_CUSTOMER, customer });
 export const fetchCustomers = () => {
   return async (dispatch) => {
     try {
-      const { data: customers } = await axios.get("/api/customers");
+      const { data: customers } = await axios.get("/api/customers", {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(setCustomers(customers));
     } catch (err) {
       console.error(err);
@@ -47,7 +52,12 @@ export const updateCustomer = (updatedCustomer, history) => {
     try {
       const { data: customer } = await axios.put(
         `/api/customers/${updatedCustomer.id}`,
-        updatedCustomer
+        {
+          headers: {
+            authorization: token,
+          },
+          body: updatedCustomer,
+        }
       );
       dispatch(_updateCustomer(customer));
       history.goBack();
@@ -60,7 +70,11 @@ export const updateCustomer = (updatedCustomer, history) => {
 export const deleteCustomer = (id) => {
   return async (dispatch) => {
     try {
-      const { data: customer } = await axios.delete(`api/customers/${id}`);
+      const { data: customer } = await axios.delete(`/api/customers/${id}`, {
+        header: {
+          authorization: token,
+        },
+      });
       dispatch(_deleteCustomer(customer));
     } catch (error) {
       console.error(error);

@@ -21,6 +21,7 @@ export class Cart extends Component {
               <img src={item.imageUrl} alt={`picture of ${item.name}`} />
             </div>
             <div className="containerRight">
+              <p>{item.id}</p>
               <p>{item.name}</p>
               <p>${item.price / 100}</p>
               <button onClick={() => addCartItem(cart.id, item.id, customerId)}>
@@ -58,12 +59,12 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchCart: (customerId) => dispatch(fetchCart(customerId)),
-    deleteFromCart: (orderId, hotSauceId, customerId) =>
-      dispatch(deleteFromCart(orderId, hotSauceId, customerId)),
     addCartItem: (orderId, hotSauceId, customerId) =>
       dispatch(addCartItem(orderId, hotSauceId, customerId)),
     subtractCartItem: (orderId, hotSauceId, customerId) =>
       dispatch(subtractCartItem(orderId, hotSauceId, customerId)),
+    deleteFromCart: (orderId, hotSauceId, customerId) =>
+      dispatch(deleteFromCart(orderId, hotSauceId, customerId)),
   };
 };
 

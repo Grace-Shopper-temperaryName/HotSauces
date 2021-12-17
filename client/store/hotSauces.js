@@ -1,6 +1,7 @@
 import axios from "axios";
 import history from "../history";
 
+const token = window.localStorage.getItem("token");
 /**
  * ACTION TYPES
  */
@@ -15,6 +16,11 @@ const UPDATE_HOTSAUCE = "UPDATE_HOTSAUCE";
 const setHotSauces = (hotSauces) => ({ type: SET_HOTSAUCES, hotSauces });
 
 const addSingleHotSauce = (hotSauce) => ({ type: ADD_HOTSAUCE, hotSauce });
+
+const updateSingleHotSauce = (hotSauce) => ({
+  type: UPDATE_HOTSAUCE,
+  hotSauce,
+});
 
 const deleteSingleHotSauce = (hotSauce) => ({
   type: DELETE_HOTSAUCE,
@@ -35,17 +41,35 @@ export const fetchHotSauces = () => {
   };
 };
 
-export const createNewHotSauce = (hotSauce, history) => {
+export const createNewHotSauce = (hotSauce) => {
   return async (dispatch) => {
     try {
-      const { data: newHotSauce } = await axios.post(
-        "/api/hotsauces",
-        hotSauce
-      );
+      const { data: newHotSauce } = await axios.post("/api/hotsauces", {
+        body: hotSauce,
+        headers: { authorization: token },
+      });
       dispatch(addSingleHotSauce(newHotSauce));
       history.push("/hotsauces");
-    } catch (err) {
+    } catch (error) {
       console.error(err);
+    }
+  };
+};
+
+export const updateHotSauce = (hotSauce) => {
+  return async (dispatch) => {
+    try {
+      const { data: newHotSauce } = await axios.put(
+        `/api/hotsauces/${hotSauce.id}`,
+        {
+          body: hotSauce,
+          headers: { authorization: token },
+        }
+      );
+      dispatch(updateSingleHotSauce(newHotSauce));
+      history.goBack();
+    } catch (error) {
+      console.error(error);
     }
   };
 };
@@ -53,7 +77,11 @@ export const createNewHotSauce = (hotSauce, history) => {
 export const deleteHotSauce = (id) => {
   return async (dispatch) => {
     try {
-      const { data: hotSauce } = await axios.delete(`/api/hotsauces/${id}`);
+      const { data: hotSauce } = await axios.delete(`/api/hotsauces/${id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
       dispatch(deleteSingleHotSauce(hotSauce));
     } catch (err) {
       console.error(err);
