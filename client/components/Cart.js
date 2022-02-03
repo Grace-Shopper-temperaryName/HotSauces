@@ -59,11 +59,44 @@ export class Cart extends Component {
               <p>{item.id}</p>
               <p>{item.name}</p>
               <p>${item.price / 100}</p>
+              <button
+                onClick={() =>
+                  this.props.addCartItem(
+                    this.props.cart.id,
+                    item.id,
+                    this.props.customerId
+                  )
+                }
+              >
+                +
+              </button>
               <p>{item.orderHotSauce.quantity}</p>
+              <button
+                onClick={() =>
+                  this.props.subtractCartItem(
+                    this.props.cart.id,
+                    item.id,
+                    this.props.customerId
+                  )
+                }
+              >
+                -
+              </button>
               <p>
                 <strong>
                   ${(item.price / 100) * item.orderHotSauce.quantity}
                 </strong>
+                <button
+                  onClick={() =>
+                    this.props.deleteFromCart(
+                      this.props.cart.id,
+                      item.id,
+                      this.props.customerId
+                    )
+                  }
+                >
+                  Remove From Cart
+                </button>
               </p>
             </div>
           </div>

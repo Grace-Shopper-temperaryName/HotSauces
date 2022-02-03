@@ -6,42 +6,43 @@ import { Grid, Paper } from "@material-ui/core";
 /**
  * COMPONENT
  */
-const LoginAuthForm = (props) => {
-  const { name, displayName, handleSubmit, error } = props;
-  const paperStyle = {
-    padding: 40,
-    height: "20vh",
-    width: 500,
-    margin: "20px auto",
-  };
-
-  return (
-    <Grid>
-      <Paper elevation={15} style={paperStyle}>
-        <div>
-          <form onSubmit={handleSubmit} name={name}>
-            <div>
-              <label htmlFor="email">
-                <small>Email</small>
-              </label>
-              <input name="email" type="email" />
-            </div>
-            <div>
-              <label htmlFor="password">
-                <small>Password</small>
-              </label>
-              <input name="password" type="password" />
-            </div>
-            <div>
-              <button type="submit">{displayName}</button>
-            </div>
-            {error && error.response && <div> {error.response.data} </div>}
-          </form>
-        </div>
-      </Paper>
-    </Grid>
-  );
-};
+class LoginAuthForm extends React.Component {
+  render() {
+    const { name, displayName, handleSubmit, error } = this.props;
+    const paperStyle = {
+      padding: 40,
+      height: "20vh",
+      width: 500,
+      margin: "20px auto",
+    };
+    return (
+      <Grid>
+        <Paper elevation={15} style={paperStyle}>
+          <div>
+            <form onSubmit={handleSubmit} name={name}>
+              <div>
+                <label htmlFor="email">
+                  <small>Email</small>
+                </label>
+                <input name="email" type="email" />
+              </div>
+              <div>
+                <label htmlFor="password">
+                  <small>Password</small>
+                </label>
+                <input name="password" type="password" />
+              </div>
+              <div>
+                <button type="submit">{displayName}</button>
+              </div>
+              {error && error.response && <div> {error.response.data} </div>}
+            </form>
+          </div>
+        </Paper>
+      </Grid>
+    );
+  }
+}
 
 /**
  * CONTAINER

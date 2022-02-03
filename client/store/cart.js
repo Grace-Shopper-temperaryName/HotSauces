@@ -53,6 +53,7 @@ export const addToCart = (hotSauceId, quantity, orderId, customerId, price) => {
           },
         });
         dispatch(fetchCart(customerId, quantity, price));
+        history.goBack();
       } else {
         await axios.post(`/api/cart/${orderId}`, {
           hotSauceId,
@@ -107,7 +108,6 @@ export const subtractCartItem = (orderId, hotSauceId, customerId) => {
         },
       });
       dispatch(fetchCart(customerId));
-      history.goBack();
     } catch (error) {
       console.error(error);
     }
