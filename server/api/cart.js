@@ -1,12 +1,12 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
   models: { Customer, HotSauce, OrderHotSauce, Order },
-} = require("../db");
-const { requireToken, requireTokeninBody } = require("./middleware");
+} = require('../db');
+const { requireToken, requireTokeninBody } = require('./middleware');
 module.exports = router;
 
 // mounted on /api/cart
-router.get("/:customerId", requireToken, async (req, res, next) => {
+router.get('/:customerId', requireToken, async (req, res, next) => {
   try {
     if (req.customer.id === Number(req.params.customerId)) {
       const customer = await Customer.findByPk(req.params.customerId);
@@ -24,7 +24,7 @@ router.get("/:customerId", requireToken, async (req, res, next) => {
 });
 
 router.post(
-  "/:customerId/:orderId",
+  '/:customerId/:orderId',
   requireTokeninBody,
   async (req, res, next) => {
     try {
@@ -42,15 +42,18 @@ router.post(
   }
 );
 
-router.put("/:orderId/add", requireTokeninBody, async (req, res, next) => {
+router.put('/:orderId/add', requireTokeninBody, async (req, res, next) => {
   try {
     if (req.customer.id === Number(req.body.body.customerId)) {
-      const orderItem = await OrderHotSauce.findByPk(req.params.orderId, {
+      const orderItem = await OrderHotSauce.findOne({
         where: {
+          orderId: req.params.orderId,
           hotSauceId: req.body.body.hotSauceId,
         },
       });
+
       const newQuantity = orderItem.quantity + 1;
+
       await orderItem.update({
         orderId: req.params.orderId,
         hotSauceId: req.body.body.hotSauceId,
@@ -63,15 +66,17 @@ router.put("/:orderId/add", requireTokeninBody, async (req, res, next) => {
   }
 });
 
-router.put("/:orderId/subtract", requireTokeninBody, async (req, res, next) => {
+router.put('/:orderId/subtract', requireTokeninBody, async (req, res, next) => {
   try {
     if (req.customer.id === Number(req.body.body.customerId)) {
-      const orderItem = await OrderHotSauce.findByPk(req.params.orderId, {
+      const orderItem = await OrderHotSauce.findOne({
         where: {
+          orderId: req.params.orderId,
           hotSauceId: req.body.body.hotSauceId,
         },
       });
       const newQuantity = orderItem.quantity - 1;
+
       await orderItem.update({
         orderId: req.params.orderId,
         hotSauceId: req.body.body.hotSauceId,
@@ -85,7 +90,7 @@ router.put("/:orderId/subtract", requireTokeninBody, async (req, res, next) => {
 });
 
 router.delete(
-  "/:customerId/:orderId/:hotSauceId",
+  '/:customerId/:orderId/:hotSauceId',
   requireToken,
   async (req, res, next) => {
     try {
