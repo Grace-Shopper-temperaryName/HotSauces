@@ -33,20 +33,28 @@ header {
 
 nav {
   display: flex;
-  justify-content: space-between;
-  gap: 1em;
-}
-
-#rightLinks {
-  max-width: 150px;
-  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1em;
 }
 
 #leftLinks {
-  max-width: 200px;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+#centerLinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+#rightLinks {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1em;
 }
