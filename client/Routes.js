@@ -17,7 +17,6 @@ import Checkout from "./components/Checkout";
 import ConfirmationPage from "./components/ConfirmationPage";
 import LandingPage from "./components/LandingPage";
 
-
 /**
  * COMPONENT
  */
@@ -30,7 +29,7 @@ class Routes extends Component {
     const { isLoggedIn, isAdmin } = this.props;
 
     return (
-      <div>
+      <>
         {isLoggedIn ? (
           isAdmin ? (
             <Switch>
@@ -78,7 +77,7 @@ class Routes extends Component {
             <Route exact path="/confirmation" component={ConfirmationPage} />
           </Switch>
         )}
-      </div>
+      </>
     );
   }
 }

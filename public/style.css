@@ -1,16 +1,47 @@
 body {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
   font-family: "Roboto", sans-serif;
   font-family: "Urbanist", sans-serif;
   font-size: 20px;
 }
 
-.header {
-  height: 60%;
-  width: 50%;
-  background-image: linear-gradient(
-    rgba(4, 9, 30, 0, 7),
-    rgba(4, 9, 30, 0, 7) url("home.JPG")
-  );
+/*
+** NAV BAR
+*/
+
+header {
+  margin-bottom: 2rem;
+  border-bottom: solid 8px #f00;
+  padding: 1em;
+  text-align: center;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+#rightLinks {
+  max-width: 150px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+#leftLinks {
+  max-width: 200px;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+main {
+  flex-grow: 1;
 }
 
 a {
@@ -19,27 +50,6 @@ a {
 
 label {
   display: block;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-}
-
-#rightLinks {
-  width: 13%;
-  max-width: 150px;
-  display: flex;
-  justify-content: space-between;
-  margin-right: 1rem;
-}
-
-#leftLinks {
-  width: 13%;
-  max-width: 200px;
-  display: flex;
-  justify-content: space-between;
-  margin-left: 1rem;
 }
 
 form div {
@@ -129,10 +139,12 @@ img {
   height: auto;
 }
 
+#logo_container {
+  justify-content: center;
+}
+
 #logo {
   width: 150px;
-  height: 110px;
-  justify-content: center;
 }
 
 .text-box {
@@ -160,4 +172,16 @@ img {
 
 #editCustomerInfo {
   justify-content: center;
+}
+
+/*
+** LANDING PAGE
+*/
+
+.landingpage {
+  background: no-repeat center/100% url("./landingPage.jpg");
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 30rem;
 }
