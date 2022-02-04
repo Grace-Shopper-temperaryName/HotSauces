@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 const LandingPage = () => {
   return (
     <div className="landingpage">
-      <h1> Simple, Natural, Hot Sauce </h1>
+      <p> Simple, Natural, Hot Sauce </p>
       <Link to="/hotsauces">
-        <button>See Our Collection Here</button>
+        <button>Browse Our Hot Sauces</button>
       </Link>
     </div>
   );

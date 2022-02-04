@@ -14,10 +14,18 @@ body {
 */
 
 header {
-  margin-bottom: 2rem;
-  border-bottom: solid 8px #f00;
+  border-bottom: solid 8px #ff0b0a;
   padding: 1em;
   text-align: center;
+}
+
+#logo_container {
+  justify-content: center;
+}
+
+#logo {
+  width: 150px;
+  margin-left: 0;
 }
 
 nav {
@@ -41,7 +49,17 @@ nav {
 }
 
 main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   flex-grow: 1;
+}
+
+footer {
+  border-top: solid 8px #a80000;
+  padding: 1em;
+  text-align: center;
+  background-color: #eadcdb;
 }
 
 a {
@@ -50,6 +68,22 @@ a {
 
 label {
   display: block;
+}
+
+button {
+  border: 2px solid #eece01;
+  border-radius: 4px;
+  padding: 1em;
+  font-size: 1.1em;
+  font-weight: bold;
+  background-color: #a80000;
+  color: #eece01;
+  transition-duration: 1s;
+}
+
+button:hover {
+  background-color: #eece01;
+  color: #a80000;
 }
 
 form div {
@@ -130,22 +164,14 @@ form div {
   align-items: center;
 }
 
-.img {
+/* .img {
   max-width: 70%;
   height: auto;
 }
 img {
   max-width: 100%;
   height: auto;
-}
-
-#logo_container {
-  justify-content: center;
-}
-
-#logo {
-  width: 150px;
-}
+} */
 
 .text-box {
   width: 50%;
@@ -179,9 +205,18 @@ img {
 */
 
 .landingpage {
-  background: no-repeat center/100% url("./landingPage.jpg");
+  background: grey no-repeat url("./landingPage.jpg");
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  height: 30rem;
+  flex-grow: 1;
+  text-align: center;
+}
+
+.landingpage > p {
+  margin: 0;
+  color: #eece01;
+  font-size: 5rem;
+  font-weight: bold;
+  text-shadow: 4px 4px 8px #a80000;
 }
