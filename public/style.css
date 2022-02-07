@@ -215,6 +215,8 @@ form div {
 }
 
 #landingPage-btn {
+  width: fit-content;
+  margin: auto;
   border: 2px solid #eece01;
   border-radius: 4px;
   padding: 1em;
