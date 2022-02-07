@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 import { addToCart, createOrder, addToLocalCart } from "../store/cart";
 
-
 export class SingleHotSauce extends React.Component {
   constructor() {
     super();
@@ -63,28 +62,42 @@ export class SingleHotSauce extends React.Component {
 
   render() {
     const { singleHotSauce, isAdmin } = this.props;
-    const stock = singleHotSauce.stock || 1;
-    const { quantity } = this.state || 1;
+    const stock = singleHotSauce.stock || 0;
+    const { quantity } = this.state || 0;
     return (
       <div id="singleHotSauce">
-        <h1> {singleHotSauce.name} </h1>
-        <div className="container" id="hotSauce">
+        <h1>{singleHotSauce.name}</h1>
+        <div className="container">
           <div className="containerLeft">
             <img
-              className="img"
               src={singleHotSauce.imageUrl}
               alt={`picture of ${singleHotSauce.name}`}
             />
-
           </div>
           <div className="containerRight">
             {stock < 1 ? (
-              <h1> OUT OF STOCK! </h1>
+              <h1>OUT OF STOCK!</h1>
             ) : (
               <div>
                 <h2>{singleHotSauce.name}</h2>
                 <p> ${singleHotSauce.price / 100} </p>
-                <p> 🔥 {singleHotSauce.heatLevel} / 10</p>
+                <p>
+                  <small>
+                    {Array.apply(null, Array(singleHotSauce.heatLevel)).map(
+                      () => `🔥`
+                    )}
+                  </small>
+                  {singleHotSauce.heatLevel < 10 ? (
+                    <small className="flame-gradient">
+                      {Array.apply(
+                        null,
+                        Array(10 - singleHotSauce.heatLevel)
+                      ).map(() => `🔥`)}
+                    </small>
+                  ) : (
+                    ""
+                  )}
+                </p>
                 <p>{singleHotSauce.description}</p>
                 <form id="add-item-to-cart" onSubmit={this.handleAdd}>
                   <label htmlFor="quantity">Quantity</label>
@@ -101,7 +114,7 @@ export class SingleHotSauce extends React.Component {
                     <button>Edit Hot Sauce</button>
                   </Link>
                 ) : (
-                  <></>
+                  ""
                 )}
               </div>
             )}

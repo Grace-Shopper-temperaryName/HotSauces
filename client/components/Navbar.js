@@ -5,11 +5,12 @@ import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <header>
-    <div id="logo_container">
-      <Link to={isLoggedIn ? "/home" : "/"}>
+    <>
+      <Link to={isLoggedIn ? "/home" : "/"} id="logo-container">
         <img src="hotnsaucylogo.png" id="logo" alt="HotNSaucy logo" />
+        <span className="flame-gradient">Hot 'N' Saucy</span>
       </Link>
-    </div>
+    </>
     <nav>
       {isLoggedIn ? (
         <>

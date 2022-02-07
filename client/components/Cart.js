@@ -15,6 +15,11 @@ export class Cart extends Component {
     this.calculateTax = this.calculateTax.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
   }
+
+  componentDidMount() {
+    this.props.fetchCart(this.props.customerId);
+  }
+
   calculateSubTotal(items) {
     return (
       items.reduce((sum, item) => {
@@ -42,51 +47,70 @@ export class Cart extends Component {
   }
 
   render() {
-    const items = this.props.parentItems
-      ? this.props.parentItems
-      : this.props.cart.hotSauces || [];
+    const items = this.props.parentItems || this.props.cart.hotSauces || [];
     const { calculateSubTotal, calculateTax, calculateTotal } = this;
     const subTotal = calculateSubTotal(items);
+    const { isAdmin } = this.props || false;
     return (
-      <div>
-        <h2>Cart</h2>
-        {items.map((item) => (
-          <div className="container" key={item.id}>
-            <div className="containerLeft">
-              <img src={item.imageUrl} alt={`picture of ${item.name}`} />
-            </div>
-            <div className="containerRight">
-              <p>{item.id}</p>
-              <p>{item.name}</p>
-              <p>${item.price / 100}</p>
-              <button
-                onClick={() =>
-                  this.props.addCartItem(
-                    this.props.cart.id,
-                    item.id,
-                    this.props.customerId
-                  )
-                }
-              >
-                +
-              </button>
-              <p>{item.orderHotSauce.quantity}</p>
-              <button
-                onClick={() =>
-                  this.props.subtractCartItem(
-                    this.props.cart.id,
-                    item.id,
-                    this.props.customerId
-                  )
-                }
-              >
-                -
-              </button>
-              <p>
-                <strong>
-                  ${(item.price / 100) * item.orderHotSauce.quantity}
-                </strong>
+      <div id="cart">
+        <h1>Cart</h1>
+        <div className="all-items">
+          {items.map((item) => (
+            <div className="container" key={item.id}>
+              <div className="containerLeft">
+                <img src={item.imageUrl} alt={`picture of ${item.name}`} />
+              </div>
+              <div className="containerRight">
+                {isAdmin ? <p>item #{item.id}</p> : ""}
+                <p>{item.name}</p>
+                <table>
+                  <tr className="quantity-row">
+                    <td>
+                      <span>${item.price / 100}</span>
+                    </td>
+                    <td>
+                      <button
+                        className="operatorButtons"
+                        onClick={() =>
+                          this.props.addCartItem(
+                            this.props.cart.id,
+                            item.id,
+                            this.props.customerId
+                          )
+                        }
+                      >
+                        +
+                      </button>
+                    </td>
+                    <td>
+                      <span>{item.orderHotSauce.quantity}</span>
+                    </td>
+                    <td>
+                      <button
+                        className="operatorButtons"
+                        onClick={() =>
+                          this.props.subtractCartItem(
+                            this.props.cart.id,
+                            item.id,
+                            this.props.customerId
+                          )
+                        }
+                      >
+                        -
+                      </button>
+                    </td>
+                    <td>
+                      <span>
+                        <strong>
+                          ${(item.price / 100) * item.orderHotSauce.quantity}
+                        </strong>
+                      </span>
+                    </td>
+                  </tr>
+                </table>
+
                 <button
+                  className="deleteFromCart"
                   onClick={() =>
                     this.props.deleteFromCart(
                       this.props.cart.id,
@@ -97,20 +121,22 @@ export class Cart extends Component {
                 >
                   Remove From Cart
                 </button>
-              </p>
+              </div>
             </div>
-          </div>
-        ))}
-        <p>Subtotal: ${subTotal}</p>
-        <p>Tax: ${calculateTax(items)}</p>
-        <p>Total: ${calculateTotal(items)}</p>
-        {this.props.parentItems ? (
-          ""
-        ) : (
-          <Link to="/checkout">
-            <button>Purchase</button>
-          </Link>
-        )}
+          ))}
+        </div>
+        <div id="total-charges">
+          <p>Subtotal: ${subTotal}</p>
+          <p>Tax: ${calculateTax(items)}</p>
+          <p>Total: ${calculateTotal(items)}</p>
+          {this.props.parentItems ? (
+            ""
+          ) : (
+            <Link to="/checkout">
+              <button id="purchase-btn">Purchase</button>
+            </Link>
+          )}
+        </div>
       </div>
     );
   }
@@ -120,6 +146,7 @@ const mapState = (state) => {
   return {
     cart: state.cart,
     customerId: state.auth.id,
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 
