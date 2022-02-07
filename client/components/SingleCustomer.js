@@ -11,39 +11,77 @@ export class SingleCustomer extends React.Component {
     const { singleCustomer } = this.props;
     const { orders } = singleCustomer || [];
     return (
-      <div>
-        <div id="singleCustomer">
-          <div className="container" id="customerInfo">
-            <div className="containerLeft">
-              <h1>{`${singleCustomer.firstName} ${singleCustomer.lastName}`}</h1>
-            </div>
-            <div className="containerRight">
-              <small>Email:</small>
-              <p>{singleCustomer.email}</p>
-              <small>Address:</small>
-              <p>{singleCustomer.streetAddress}</p>
-              <p>{singleCustomer.city}</p>
-              <p>{singleCustomer.state}</p>
-              <p>{singleCustomer.zip}</p>
-            </div>
+      <div id="singleCustomer" className="component-container">
+        <h1>Customer Info</h1>
+        <div className="container" id="customerInfo">
+          <h2>{`${singleCustomer.firstName} ${singleCustomer.lastName}`}</h2>
+          <div className="containerRight">
+            <table className="customer-details">
+              <tbody>
+                <tr>
+                  <td>id: </td>
+                  <td>{singleCustomer.id}</td>
+                </tr>
+                <tr>
+                  <td>email: </td>
+                  <td>{singleCustomer.email}</td>
+                </tr>
+                <tr>
+                  <td>address: </td>
+                  <td>
+                    <p id="address-table">
+                      {singleCustomer.streetAddress}
+                      <br />
+                      {singleCustomer.city}
+                      <br />
+                      {singleCustomer.state}
+                      <br />
+                      {singleCustomer.zip}
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <h2>Order History</h2>
+        </div>
+        <h2>Order History</h2>
+        <div className="all-items">
           {orders ? (
             orders.length > 0 ? (
               orders.map((order) => (
-                <div className="container" id="customerOrders">
+                <div className="container" id="customerOrders" key={order.id}>
                   <div className="containerLeft">
-                    <h3>{order.orderStatus}</h3>
+                    <h3>{order.orderDate.slice(0, 10)}</h3>
                   </div>
                   <div className="containerRight">
-                    <small>Cart:</small>
-                    <span>{order.isCart}</span>
-                    <p>{order.orderDate}</p>
-                    <p>{order.amount}</p>
-                    <small>Payment:</small>
-                    <p>{order.paymentStatus}</p>
-                    <p>{order.provider}</p>
-                    <p>{order.cardNumber}</p>
+                    <table>
+                      <tbody>
+                        {order.isCart && (
+                          <tr>
+                            <td>Cart:</td>
+                            <td>{order.isCart}</td>
+                          </tr>
+                        )}
+                        <tr>
+                          <td>total: </td>
+                          <td>${order.amount / 100}</td>
+                        </tr>
+                        <tr>
+                          <td>payment status: </td>
+                          <td>
+                            <strong>{order.paymentStatus}</strong>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>payment provider: </td>
+                          <td>{order.provider}</td>
+                        </tr>
+                        <tr>
+                          <td>payment card #: </td>
+                          <td>{order.cardNumber}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               ))

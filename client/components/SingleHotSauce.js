@@ -65,8 +65,7 @@ export class SingleHotSauce extends React.Component {
     const stock = singleHotSauce.stock || 0;
     const { quantity } = this.state || 0;
     return (
-      <div id="singleHotSauce">
-        <h1>{singleHotSauce.name}</h1>
+      <div id="singleHotSauce" className="component-container">
         <div className="container">
           <div className="containerLeft">
             <img
@@ -78,10 +77,10 @@ export class SingleHotSauce extends React.Component {
             {stock < 1 ? (
               <h1>OUT OF STOCK!</h1>
             ) : (
-              <div>
+              <>
                 <h2>{singleHotSauce.name}</h2>
-                <p> ${singleHotSauce.price / 100} </p>
-                <p>
+                <span> ${singleHotSauce.price / 100} </span>
+                <span>
                   <small>
                     {Array.apply(null, Array(singleHotSauce.heatLevel)).map(
                       () => `🔥`
@@ -97,9 +96,13 @@ export class SingleHotSauce extends React.Component {
                   ) : (
                     ""
                   )}
-                </p>
-                <p>{singleHotSauce.description}</p>
-                <form id="add-item-to-cart" onSubmit={this.handleAdd}>
+                </span>
+                <span>{singleHotSauce.description}</span>
+                <form
+                  id="add-item-to-cart"
+                  className="container"
+                  onSubmit={this.handleAdd}
+                >
                   <label htmlFor="quantity">Quantity</label>
                   <input
                     type="number"
@@ -108,15 +111,17 @@ export class SingleHotSauce extends React.Component {
                     onChange={this.handleChange}
                   ></input>
                   <button type="submit">Add to Cart</button>
+                  {isAdmin ? (
+                    <Link to={`/hotsauces/${singleHotSauce.id}/edit`}>
+                      <button id="edit-hotSauce" className="change-btns">
+                        Edit Hot Sauce
+                      </button>
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </form>
-                {isAdmin ? (
-                  <Link to={`/hotsauces/${singleHotSauce.id}/edit`}>
-                    <button>Edit Hot Sauce</button>
-                  </Link>
-                ) : (
-                  ""
-                )}
-              </div>
+              </>
             )}
           </div>
         </div>

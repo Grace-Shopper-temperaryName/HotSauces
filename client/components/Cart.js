@@ -52,80 +52,86 @@ export class Cart extends Component {
     const subTotal = calculateSubTotal(items);
     const { isAdmin } = this.props || false;
     return (
-      <div id="cart">
+      <div id="cart" className="component-container">
         <h1>Cart</h1>
-        <div className="all-items">
-          {items.map((item) => (
-            <div className="container" key={item.id}>
-              <div className="containerLeft">
-                <img src={item.imageUrl} alt={`picture of ${item.name}`} />
-              </div>
-              <div className="containerRight">
-                {isAdmin ? <p>item #{item.id}</p> : ""}
-                <p>{item.name}</p>
-                <table>
-                  <tr className="quantity-row">
-                    <td>
-                      <span>${item.price / 100}</span>
-                    </td>
-                    <td>
-                      <button
-                        className="operatorButtons"
-                        onClick={() =>
-                          this.props.addCartItem(
-                            this.props.cart.id,
-                            item.id,
-                            this.props.customerId
-                          )
-                        }
-                      >
-                        +
-                      </button>
-                    </td>
-                    <td>
-                      <span>{item.orderHotSauce.quantity}</span>
-                    </td>
-                    <td>
-                      <button
-                        className="operatorButtons"
-                        onClick={() =>
-                          this.props.subtractCartItem(
-                            this.props.cart.id,
-                            item.id,
-                            this.props.customerId
-                          )
-                        }
-                      >
-                        -
-                      </button>
-                    </td>
-                    <td>
-                      <span>
-                        <strong>
-                          ${(item.price / 100) * item.orderHotSauce.quantity}
-                        </strong>
-                      </span>
-                    </td>
-                  </tr>
-                </table>
+        {items.length > 0 && (
+          <div className="all-items">
+            {items.map((item) => (
+              <div className="container" key={item.id}>
+                <div className="containerLeft">
+                  <img src={item.imageUrl} alt={`picture of ${item.name}`} />
+                </div>
+                <div className="containerRight">
+                  {isAdmin ? <p>item #{item.id}</p> : ""}
+                  <p>{item.name}</p>
+                  <table>
+                    <tbody>
+                      <tr className="quantity-row">
+                        <td>
+                          <span>${item.price / 100}</span>
+                        </td>
+                        <td>
+                          <button
+                            className="operatorButtons"
+                            onClick={() =>
+                              this.props.addCartItem(
+                                this.props.cart.id,
+                                item.id,
+                                this.props.customerId
+                              )
+                            }
+                          >
+                            +
+                          </button>
+                        </td>
+                        <td>
+                          <span>{item.orderHotSauce.quantity}</span>
+                        </td>
+                        <td>
+                          <button
+                            className="operatorButtons"
+                            onClick={() =>
+                              this.props.subtractCartItem(
+                                this.props.cart.id,
+                                item.id,
+                                this.props.customerId
+                              )
+                            }
+                          >
+                            -
+                          </button>
+                        </td>
+                        <td>
+                          <span>
+                            <strong>
+                              $
+                              {(item.price / 100) * item.orderHotSauce.quantity}
+                            </strong>
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-                <button
-                  className="deleteFromCart"
-                  onClick={() =>
-                    this.props.deleteFromCart(
-                      this.props.cart.id,
-                      item.id,
-                      this.props.customerId
-                    )
-                  }
-                >
-                  Remove From Cart
-                </button>
+                  <button
+                    id="deleteFromCart"
+                    className="change-btns"
+                    onClick={() =>
+                      this.props.deleteFromCart(
+                        this.props.cart.id,
+                        item.id,
+                        this.props.customerId
+                      )
+                    }
+                  >
+                    Remove From Cart
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-        <div id="total-charges">
+            ))}
+          </div>
+        )}
+        <div id="total-charges" className="container">
           <p>Subtotal: ${subTotal}</p>
           <p>Tax: ${calculateTax(items)}</p>
           <p>Total: ${calculateTotal(items)}</p>

@@ -11,7 +11,7 @@ export class AllHotSauces extends Component {
   render() {
     const { hotSauces } = this.props;
     return (
-      <div id="allHotSauces">
+      <div id="allHotSauces" className="component-container">
         <h1>All the Sauce</h1>
         <div className="all-items">
           {hotSauces.map((hotSauce) => (

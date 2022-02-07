@@ -93,11 +93,20 @@ main {
   text-align: center;
 }
 
+.component-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 1em;
+}
+
 a {
   text-decoration: none;
 }
 
 button {
+  display: block;
+  width: 100%;
   border: none;
   border-radius: 4px;
   padding: 1em;
@@ -110,8 +119,17 @@ button:hover {
   background-color: rgb(255, 136, 0);
 }
 
+.cancelChanges {
+  background-color: #fff;
+  border: 1px solid #eece01;
+}
+
 label {
   display: block;
+}
+
+input {
+  height: 2em;
 }
 
 form div {
@@ -131,12 +149,13 @@ form div {
   width: 45%;
   max-width: 405px;
   min-width: 350px;
-  padding: 1em;
-  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1em;
+  border-radius: 8px;
+  padding: 1em;
+  align-items: center;
   box-shadow: 0 -0 1em rgba(0, 0, 0, 0.05), -0 0 1em rgba(0, 0, 0, 0.05);
 }
 
@@ -156,21 +175,12 @@ form div {
 }
 
 .containerRight {
-  flex-grow: 1;
+  max-width: 100%;
   align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1em;
-}
-
-#containerRightSingle {
-  float: right;
-  display: flex;
-  flex-direction: column;
-  margin: 4px 4px;
-  text-align: center;
-  align-items: center;
 }
 
 .text-box {
@@ -181,19 +191,6 @@ form div {
   left: 60%;
   transform: translate(-50%, -50%);
   text-align: center;
-}
-
-.homeimage {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  width: 70%;
-}
-
-#editCustomerInfo {
-  justify-content: center;
 }
 
 /*
@@ -234,11 +231,86 @@ form div {
 }
 
 /*
+** HOME
+*/
+
+#home {
+  align-items: center;
+}
+
+#user-info {
+  align-items: unset;
+}
+
+.homeimage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+/*
+** LOGIN
+*/
+
+#login {
+  flex-grow: 1;
+  align-items: center;
+}
+
+form[name="login"] {
+  min-width: 290px;
+  align-items: unset;
+}
+
+/*
+** SIGNUP
+*/
+
+#signup {
+  flex-grow: 1;
+  align-items: center;
+}
+
+form[name="signup"] {
+  min-width: 290px;
+  align-items: unset;
+}
+
+/*
+** ALLCUSTOMERS
+*/
+
+td {
+  border: 1px solid black;
+  padding: 0.5em;
+  word-break: break-all;
+}
+
+/*
+** SINGLECUSTOMER
+*/
+
+#singleCustomer {
+  align-items: center;
+}
+
+/*
+** EDITCUSTOMER
+*/
+
+#edit-customer {
+  align-items: center;
+}
+
+/*
 ** ALLHOTSAUCES
 */
 
 #allHotSauces {
-  padding: 1em;
+  align-items: center;
 }
 
 /*
@@ -246,17 +318,18 @@ form div {
 */
 
 #singleHotSauce {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 1rem;
+}
+
+#singleHotSauce-quantity {
   padding: 1em;
 }
 
 #add-item-to-cart {
-  display: flex;
-  flex-direction: column;
-  gap: 1em;
+  min-width: 90%;
+  align-items: unset;
+  padding: unset;
+  box-shadow: unset;
 }
 
 #add-item-to-cart input {
@@ -264,15 +337,26 @@ form div {
   margin: auto;
 }
 
+#edit-hotSauce {
+  width: 100%;
+  align-items: center;
+}
+
+/*
+** ADDHOTSAUCE
+*/
+
+#addHotSauce {
+  align-items: center;
+}
+
 /*
 ** CART
 */
 
 #cart {
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
   align-items: center;
-  padding: 1em;
 }
 
 .quantity-row {
@@ -280,6 +364,10 @@ form div {
   justify-content: space-between;
   align-items: center;
   gap: 0.5em;
+}
+
+.quantity-row td {
+  border: unset;
 }
 
 .operatorButtons {
@@ -291,23 +379,24 @@ form div {
   text-align: center;
 }
 
-.deleteFromCart {
-  width: fit-content;
+.change-btns {
   color: #eadcdb;
   background-color: #a80000;
   transition-duration: 1s;
 }
 
-.deleteFromCart:hover {
+.change-btns:hover {
   background-color: red;
 }
 
 #total-charges {
-  margin-top: 1em;
-}
-
-#purchase-btn {
-  width: 8em;
+  width: 20em;
+  max-width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: unset;
+  gap: unset;
+  box-shadow: unset;
 }
 
 /*

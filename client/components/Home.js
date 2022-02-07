@@ -17,14 +17,14 @@ class Home extends Component {
     const { firstName, id } = this.props;
     const { orders } = this.props || [];
     return (
-      <div>
-        <div className="container">
+      <div id="home" className="component-container">
+        <div id="user-info" className="container">
           <div>
             <img src="login.jpg" className="homeimage" />
           </div>
-          <h2>Welcome, {firstName}</h2>
+          <h2>Hello, {firstName}!</h2>
           <Link to={`/profile/${id}/edit`}>
-            <button type="submit" id="editCustomerInfo">
+            <button type="submit" id="editCustomerInfo" className="change-btns">
               Edit Info
             </button>
           </Link>
