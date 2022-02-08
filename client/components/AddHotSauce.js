@@ -43,58 +43,65 @@ class AddHotSauce extends Component {
     const { name, heatLevel, price, stock, imageUrl, sku, description } =
       this.state;
     return (
-      <form id="create-form" onSubmit={this.handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="heatLevel">Heat Level</label>
-        <input
-          type="number"
-          name="heatLevel"
-          value={heatLevel}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="price">Price</label>
-        <input
-          type="text"
-          name="price"
-          value={price}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="stock">Stock</label>
-        <input
-          type="text"
-          name="stock"
-          value={stock}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="imageUrl">Image Link</label>
-        <input
-          type="text"
-          name="imageUrl"
-          value={imageUrl}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="sku">Sku #</label>
-        <input
-          type="text"
-          name="sku"
-          value={sku}
-          onChange={this.handleChange}
-        />
-        <label htmlFor="description">Description</label>
-        <input
-          type="text"
-          name="description"
-          value={description}
-          onChange={this.handleChange}
-        />
-        <button type="submit">Create</button>
-      </form>
+      <div id="addHotSauce" className="component-container">
+        <h1>Add New Hot Sauce</h1>
+        <form
+          id="create-form"
+          className="container"
+          onSubmit={this.handleSubmit}
+        >
+          <label htmlFor="name">Name</label>
+          <input
+            type="text"
+            name="name"
+            value={name}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="heatLevel">Heat Level</label>
+          <input
+            type="number"
+            name="heatLevel"
+            value={heatLevel}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="price">Price</label>
+          <input
+            type="text"
+            name="price"
+            value={price}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="stock">Stock</label>
+          <input
+            type="text"
+            name="stock"
+            value={stock}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="imageUrl">Image Link</label>
+          <input
+            type="text"
+            name="imageUrl"
+            value={imageUrl}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="sku">Sku #</label>
+          <input
+            type="text"
+            name="sku"
+            value={sku}
+            onChange={this.handleChange}
+          />
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            name="description"
+            value={description}
+            onChange={this.handleChange}
+          />
+          <button type="submit">Create</button>
+        </form>
+      </div>
     );
   }
 }

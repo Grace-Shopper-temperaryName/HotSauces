@@ -1,56 +1,40 @@
 import React from "react";
 import { connect } from "react-redux";
 import { loginAuthenticate } from "../store";
-import { Grid, Paper } from "@material-ui/core";
 
-/**
- * COMPONENT
- */
 class LoginAuthForm extends React.Component {
   render() {
     const { name, displayName, handleSubmit, error } = this.props;
-    const paperStyle = {
-      padding: 40,
-      height: "20vh",
-      width: 500,
-      margin: "20px auto",
-    };
     return (
-      <Grid>
-        <Paper elevation={15} style={paperStyle}>
+      <div id="login" className="component-container">
+        <h1>Login</h1>
+        <form onSubmit={handleSubmit} name={name} className="container">
           <div>
-            <form onSubmit={handleSubmit} name={name}>
-              <div>
-                <label htmlFor="email">
-                  <small>Email</small>
-                </label>
-                <input name="email" type="email" />
-              </div>
-              <div>
-                <label htmlFor="password">
-                  <small>Password</small>
-                </label>
-                <input name="password" type="password" />
-              </div>
-              <div>
-                <button type="submit">{displayName}</button>
-              </div>
-              {error && error.response && <div> {error.response.data} </div>}
-            </form>
+            <label htmlFor="email">
+              <span>Email</span>
+            </label>
+            <input name="email" type="email" />
           </div>
-        </Paper>
-      </Grid>
+          <div>
+            <label htmlFor="password">
+              <span>Password</span>
+            </label>
+            <input name="password" type="password" />
+          </div>
+          <div>
+            <button type="submit" id="login-btn">
+              {displayName}
+            </button>
+          </div>
+          {error && error.response && (
+            <div className="form-error-message">{error.response.data}</div>
+          )}
+        </form>
+      </div>
     );
   }
 }
 
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
 const mapLogin = (state) => {
   return {
     name: "login",

@@ -111,9 +111,9 @@ export class EditCustomer extends Component {
     } = this.state;
     const { handleChange, handleCancel, handleSubmit } = this;
     return (
-      <div>
+      <div id="edit-customer" className="component-container">
         {this.props.parentAuth ? "" : <h2>Edit Personal Info</h2>}
-        <form id="edit-form" onSubmit={handleSubmit}>
+        <form id="edit-form" className="container" onSubmit={handleSubmit}>
           <label htmlFor="firstName">First Name</label>
           <input
             type="text"
@@ -180,7 +180,7 @@ export class EditCustomer extends Component {
               <button type="submit" id="saveChanges">
                 Save Changes
               </button>
-              <button onClick={handleCancel} id="cancelChanges">
+              <button onClick={handleCancel} className="cancelChanges">
                 Cancel Changes
               </button>
             </>

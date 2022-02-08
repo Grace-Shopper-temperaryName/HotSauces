@@ -2,69 +2,49 @@ import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../store";
-import styled from "styled-components";
-
-const Navcontainer = styled.div`
-  background-color: white;
-  display:inline-block: ;
-`;
-
-const Navwrapper = styled.div`
-  display:inline-block: ;
-`;
-
 
 const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
-  <Navcontainer>
-    <Navwrapper>
+  <header>
+    <>
+      <Link to={isLoggedIn ? "/home" : "/"} id="logo-container">
+        <img src="hotnsaucylogo.png" id="logo" alt="HotNSaucy logo" />
+        <span className="flame-gradient">Hot 'N' Saucy</span>
+      </Link>
+    </>
+    <nav>
       {isLoggedIn ? (
-        <Link to="/home">
-          <img src="hotnsaucylogo.png" id="logo" />
-        </Link>
-    ) : (
-      <Link to="/hotsauces">
-          <img src="hotnsaucylogo.png" id="logo" />
-        </Link>
-      )}
-      <nav>
-      {isLoggedIn ? (
-        isAdmin ? (
-          <div>
-            {/* The navbar will show these links after you log in */}
-            <Link to="/customers">Customers</Link>
-            <Link to="/hotsauces/add">Add Hot Sauce</Link>
-            <a href="#" onClick={handleClick}>
-              Logout
-            </a>
-          </div>
-        ) : (
-          <div>
-            {/* The navbar will show these links after you log in */}
-            <a href="#" onClick={handleClick}>
-              Logout
-            </a>
-          </div>
-        ) ):
-        (
+        <>
           <div id="leftLinks">
-            {/* The navbar will show these links before you log in */}
-            <Link to="/login">LOGIN</Link>
-            <Link to="/signup">SIGN UP </Link>
+            {/* The nav will show these links after user logs in */}
+            <a href="#" onClick={handleClick}>
+              LOGOUT
+            </a>
           </div>
-        )}
-        <div id="rightLinks">
-          <Link to="/hotsauces">SHOP</Link>
-          <Link to="/cart"> CART </Link>
+          {/* The nav will show these links after you log in as Admin */}
+          {isAdmin ? (
+            <div id="centerLinks">
+              <Link to="/customers">CUSTOMERS</Link>
+              <Link to="/hotsauces/add">ADD HOT SAUCE</Link>
+            </div>
+          ) : (
+            ""
+          )}
+        </>
+      ) : (
+        <div id="leftLinks">
+          {/* The nav will show these links when not logged in */}
+          <Link to="/login">LOGIN</Link>
+          <Link to="/signup">SIGN UP</Link>
         </div>
-      </nav>
-      <hr />
-    </Navwrapper>
-  </Navcontainer>
+      )}
+      <div id="rightLinks">
+        <Link to="/hotsauces">SHOP</Link>
+        <Link to="/cart">CART</Link>
+      </div>
+    </nav>
+  </header>
 );
 
-/**
- * CONTAINER
- */
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,

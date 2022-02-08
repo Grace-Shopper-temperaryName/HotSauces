@@ -59,43 +59,56 @@ class EditHotSauce extends Component {
       this.state;
     const { handleChange, handleCancel, handleSubmit } = this;
     return (
-      <form id="edit-form" onSubmit={handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input type="text" name="name" value={name} onChange={handleChange} />
-        <label htmlFor="heatLevel">Heat Level</label>
-        <input
-          type="number"
-          name="heatLevel"
-          value={heatLevel}
-          onChange={handleChange}
-        />
-        <label htmlFor="price">Price</label>
-        <input type="text" name="price" value={price} onChange={handleChange} />
-        <label htmlFor="stock">Stock</label>
-        <input type="text" name="stock" value={stock} onChange={handleChange} />
-        <label htmlFor="imageUrl">Image Link</label>
-        <input
-          type="text"
-          name="imageUrl"
-          value={imageUrl}
-          onChange={handleChange}
-        />
-        <label htmlFor="sku">Sku #</label>
-        <input type="text" name="sku" value={sku} onChange={handleChange} />
-        <label htmlFor="description">Description</label>
-        <input
-          type="text"
-          name="description"
-          value={description}
-          onChange={handleChange}
-        />
-        <button type="submit" id="saveChanges">
-          Save Changes
-        </button>
-        <button onClick={handleCancel} id="cancelChanges">
-          Cancel Changes
-        </button>
-      </form>
+      <div id="edit-hotSauce" className="component-container">
+        <h2>Edit Hot Sauce info</h2>
+        <form id="edit-form" className="container" onSubmit={handleSubmit}>
+          <label htmlFor="name">Name</label>
+          <input type="text" name="name" value={name} onChange={handleChange} />
+          <label htmlFor="heatLevel">Heat Level</label>
+          <input
+            type="number"
+            name="heatLevel"
+            value={heatLevel}
+            onChange={handleChange}
+          />
+          <label htmlFor="price">Price</label>
+          <input
+            type="text"
+            name="price"
+            value={price}
+            onChange={handleChange}
+          />
+          <label htmlFor="stock">Stock</label>
+          <input
+            type="text"
+            name="stock"
+            value={stock}
+            onChange={handleChange}
+          />
+          <label htmlFor="imageUrl">Image Link</label>
+          <input
+            type="text"
+            name="imageUrl"
+            value={imageUrl}
+            onChange={handleChange}
+          />
+          <label htmlFor="sku">Sku #</label>
+          <input type="text" name="sku" value={sku} onChange={handleChange} />
+          <label htmlFor="description">Description</label>
+          <input
+            type="text"
+            name="description"
+            value={description}
+            onChange={handleChange}
+          />
+          <button type="submit" id="saveChanges">
+            Save Changes
+          </button>
+          <button onClick={handleCancel} className="cancelChanges">
+            Cancel Changes
+          </button>
+        </form>
+      </div>
     );
   }
 }

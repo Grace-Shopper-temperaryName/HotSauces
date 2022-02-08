@@ -10,26 +10,44 @@ export class AllCustomers extends Component {
   render() {
     const { customers } = this.props;
     return (
-      <div>
-        <h1>Customers</h1>
-        <div id="allCustomers">
+      <div id="allCustomers" className="component-container">
+        <h1>All Customers</h1>
+        <div className="all-items">
           {customers.map((customer) => (
-            <div className="container" key={customer.id}>
-              <div className="containerLeft">
-                <h2>Customer {customer.id}</h2>
-                <h3>{customer.name}</h3>
-              </div>
+            <div
+              id="customer-container"
+              className="container"
+              key={customer.id}
+            >
               <Link to={`/customers/${customer.id}`}>
-                <div className="containerRight">
-                  <small>Email:</small>
-                  <p>{customer.email}</p>
-                  <small>Address:</small>
-                  <p>{customer.streetAddress}</p>
-                  <p>{customer.city}</p>
-                  <p>{customer.state}</p>
-                  <p>{customer.zip}</p>
-                </div>
+                <h2>{`${customer.firstName} ${customer.lastName}`}</h2>
               </Link>
+              <table className="customer-details">
+                <tbody>
+                  <tr>
+                    <td>id: </td>
+                    <td>{customer.id}</td>
+                  </tr>
+                  <tr>
+                    <td>email: </td>
+                    <td>{customer.email}</td>
+                  </tr>
+                  <tr>
+                    <td>address: </td>
+                    <td>
+                      <p id="address-table">
+                        {customer.streetAddress}
+                        <br />
+                        {customer.city}
+                        <br />
+                        {customer.state}
+                        <br />
+                        {customer.zip}
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           ))}
         </div>

@@ -11,9 +11,9 @@ export class AllHotSauces extends Component {
   render() {
     const { hotSauces } = this.props;
     return (
-      <div>
-        <h1 className="text">All the Sauce</h1>
-        <div id="allSauces">
+      <div id="allHotSauces" className="component-container">
+        <h1>All the Sauce</h1>
+        <div className="all-items">
           {hotSauces.map((hotSauce) => (
             <div className="container" key={hotSauce.id}>
               <div className="containerLeft">
@@ -24,9 +24,20 @@ export class AllHotSauces extends Component {
               </div>
               <Link to={`/hotsauces/${hotSauce.id}`}>
                 <div className="containerRight">
-                  <p>{hotSauce.name}</p>
-                  <p>${hotSauce.price / 100}</p>
-                  <p>🔥{hotSauce.heatLevel} / 10</p>
+                  <span>{hotSauce.name}</span>
+                  <span>${hotSauce.price / 100}</span>
+                  <span>
+                    <small>
+                      {Array.apply(null, Array(hotSauce.heatLevel)).map(
+                        () => `🔥`
+                      )}
+                    </small>
+                    <small className="flame-gradient">
+                      {Array.apply(null, Array(10 - hotSauce.heatLevel)).map(
+                        () => `🔥`
+                      )}
+                    </small>
+                  </span>
                 </div>
               </Link>
             </div>
