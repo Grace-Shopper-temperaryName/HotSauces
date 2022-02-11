@@ -18,35 +18,44 @@ class Home extends Component {
     const { orders } = this.props || [];
     return (
       <div id="home" className="component-container">
-        <div id="user-info" className="container">
-          <div>
-            <img src="login.jpg" className="homeimage" />
+        <div id="user-info" className="info-banner">
+          <div className="containerLeft" id="user-info-left">
+            <img
+              src="homeImage.jpg"
+              alt="picture of hot sauce"
+              id="home-image"
+            />
           </div>
-          <h2>Hello, {firstName}!</h2>
-          <Link to={`/profile/${id}/edit`}>
-            <button type="submit" id="editCustomerInfo" className="change-btns">
-              Edit Info
-            </button>
-          </Link>
+          <div className="containerRight">
+            <p>Hello, {firstName}!</p>
+            <Link to={`/profile/${id}/edit`}>
+              <button
+                type="submit"
+                id="editCustomerInfo"
+                className="change-btns"
+              >
+                Edit Info
+              </button>
+            </Link>
+          </div>
         </div>
-        <div className="container" id="customerOrders">
+        <div id="customerOrders">
           <h3>Recent Orders</h3>
-
           {orders ? (
             orders.length > 0 ? (
-              orders.slice(0, 5).map((order) => (
-                <div className="container" id="customerOrders" key={order.id}>
+              orders.map((order) => (
+                <div className="container" key={order.id}>
                   <div className="containerLeft">
                     <h3>{order.orderStatus}</h3>
                   </div>
                   <div className="containerRight">
                     {order.isCart ? "🛒" : ""}
-                    <p>{order.orderDate.slice(0, 10)}</p>
-                    <p>${order.amount / 100}</p>
+                    <span>{order.orderDate.slice(0, 10)}</span>
+                    <span>${order.amount / 100}</span>
                     <small>Payment:</small>
-                    <p>{order.paymentStatus}</p>
-                    <p>{order.provider}</p>
-                    <p>***{order.cardNumber.slice(-4)}</p>
+                    <span>{order.paymentStatus}</span>
+                    <span>{order.provider}</span>
+                    <span>***{order.cardNumber.slice(-4)}</span>
                   </div>
                 </div>
               ))
