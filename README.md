@@ -1,4 +1,64 @@
-# FS-App-Template
+<p align="center">
+  <img width="500px" src="public/landingPage.jpg" alt="Simple, natural, hot sauce">
+</p>
+<h3 align="center">
+Hot ‘N’ Saucy is an e-commerce web app that provides customers with a variety of artisanal hot sauces.
+</h3>
+
+
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Tech Stack](#tech-stack)
+- [Developers](#developers)
+
+<!-- - [Features](#features) -->
+<!-- - [Fork This Repo](#fork-this-repo) -->
+
+## Introduction
+
+Hot ‘N’ Saucy is an e-commerce web app that provides customers with a variety of artisanal hot sauces.  There are features for guests, returning customers with secure and persistent profiles, as well as administrators with access to product inventory and customer data. 
+
+Satisfy your cravings to burn with a visit to [Hot ‘N’ Saucy](https://hotnsaucy.herokuapp.com/)!
+
+## Tech Stack
+
+- Node.js
+- JavaScript
+- React
+- Redux
+- Axios
+- Express
+- pg
+- Sequelize
+- PostgreSQL
+- Heroku
+
+<!-- ## Features
+
+### App Features
+
+- ***Secure & Persistent Login:*** Provide customers with a safe and secure shopping experience
+
+### Technical Features
+
+- ***Secure & persistent registration/login:*** Guest registration and user login with email & password. User data is safe and secure using bcrypt and jsonwebtokens. -->
+
+## Developers
+
+Meet the Hot ‘N’ Saucy development team!
+
+- Regine Blanchard - [Github](https://github.com/rblanchard719) | [LinkedIn](https://www.linkedin.com/in/regineblanchard719/)
+- Angel Hernandez - [Github](https://github.com/am-hernandez) | [LinkedIn](https://www.linkedin.com/in/angel-m-hernandez/)
+- Dongli Anthony Liang - [Github](https://github.com/AnthonyLiang1117) | [LinkedIn](https://www.linkedin.com/in/dongli-liang/)
+- Heather White - [Github](https://github.com/HTHR-WHT) | [LinkedIn](https://www.linkedin.com/in/heather-white-nyc/)
+
+<!-- ## Fork This Repo
+
+Fork and clone this repo. Then, `npm install`. -->
+
+
+<!-- # FS-App-Template
 
 ## Setup
 
@@ -74,4 +134,4 @@ Database Setup
       collaborator on the app.
 
 
-Now, you should be deployed!
+Now, you should be deployed! -->
