@@ -57,7 +57,12 @@ export class Cart extends Component {
         {items.length > 0 && (
           <div className="all-items">
             {items.map((item) => (
-              <div className="container" key={item.id}>
+              <div
+                className={`container${
+                  this.props.parentItems ? " checkout-item" : ""
+                }`}
+                key={item.id}
+              >
                 <div className="containerLeft">
                   <img src={item.imageUrl} alt={`picture of ${item.name}`} />
                 </div>
@@ -124,7 +129,7 @@ export class Cart extends Component {
                       )
                     }
                   >
-                    Remove From Cart
+                    {this.props.parentItems ? "🗑️" : "Remove From Cart"}
                   </button>
                 </div>
               </div>
@@ -135,9 +140,7 @@ export class Cart extends Component {
           <p>Subtotal: ${subTotal}</p>
           <p>Tax: ${calculateTax(items)}</p>
           <p>Total: ${calculateTotal(items)}</p>
-          {this.props.parentItems ? (
-            ""
-          ) : (
+          {!this.props.parentItems && (
             <Link to="/checkout">
               <button id="purchase-btn">Purchase</button>
             </Link>

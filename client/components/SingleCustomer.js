@@ -54,14 +54,9 @@ export class SingleCustomer extends React.Component {
                     <h3>{order.orderDate.slice(0, 10)}</h3>
                   </div>
                   <div className="containerRight">
+                    {order.isCart && "🛒"}
                     <table>
                       <tbody>
-                        {order.isCart && (
-                          <tr>
-                            <td>Cart:</td>
-                            <td>{order.isCart}</td>
-                          </tr>
-                        )}
                         <tr>
                           <td>total: </td>
                           <td>${order.amount / 100}</td>

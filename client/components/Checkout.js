@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import { me } from "../store/auth";
 import { Cart } from "./Cart";
 import { EditCustomer } from "./EditCustomer";
+import {
+  addCartItem,
+  subtractCartItem,
+  deleteFromCart,
+  fetchCart,
+} from "../store/cart";
 
 export class Checkout extends React.Component {
   componentDidMount() {
@@ -16,7 +22,13 @@ export class Checkout extends React.Component {
     const providers = ["americanexpress", "mastercard", "visa"];
     return (
       <div>
-        <Cart parentItems={items} />
+        <Cart
+          parentItems={items}
+          addCartItem={addCartItem}
+          subtractCartItem={subtractCartItem}
+          deleteFromCart={deleteFromCart}
+          fetchCart={fetchCart}
+        />
         <h3>Billing info:</h3>
         <EditCustomer
           parentAuth={this.props.auth}
