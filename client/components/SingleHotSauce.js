@@ -33,10 +33,11 @@ export class SingleHotSauce extends React.Component {
 
   async handleAdd(event) {
     event.preventDefault();
+
     if (this.props.customerId) {
       const { singleHotSauce, customerId } = this.props;
       if (!this.props.cartId) {
-        this.props.makeOrder();
+        this.props.makeOrder(customerId);
       }
       const { quantity } = this.state;
       this.props.addToCart(
@@ -147,7 +148,7 @@ const mapDispatch = (dispatch) => {
       dispatch(addToCart(hotSauceId, quantity, cartId, customerId, price)),
     addToLocalCart: (hotSauceId, quantity, cartId, customerId, price) =>
       dispatch(addToLocalCart(hotSauceId, quantity, cartId, customerId, price)),
-    makeOrder: () => dispatch(createOrder()),
+    makeOrder: (customerId) => dispatch(createOrder(customerId)),
   };
 };
 

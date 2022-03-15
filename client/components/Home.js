@@ -46,7 +46,7 @@ class Home extends Component {
                     <small>Payment:</small>
                     <p>{order.paymentStatus}</p>
                     <p>{order.provider}</p>
-                    <p>***{order.cardNumber.slice(-4)}</p>
+                    <p>***{order.cardNumber?.slice(-4) && ""}</p>
                   </div>
                 </div>
               ))

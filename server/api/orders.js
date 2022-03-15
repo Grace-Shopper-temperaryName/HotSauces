@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const {
-  models: { Guest, Order },
+  models: { Customer, Guest, Order },
 } = require("../db");
+const { requireTokeninBody } = require("./middleware");
 module.exports = router;
 
 // mounted at /api/orders
@@ -23,7 +24,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", requireTokeninBody, async (req, res, next) => {
   try {
     const orderStatus = "open";
     const orderDate = new Date();
@@ -37,6 +38,9 @@ router.post("/", async (req, res, next) => {
       amount,
       paymentStatus,
     });
+
+    await req.customer.addOrder(order);
+
     res.json(order);
   } catch (error) {
     next(error);

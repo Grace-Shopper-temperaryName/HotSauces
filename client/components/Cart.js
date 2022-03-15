@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { me } from "../store/auth";
 import {
   addCartItem,
   subtractCartItem,
@@ -17,7 +18,8 @@ export class Cart extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchCart(this.props.customerId);
+    this.props.loadCart(this.props.id);
+    this.props.fetchAuth();
   }
 
   calculateSubTotal(items) {
@@ -77,7 +79,7 @@ export class Cart extends Component {
                               this.props.addCartItem(
                                 this.props.cart.id,
                                 item.id,
-                                this.props.customerId
+                                this.props.id
                               )
                             }
                           >
@@ -94,7 +96,7 @@ export class Cart extends Component {
                               this.props.subtractCartItem(
                                 this.props.cart.id,
                                 item.id,
-                                this.props.customerId
+                                this.props.id
                               )
                             }
                           >
@@ -120,7 +122,7 @@ export class Cart extends Component {
                       this.props.deleteFromCart(
                         this.props.cart.id,
                         item.id,
-                        this.props.customerId
+                        this.props.id
                       )
                     }
                   >
@@ -151,20 +153,21 @@ export class Cart extends Component {
 const mapState = (state) => {
   return {
     cart: state.cart,
-    customerId: state.auth.id,
+    id: state.auth.id,
     isAdmin: !!state.auth.isAdmin,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchCart: (customerId) => dispatch(fetchCart(customerId)),
+    loadCart: (customerId) => dispatch(fetchCart(customerId)),
     addCartItem: (orderId, hotSauceId, customerId) =>
       dispatch(addCartItem(orderId, hotSauceId, customerId)),
     subtractCartItem: (orderId, hotSauceId, customerId) =>
       dispatch(subtractCartItem(orderId, hotSauceId, customerId)),
     deleteFromCart: (orderId, hotSauceId, customerId) =>
       dispatch(deleteFromCart(orderId, hotSauceId, customerId)),
+    fetchAuth: () => dispatch(me()),
   };
 };
 

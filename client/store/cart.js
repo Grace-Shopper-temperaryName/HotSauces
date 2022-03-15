@@ -1,9 +1,9 @@
-import axios from 'axios';
-import history from '../history';
+import axios from "axios";
+import history from "../history";
 
-const token = window.localStorage.getItem('token');
+const token = window.localStorage.getItem("token");
 // Action Types
-const SET_CART = 'SET_CART';
+const SET_CART = "SET_CART";
 
 // Action Creators
 const setCart = (cart) => ({
@@ -31,7 +31,11 @@ export const fetchCart = (customerId) => {
 export const createOrder = (customerId) => {
   return async (dispatch) => {
     try {
-      const { data: order } = await axios.post(`/api/orders/`);
+      const { data: order } = await axios.post(`/api/orders/`, {
+        headers: {
+          authorization: token,
+        },
+      });
       if (!customerId) {
         return order;
       }
