@@ -1,10 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { fetchSingleHotSauce } from "../store/singleHotSauce";
-
 import { Link } from "react-router-dom";
-
-import { addToCart, createOrder, addToLocalCart } from "../store/cart";
+import { fetchSingleHotSauce } from "../store/singleHotSauce";
+import { fetchCart, addToCart, addToLocalCart } from "../store/cart";
 
 export class SingleHotSauce extends React.Component {
   constructor() {
@@ -16,12 +14,14 @@ export class SingleHotSauce extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.props.fetchSingleHotSauce(this.props.match.params.id);
-    if (!this.props.customerId) {
-      const cart = await this.props.makeOrder();
-
-      window.localStorage.setItem("cart", JSON.stringify(cart));
+    if (this.props.customerId) {
+      this.props.fetchCart(this.props.customerId);
+    } else {
+      /* edit to use only localStorage for non-logged in user, no db */
+      // const cart = this.props.makeOrder();
+      // window.localStorage.setItem("cart", JSON.stringify(cart));
     }
   }
 
@@ -36,13 +36,9 @@ export class SingleHotSauce extends React.Component {
 
     if (this.props.customerId) {
       const { singleHotSauce, customerId } = this.props;
-      if (!this.props.cartId) {
-        this.props.makeOrder(customerId);
-      }
-      const { quantity } = this.state;
       this.props.addToCart(
         singleHotSauce.id,
-        quantity,
+        this.state.quantity,
         this.props.cartId,
         customerId,
         singleHotSauce.price
@@ -55,6 +51,7 @@ export class SingleHotSauce extends React.Component {
           this.props.singleHotSauce.id,
           this.state.quantity,
           cart.id,
+          this.props.customerId,
           this.props.singleHotSauce.price
         );
       }
@@ -144,11 +141,11 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     fetchSingleHotSauce: (id) => dispatch(fetchSingleHotSauce(id)),
+    fetchCart: (customerId) => dispatch(fetchCart(customerId)),
     addToCart: (hotSauceId, quantity, cartId, customerId, price) =>
       dispatch(addToCart(hotSauceId, quantity, cartId, customerId, price)),
     addToLocalCart: (hotSauceId, quantity, cartId, customerId, price) =>
       dispatch(addToLocalCart(hotSauceId, quantity, cartId, customerId, price)),
-    makeOrder: (customerId) => dispatch(createOrder(customerId)),
   };
 };
 

@@ -9,8 +9,10 @@ import { me } from "../store/auth";
  */
 class Home extends Component {
   componentDidMount() {
-    this.props.fetchCart(this.props.id);
     this.props.fetchAuth();
+    if (this.props.customerId) {
+      this.props.fetchCart(this.props.customerId);
+    }
   }
 
   render() {
@@ -75,7 +77,7 @@ const mapState = (state) => {
   return {
     firstName: state.auth.firstName,
     orders: state.auth.orders,
-    id: state.auth.id,
+    customerId: state.auth.id,
   };
 };
 

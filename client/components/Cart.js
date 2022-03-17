@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { me } from "../store/auth";
 import {
   addCartItem,
   subtractCartItem,
@@ -12,14 +11,22 @@ import {
 export class Cart extends Component {
   constructor() {
     super();
+    this.state = { cart: {} };
     this.calculateSubTotal = this.calculateSubTotal.bind(this);
     this.calculateTax = this.calculateTax.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
   }
 
   componentDidMount() {
-    this.props.loadCart(this.props.id);
-    this.props.fetchAuth();
+    this.props.loadCart(this.props.customerId);
+    this.setState({ cart: this.props.cart });
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.cart.amount !== prevProps.cart.amount) {
+      this.props.loadCart(this.props.customerId);
+      this.setState({ cart: this.props.cart });
+    }
   }
 
   calculateSubTotal(items) {
@@ -79,7 +86,7 @@ export class Cart extends Component {
                               this.props.addCartItem(
                                 this.props.cart.id,
                                 item.id,
-                                this.props.id
+                                this.props.customerId
                               )
                             }
                           >
@@ -96,7 +103,7 @@ export class Cart extends Component {
                               this.props.subtractCartItem(
                                 this.props.cart.id,
                                 item.id,
-                                this.props.id
+                                this.props.customerId
                               )
                             }
                           >
@@ -122,7 +129,7 @@ export class Cart extends Component {
                       this.props.deleteFromCart(
                         this.props.cart.id,
                         item.id,
-                        this.props.id
+                        this.props.customerId
                       )
                     }
                   >
@@ -153,7 +160,7 @@ export class Cart extends Component {
 const mapState = (state) => {
   return {
     cart: state.cart,
-    id: state.auth.id,
+    customerId: state.auth.id,
     isAdmin: !!state.auth.isAdmin,
   };
 };
@@ -167,7 +174,6 @@ const mapDispatch = (dispatch) => {
       dispatch(subtractCartItem(orderId, hotSauceId, customerId)),
     deleteFromCart: (orderId, hotSauceId, customerId) =>
       dispatch(deleteFromCart(orderId, hotSauceId, customerId)),
-    fetchAuth: () => dispatch(me()),
   };
 };
 

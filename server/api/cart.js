@@ -1,22 +1,25 @@
-const router = require('express').Router();
+const router = require("express").Router();
 const {
   models: { Customer, HotSauce, OrderHotSauce, Order },
-} = require('../db');
-const { requireToken, requireTokeninBody } = require('./middleware');
+} = require("../db");
+const { requireToken, requireTokeninBody } = require("./middleware");
 module.exports = router;
 
 // mounted on /api/cart
-router.get('/:customerId', requireToken, async (req, res, next) => {
+router.get("/:customerId", requireToken, async (req, res, next) => {
   try {
     if (req.customer.id === Number(req.params.customerId)) {
       const customer = await Customer.findByPk(req.params.customerId);
-      const order = await customer.getOrders({
+      const orders = await customer.getOrders({
         where: {
           isCart: true,
         },
         include: HotSauce,
       });
-      res.send(order[0]);
+      const cart = orders[0];
+      if (cart) {
+        res.send(cart);
+      }
     }
   } catch (err) {
     next(err);
@@ -24,15 +27,15 @@ router.get('/:customerId', requireToken, async (req, res, next) => {
 });
 
 router.post(
-  '/:customerId/:orderId',
+  "/:customerId/:orderId",
   requireTokeninBody,
   async (req, res, next) => {
     try {
       if (req.customer.id === Number(req.params.customerId)) {
         const orderItem = await OrderHotSauce.create({
           orderId: req.params.orderId,
-          hotSauceId: req.body.body.hotSauceId,
-          quantity: req.body.body.quantity,
+          hotSauceId: req.body.hotSauceId,
+          quantity: req.body.quantity,
         });
         res.send(orderItem);
       }
@@ -42,47 +45,58 @@ router.post(
   }
 );
 
-router.put('/:orderId/add', requireTokeninBody, async (req, res, next) => {
+router.put("/:orderId/add", requireTokeninBody, async (req, res, next) => {
   try {
-    if (req.customer.id === Number(req.body.body.customerId)) {
+    if (req.customer.id === Number(req.body.customerId)) {
       const orderItem = await OrderHotSauce.findOne({
         where: {
           orderId: req.params.orderId,
-          hotSauceId: req.body.body.hotSauceId,
+          hotSauceId: req.body.hotSauceId,
         },
       });
 
       const newQuantity = orderItem.quantity + 1;
 
+      const { dataValues: hotSauce } = await HotSauce.findByPk(
+        orderItem.hotSauceId
+      );
+
       await orderItem.update({
-        orderId: req.params.orderId,
-        hotSauceId: req.body.body.hotSauceId,
         quantity: newQuantity,
       });
-      res.send(orderItem);
+      const amount = hotSauce.price;
+      res.send({ amount });
     }
   } catch (error) {
     next(error);
   }
 });
 
-router.put('/:orderId/subtract', requireTokeninBody, async (req, res, next) => {
+router.put("/:orderId/subtract", requireTokeninBody, async (req, res, next) => {
   try {
-    if (req.customer.id === Number(req.body.body.customerId)) {
+    if (req.customer.id === Number(req.body.customerId)) {
       const orderItem = await OrderHotSauce.findOne({
         where: {
           orderId: req.params.orderId,
-          hotSauceId: req.body.body.hotSauceId,
+          hotSauceId: req.body.hotSauceId,
         },
       });
+
       const newQuantity = orderItem.quantity - 1;
 
-      await orderItem.update({
-        orderId: req.params.orderId,
-        hotSauceId: req.body.body.hotSauceId,
-        quantity: newQuantity,
-      });
-      res.send(orderItem);
+      if (newQuantity <= 0) {
+        res.send(null);
+      } else {
+        const { dataValues: hotSauce } = await HotSauce.findByPk(
+          orderItem.hotSauceId
+        );
+
+        await orderItem.update({
+          quantity: newQuantity,
+        });
+        const amount = hotSauce.price;
+        res.send({ amount });
+      }
     }
   } catch (error) {
     next(error);
@@ -90,18 +104,25 @@ router.put('/:orderId/subtract', requireTokeninBody, async (req, res, next) => {
 });
 
 router.delete(
-  '/:customerId/:orderId/:hotSauceId',
+  "/:customerId/:orderId/:hotSauceId",
   requireToken,
   async (req, res, next) => {
     try {
       if (req.customer.id === Number(req.params.customerId)) {
-        const orderItem = await OrderHotSauce.findByPk(req.params.orderId, {
+        const orderItem = await OrderHotSauce.findOne({
           where: {
+            orderId: req.params.orderId,
             hotSauceId: req.params.hotSauceId,
           },
         });
+
+        const { dataValues: hotSauce } = await HotSauce.findByPk(
+          orderItem.hotSauceId
+        );
+        const amount = orderItem.quantity * hotSauce.price;
+
         await orderItem.destroy();
-        res.send(orderItem);
+        res.send({ amount });
       }
     } catch (error) {
       next(error);

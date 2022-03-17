@@ -13,14 +13,30 @@ const setCart = (cart) => ({
 
 //Thunk Creators
 
-export const fetchCart = (customerId) => {
+export const fetchCart = (customerId, orderId, amount) => {
   return async (dispatch) => {
     try {
-      const { data: cart } = await axios.get(`/api/cart/${customerId}`, {
-        headers: {
-          authorization: token,
-        },
-      });
+      let cart;
+      if (amount && amount !== 0) {
+        const { data: response } = await axios.put(
+          `/api/orders/${orderId}/${customerId}`,
+          {
+            amount,
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        cart = response;
+      } else {
+        const { data: response } = await axios.get(`/api/cart/${customerId}`, {
+          headers: {
+            authorization: token,
+          },
+        });
+        cart = response;
+      }
+
       dispatch(setCart(cart));
     } catch (error) {
       console.error(error);
@@ -36,10 +52,7 @@ export const createOrder = (customerId) => {
           authorization: token,
         },
       });
-      if (!customerId) {
-        return order;
-      }
-      dispatch(fetchCart(customerId));
+      return order;
     } catch (error) {
       console.error(error);
     }
@@ -50,20 +63,30 @@ export const addToCart = (hotSauceId, quantity, orderId, customerId, price) => {
   return async (dispatch) => {
     try {
       if (customerId) {
+        let order;
+        if (!orderId) {
+          order = await dispatch(createOrder(customerId));
+          orderId = order.id;
+        }
+
         await axios.post(`/api/cart/${customerId}/${orderId}`, {
-          body: { hotSauceId: hotSauceId, quantity: quantity, price: price },
+          hotSauceId,
+          quantity,
           headers: {
             authorization: token,
           },
         });
-        dispatch(fetchCart(customerId, quantity, price));
+        const amount = quantity * price;
+
+        dispatch(fetchCart(customerId, orderId, amount));
         history.goBack();
       } else {
-        await axios.post(`/api/cart/${orderId}`, {
-          hotSauceId,
-          quantity,
-          price,
-        });
+        /* use local storage for non-users */
+        // await axios.post(`/api/cart/${orderId}`, {
+        //   hotSauceId,
+        //   quantity,
+        //   price,
+        // });
       }
     } catch (error) {
       console.error(error);
@@ -89,13 +112,16 @@ export const addToLocalCart = (hotSauceId, quantity, orderId, price) => {
 export const addCartItem = (orderId, hotSauceId, customerId) => {
   return async (dispatch) => {
     try {
-      await axios.put(`/api/cart/${orderId}/add`, {
-        body: { hotSauceId: hotSauceId, customerId: customerId },
+      const { data } = await axios.put(`/api/cart/${orderId}/add`, {
+        hotSauceId,
+        customerId,
         headers: {
           authorization: token,
         },
       });
-      dispatch(fetchCart(customerId));
+      const { amount } = data;
+
+      dispatch(fetchCart(customerId, orderId, amount));
     } catch (error) {
       console.error(error);
     }
@@ -105,13 +131,20 @@ export const addCartItem = (orderId, hotSauceId, customerId) => {
 export const subtractCartItem = (orderId, hotSauceId, customerId) => {
   return async (dispatch) => {
     try {
-      await axios.put(`/api/cart/${orderId}/subtract`, {
-        body: { hotSauceId: hotSauceId, customerId: customerId },
+      const { data } = await axios.put(`/api/cart/${orderId}/subtract`, {
+        hotSauceId,
+        customerId,
         headers: {
           authorization: token,
         },
       });
-      dispatch(fetchCart(customerId));
+      const { amount } = data;
+
+      if (!amount) {
+        dispatch(deleteFromCart(orderId, hotSauceId, customerId));
+      } else {
+        dispatch(fetchCart(customerId, orderId, -amount));
+      }
     } catch (error) {
       console.error(error);
     }
@@ -121,12 +154,16 @@ export const subtractCartItem = (orderId, hotSauceId, customerId) => {
 export const deleteFromCart = (orderId, hotSauceId, customerId) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`/api/cart/${customerId}/${orderId}/${hotSauceId}`, {
-        headers: {
-          authorization: token,
-        },
-      });
-      dispatch(fetchCart(customerId));
+      const { data } = await axios.delete(
+        `/api/cart/${customerId}/${orderId}/${hotSauceId}`,
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      const { amount } = data;
+      dispatch(fetchCart(customerId, orderId, -amount));
     } catch (error) {
       console.error(error);
     }
