@@ -253,6 +253,12 @@ form div {
   width: 70%;
 }
 
+#customerOrder {
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 -0 1em rgba(0, 0, 0, 0.05), -0 0 1em rgba(0, 0, 0, 0.05);
+}
+
 /*
 ** LOGIN
 */

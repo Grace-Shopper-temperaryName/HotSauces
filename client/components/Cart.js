@@ -11,7 +11,6 @@ import {
 export class Cart extends Component {
   constructor() {
     super();
-    this.state = { cart: {} };
     this.calculateSubTotal = this.calculateSubTotal.bind(this);
     this.calculateTax = this.calculateTax.bind(this);
     this.calculateTotal = this.calculateTotal.bind(this);
@@ -19,13 +18,11 @@ export class Cart extends Component {
 
   componentDidMount() {
     this.props.loadCart(this.props.customerId);
-    this.setState({ cart: this.props.cart });
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.cart.amount !== prevProps.cart.amount) {
       this.props.loadCart(this.props.customerId);
-      this.setState({ cart: this.props.cart });
     }
   }
 
@@ -52,7 +49,8 @@ export class Cart extends Component {
   calculateTotal(items) {
     const subTotal = this.calculateSubTotal(items);
     const tax = this.calculateTax(items);
-    return subTotal + tax;
+
+    return (subTotal + tax).toFixed(2);
   }
 
   render() {

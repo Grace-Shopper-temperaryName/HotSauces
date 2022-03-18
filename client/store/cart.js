@@ -1,8 +1,8 @@
 import axios from "axios";
 import history from "../history";
 
-const token = window.localStorage.getItem("token");
 // Action Types
+const TOKEN = "token";
 const SET_CART = "SET_CART";
 
 // Action Creators
@@ -16,6 +16,8 @@ const setCart = (cart) => ({
 export const fetchCart = (customerId, orderId, amount) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem(TOKEN);
+
       let cart;
       if (amount && amount !== 0) {
         const { data: response } = await axios.put(
@@ -47,6 +49,8 @@ export const fetchCart = (customerId, orderId, amount) => {
 export const createOrder = (customerId) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem(TOKEN);
+
       const { data: order } = await axios.post(`/api/orders/`, {
         headers: {
           authorization: token,
@@ -60,6 +64,8 @@ export const createOrder = (customerId) => {
 };
 
 export const addToCart = (hotSauceId, quantity, orderId, customerId, price) => {
+  const token = window.localStorage.getItem(TOKEN);
+
   return async (dispatch) => {
     try {
       if (customerId) {
@@ -112,6 +118,8 @@ export const addToLocalCart = (hotSauceId, quantity, orderId, price) => {
 export const addCartItem = (orderId, hotSauceId, customerId) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem(TOKEN);
+
       const { data } = await axios.put(`/api/cart/${orderId}/add`, {
         hotSauceId,
         customerId,
@@ -131,6 +139,8 @@ export const addCartItem = (orderId, hotSauceId, customerId) => {
 export const subtractCartItem = (orderId, hotSauceId, customerId) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem(TOKEN);
+
       const { data } = await axios.put(`/api/cart/${orderId}/subtract`, {
         hotSauceId,
         customerId,
@@ -154,6 +164,8 @@ export const subtractCartItem = (orderId, hotSauceId, customerId) => {
 export const deleteFromCart = (orderId, hotSauceId, customerId) => {
   return async (dispatch) => {
     try {
+      const token = window.localStorage.getItem(TOKEN);
+
       const { data } = await axios.delete(
         `/api/cart/${customerId}/${orderId}/${hotSauceId}`,
         {
