@@ -139,8 +139,8 @@ export class Cart extends Component {
           </div>
         )}
         <div id="total-charges" className="container">
-          <p>Subtotal: ${subTotal}</p>
-          <p>Tax: ${calculateTax(items)}</p>
+          <p>Subtotal: ${subTotal.toFixed(2)}</p>
+          <p>Tax: ${calculateTax(items).toFixed(2)}</p>
           <p>Total: ${calculateTotal(items)}</p>
           {this.props.parentItems ? (
             ""
