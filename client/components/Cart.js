@@ -17,7 +17,13 @@ export class Cart extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchCart(this.props.customerId);
+    this.props.loadCart(this.props.customerId);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.cart.amount !== prevProps.cart.amount) {
+      this.props.loadCart(this.props.customerId);
+    }
   }
 
   calculateSubTotal(items) {
@@ -43,7 +49,8 @@ export class Cart extends Component {
   calculateTotal(items) {
     const subTotal = this.calculateSubTotal(items);
     const tax = this.calculateTax(items);
-    return subTotal + tax;
+
+    return (subTotal + tax).toFixed(2);
   }
 
   render() {
@@ -158,7 +165,7 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchCart: (customerId) => dispatch(fetchCart(customerId)),
+    loadCart: (customerId) => dispatch(fetchCart(customerId)),
     addCartItem: (orderId, hotSauceId, customerId) =>
       dispatch(addCartItem(orderId, hotSauceId, customerId)),
     subtractCartItem: (orderId, hotSauceId, customerId) =>

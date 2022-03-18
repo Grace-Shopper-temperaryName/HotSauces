@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchCart } from "../store/cart";
 import { me } from "../store/auth";
 
 /**
@@ -9,7 +8,6 @@ import { me } from "../store/auth";
  */
 class Home extends Component {
   componentDidMount() {
-    this.props.fetchCart(this.props.id);
     this.props.fetchAuth();
   }
 
@@ -35,18 +33,22 @@ class Home extends Component {
           {orders ? (
             orders.length > 0 ? (
               orders.slice(0, 5).map((order) => (
-                <div className="container" id="customerOrders" key={order.id}>
+                <div id="customerOrder" key={order.id}>
                   <div className="containerLeft">
                     <h3>{order.orderStatus}</h3>
                   </div>
                   <div className="containerRight">
                     {order.isCart ? "🛒" : ""}
-                    <p>{order.orderDate.slice(0, 10)}</p>
-                    <p>${order.amount / 100}</p>
-                    <small>Payment:</small>
-                    <p>{order.paymentStatus}</p>
-                    <p>{order.provider}</p>
-                    <p>***{order.cardNumber.slice(-4)}</p>
+                    <span>date: {order.orderDate.slice(0, 10)}</span>
+                    <span>subtotal: ${order.amount / 100}</span>
+                    <span>Payment:</span>
+                    <p>
+                      status: {order.paymentStatus}
+                      <br />
+                      provider: {order.provider}
+                      <br />
+                      card #: ***{order.cardNumber?.slice(-4) && ""}
+                    </p>
                   </div>
                 </div>
               ))
@@ -68,20 +70,16 @@ class Home extends Component {
   }
 }
 
-/**
- * CONTAINER
- */
 const mapState = (state) => {
   return {
     firstName: state.auth.firstName,
     orders: state.auth.orders,
-    id: state.auth.id,
+    customerId: state.auth.id,
   };
 };
 
 const mapDispatch = (dispatch) => {
   return {
-    fetchCart: (customerId) => dispatch(fetchCart(customerId)),
     fetchAuth: () => dispatch(me()),
   };
 };
